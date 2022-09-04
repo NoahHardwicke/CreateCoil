@@ -1,0 +1,49 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      1080,         39]
+NotebookOptionsPosition[       736,         25]
+NotebookOutlinePosition[      1129,         41]
+CellTagsIndexPosition[      1086,         38]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Catalogue of Discrete Coils", "Title",
+ CellChangeTimes->{{3.8712761045898533`*^9, 
+  3.8712761215941067`*^9}},ExpressionUUID->"a1a1408d-22e8-46ae-9667-\
+9e9127ed3452"]
+},
+WindowSize->{808, 911},
+WindowMargins->{{20, Automatic}, {Automatic, 44}},
+FrontEndVersion->"13.1 for Mac OS X ARM (64-bit) (June 16, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"48aa365c-c2d2-462d-80d5-6dcc2a588c0e"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 174, 3, 106, "Title",ExpressionUUID->"a1a1408d-22e8-46ae-9667-9e9127ed3452"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
