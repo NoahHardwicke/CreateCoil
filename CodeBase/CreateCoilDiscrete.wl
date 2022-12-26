@@ -19,23 +19,29 @@ FindLoopCoil::usage = "stub";
 
 FindSaddleCoil::usage = "stub";
 
+FindSaddleCoilAxial::usage = "stub";
+
+FindSaddleCoilAzimuthal::usage = "stub";
+
 FindEllipseCoil::usage = "stub";
 
 Coil\[Chi]c::usage = "Separation of loop/arc/ellipse pairs";
+
+Coil\[Phi]::usage = "Azimuthal extent of a saddle";
 
 CoilT::usage = "Ellipse z-tangent";
 
 DesToErr::usage = "Ratio of the desired-to-leading error harmonic magnitudes";
 
 
-Begin["`Private`"];
-
-
 (* ::Text:: *)
-(*Setting CreateCoil`Private`$DevMode to True prints various stages of evaluation in some functions.*)
+(*Setting CreateCoil`$DevMode to True prints various stages of evaluation in some functions.*)
 
 
 $DevMode = False;
+
+
+Begin["`Private`"];
 
 
 (* ::Section:: *)
@@ -55,7 +61,7 @@ $DevMode = False;
 
 
 p[{n_, m_}, x_] :=
-	(-1)^m LegendreP[n, m, x] (* We do not include the Condon\[Dash]Shortley phase *)
+	(-1)^m LegendreP[n, m, x] (* We do not include the Condon-Shortley phase *)
 
 
 f[{n_, m_}] :=
@@ -93,14 +99,18 @@ bFieldHarmonicVector[{n_, m_}, r_, \[Theta]_, \[Phi]_] :=
 
 
 (* ::Text:: *)
+(*Use the construct "f[x___] := f[x] = body" to cache results so that long-to-compute expressions only need to be calculated once per kernel session.*)
+
+
+(* ::Text:: *)
 (*Axial harmonic weighting:*)
 
 
-\[Beta]["Loop"][{n_, 0}, \[Chi]_] :=
+\[Beta]["Loop"][{n_, 0}, \[Chi]_] := \[Beta]["Loop"][{n, 0}, \[Chi]] =
 	Simplify @ N[\[Pi]/2 D[\[Chi] Sqrt[1/(1 + \[Chi]^2)], {\[Chi], n}]]
 
 
-\[Beta]["Saddle"][{n_, m_}, \[Chi]_] :=
+\[Beta]["Saddle"][{n_, m_}, \[Chi]_] := \[Beta]["Saddle"][{n, m}, \[Chi]] =
 	Simplify @ N[
 		(\[Pi] (2m)!)/(2^(m + 1) m!) D[
 			\[Chi] (1/(1 + \[Chi]^2))^(m + 1/2) -
@@ -113,10 +123,11 @@ bFieldHarmonicVector[{n_, m_}, r_, \[Theta]_, \[Phi]_] :=
 q[n_, m_, x_] := (-1)^m LegendreQ[n, m, 3, x]
 
 
-s[m_, t_, \[Chi]_] := Simplify @ N[(1 - I)/(2 Sqrt[2t]) q[m - 1/2, 0, I (t^2 - \[Chi]^2 - 1)/(2t)]]
+s[m_, t_, \[Chi]_] := s[m, t, \[Chi]] =
+	Simplify @ N[(1 - I)/(2 Sqrt[2t]) q[m - 1/2, 0, I (t^2 - \[Chi]^2 - 1)/(2t)]]
 
 
-\[Beta]["Ellipse"][{n_, m_}, t_, \[Chi]_] :=
+\[Beta]["Ellipse"][{n_, m_}, t_, \[Chi]_] := \[Beta]["Ellipse"][{n, m}, t, \[Chi]] =
 	Simplify @ N[
 		-I^m D[
 			Simplify[
@@ -143,16 +154,41 @@ harmMag[{n_, m_}, \[Chi]_, t:Except[None]] := 8m/((n + m)!) \[Beta]["Ellipse"][{
 (*Define a function to generate the total harmonic of order N, given the coil currents:*)
 
 
-totalHarmonic[i\[Chi]_List, {n_Integer, m_Integer}, \[Chi]c_, t_:None] :=
-	(* The sum of harmonic contributions from however as many coils as there are currents. *)
-	(* Simplify to quicken root-finding later. *)
-	With[{term = Simplify[N[harmMag[{n, m}, \[Chi]c, t] / f[{n, m}]], Assumptions -> {\[Chi]c > 0, t > 0}]},
-		Abs[Sum[
-			i\[Chi][[j]] (term /. {\[Chi]c -> \[Chi]c[j], t -> t[j]}),
-			{j, Length[i\[Chi]]}]]]
+(* Compiling the totalHarmonics at this point will slow FindRoot down, which does its own compilation. Hence
+	compilation is only offered here incase you want to work with the total harmonics directly by calling
+	CreateCoil`Private`totalHarmonic. *)
+Options[totalHarmonic] = {"Compile" -> False};
 
 
-totalHarmonic[i\[Chi]_List, n_Integer, \[Chi]c_Symbol, t:None:None] := totalHarmonic[i\[Chi], {n, 0}, \[Chi]c]
+totalHarmonic[i\[Chi]_List, {n_Integer, m_Integer}, \[Chi]c_Symbol, t_Symbol:None, OptionsPattern[]] :=
+	With[{compQ = TrueQ[OptionValue["Compile"]]},
+
+		totalHarmonic[i\[Chi], {n, m}, \[Chi]c, t, "Compile" -> compQ] = Module[
+			{term, expr, vars, fn, loopCount = Length[i\[Chi]]},
+
+			(* The sum of harmonic contributions from however as many loop/saddle/ellipse-primitives as there are currents. *)
+			(* Simplify to quicken root-finding later. *)
+			term = Simplify[N[harmMag[{n, m}, \[Chi]c, t] / f[{n, m}]], Assumptions -> {\[Chi]c > 0, t > 0}];
+			expr = Abs @ Sum[
+				i\[Chi][[j]] (term /. {\[Chi]c -> \[Chi]c[j], t -> t[j]}),
+				{j, loopCount}];
+
+			(* Compile the total harmonic expression if needed. Note: FindRoot automatically compiles its equations, so compilation
+				is only potentially advantageous here if you want to work with the total harmonics directly. *)
+			If[!compQ, expr,
+				(* Make {\[Chi]c[1], t[1], \[Chi]c[2], t[2], ...} in the ellipse case or {\[Chi]c[1], \[Chi]c[2], ...} otherwise. *)
+				vars = Flatten[Through[{\[Chi]c, t /. None -> Nothing}[#]] & /@ Range[loopCount]];
+				(* Compile for Reals. "EvaluateSymbolically" -> False is important because it allows us to feed the compiled
+					function symbolic values without it attempting to evaluate, so we can build up a symbolic expression
+					involving the compiled function. When those symbols get replaced with Reals, the compiled function will
+					then evaluate. *)
+				fn = Compile @@ {vars, expr, RuntimeOptions -> {"EvaluateSymbolically" -> False}};
+				(* Return compiledFn[\[Chi]c[1], t[1], ...]. *)
+				fn @@ vars]]]
+
+
+totalHarmonic[i\[Chi]_List, n_Integer, \[Chi]c_Symbol, t:None:None, o:OptionsPattern[]] :=
+	totalHarmonic[i\[Chi], {n, 0}, \[Chi]c, o]
 
 
 (* ::Text:: *)
@@ -165,10 +201,7 @@ harmonicsToNull["Loop"][loopCount_, nDes_] :=
 		DeleteCases[2 Range[nullCount + 1] - If[EvenQ[nDes], 0, 1], nDes][[;; nullCount]]]
 
 
-harmonicsToNull["Saddle"][loopCount_, {nDes_, mDes_}] :=
-	With[{nullCount = loopCount - 1},
-		(* Make a list of the odd multiples of mDes, nullCount long and ensuring that nDes is excluded. *)
-		DeleteCases[mDes(2 Range[nullCount + 1] - 1), nDes][[;; nullCount]]]
+harmonicsToNull["Saddle"][loopCount_, nDes_] := harmonicsToNull["Loop"][loopCount, nDes]
 
 
 harmonicsToNull["Ellipse"][loopCount_ , {nDes_, mDes_}] :=
@@ -211,6 +244,10 @@ realQ[x_] := TrueQ[Element[x, Reals]]
 echoFn[devMode_] := If[TrueQ[devMode], Function[label, Echo[#, label, Iconize]&], Identity &]
 
 
+(* ::Subsection::Closed:: *)
+(*Loops*)
+
+
 Options[FindLoopCoil] = findCoilOpts;
 
 
@@ -244,7 +281,8 @@ FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
 			Message[FindLoopCoil::BadLeadingError]; proceed = False];
 		
 		If[!proceed, $Failed,
-			(* Explicitly feed findSeparations all option->value pairs. *)
+			(* Explicitly feed findSeparations all option->value pairs. This is incase the user has changed the default value of an option on FindLoopCoil,
+				which needs to propagate through to findSeparations. *)
 			allOpts = Sequence @@ Normal[Merge[{Options[FindLoopCoil], {opts}}, Last]];
 			nNull = Replace[optValNull,
 				Automatic :> (
@@ -256,17 +294,121 @@ FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
 			findSeparations["Loop", i\[Chi], nDes, nNull, nErr, minMax\[Chi]c, {None, None}, allOpts]]]
 
 
-Options[FindSaddleCoil] = findCoilOpts;
+(* ::Subsection::Closed:: *)
+(*Saddles*)
 
 
-FindSaddleCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
-FindSaddleCoil::BadDesiredNM = "Desired harmonic order N and degree M: `1` (N) and `2` (M) should be integers, where N \[GreaterEqual] M > 0.";
-FindSaddleCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
-FindSaddleCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
+(* ::Text:: *)
+(*The axial and azimuthal optimisations for saddle coils are orthogonal, so the user has the option to perform them both with FindSaddleCoil, or separately with FindSaddleCoilAxial and FindSaddleCoilAzimuthal.*)
 
 
-FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPattern[]] :=
+(* Given that FindSaddleCoil calls FindSaddleCoilAxial and FindSaddleCoilAzimuthal, we keep the axial and azimuthal options distinct by
+	starting all FindSaddleCoilAzimuthal options with "Azimuthal...". *)
+azimuthalOpts = Join[
+	(* FindRoot options for the azimuthal solver are given as strings, preprended with "Azimuthal". *)
+	"Azimuthal" <> ToString[#1] -> #2 & @@@ Options[FindRoot],
+	{
+		"AzimuthalCoilsReturned" -> 1,
+		"AzimuthalMeshPoints" -> 20,
+		"AzimuthalSquashingFactor" -> .5,
+		"AzimuthalSolutionTolerance" -> 10.^-5
+	}];
+
+
+Options[FindSaddleCoil] = Join[findCoilOpts, azimuthalOpts];
+
+
+Options[FindSaddleCoilAxial] = findCoilOpts;
+
+
+Options[FindSaddleCoilAzimuthal] = azimuthalOpts;
+
+
+saddleMessages = <|
+	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers.",
+	"BadDesiredNM" -> "Desired harmonic order N and degree M: `1` (N) and `2` (M) should be integers, where N \[GreaterEqual] M > 0.",
+	"BadDesiredM" -> "Desired harmonic order M (`1`) should be an integer greater than zero.",
+	"BadSeparations" -> "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.",
+	"BadLeadingError" -> "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.",
+	"BadNulledDegrees" -> "The number of degrees to null, k\[Phi] = `1`, should be an integer greater than zero."
+|>;
+
+
+FindSaddleCoil::BadCurrents = saddleMessages["BadCurrents"];
+FindSaddleCoil::BadDesiredNM = saddleMessages["BadDesiredNM"];
+FindSaddleCoil::BadSeparations = saddleMessages["BadSeparations"];
+FindSaddleCoil::BadLeadingError = saddleMessages["BadLeadingError"];
+FindSaddleCoil::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
+
+
+FindSaddleCoilAxial::BadCurrents = saddleMessages["BadCurrents"];
+FindSaddleCoilAxial::BadDesiredNM = saddleMessages["BadDesiredNM"];
+FindSaddleCoilAxial::BadSeparations = saddleMessages["BadSeparations"];
+FindSaddleCoilAxial::BadLeadingError = saddleMessages["BadLeadingError"];
+
+
+FindSaddleCoilAzimuthal::BadDesiredM = saddleMessages["BadDesiredM"];
+FindSaddleCoilAzimuthal::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
+
+
+FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPattern[]] :=
 	Module[{proceed = True, nNull, nmErr, autoHarms, nmNull, optValNull, optValErr, allOpts},
+		
+		(* Check that arguments have been specified correctly, and issue messages if not. *)
+		
+		(* Currents must be a list of two or more reals. *)
+		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+			Message[FindSaddleCoilAxial::BadCurrents, i\[Chi]]; proceed = False];
+		
+		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+			Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
+		
+		(* Check that 0 < min separation < max separation. *)
+		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
+			Message[FindSaddleCoilAxial::BadSeparations, minMax\[Chi]c]; proceed = False];
+		
+		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
+		optValNull = OptionValue["NulledHarmonics"];
+		optValErr = OptionValue["LeadingErrorHarmonic"];
+		If[optValNull =!= Automatic && optValErr === Automatic,
+			Message[FindSaddleCoilAxial::BadLeadingError]; proceed = False];
+		
+		If[!proceed, $Failed,
+			(* Ensure findSeparations inherits all option values from FindSaddleCoilAxial. *)
+			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAxial], {opts}}, Last]];
+			nNull = Replace[optValNull,
+				Automatic :> (
+					(* Calculate the nulled harmonics, and the leading error harmonic. *)
+					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
+					(* Only take the nulled harmonics for nNull. *)
+					Drop[autoHarms, -1])];
+			nmNull = {#, mDes}& /@ nNull;
+			nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
+			findSeparations["Saddle", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, {None, None}, allOpts]]]
+
+
+FindSaddleCoilAzimuthal[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
+	Module[{proceed = True, allOpts},
+		
+		(* Check that arguments have been specified correctly, and issue messages if not. *)
+		
+		(* mDes must be an integer greater than zero. *)
+		If[!MatchQ[mDes, m_Integer /; m > 0],
+			Message[FindSaddleCoilAzimuthal::BadDesiredM, mDes]; proceed = False];
+		
+		(* Check that kPhi is an integer >= 1. *)
+		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+			Message[FindSaddleCoilAzimuthal::BadNulledDegrees, k\[Phi]]; proceed = False];
+		
+		If[!proceed, $Failed,
+			(* Ensure findAzimuthalExtents inherits all option values from FindSaddleCoilAzimuthal. *)
+			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAzimuthal], {opts}}, Last]];
+			findAzimuthalExtents[mDes, k\[Phi], allOpts]]]
+
+
+FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
+	Module[{proceed = True, nNull, nmErr, autoHarms, nmNull, optValNull, optValErr, allSeparationOpts, allAzimuthalOpts, separations, azimuthalExtents},
 		
 		(* Check that arguments have been specified correctly, and issue messages if not. *)
 		
@@ -288,23 +430,39 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPattern[]] 
 		If[optValNull =!= Automatic && optValErr === Automatic,
 			Message[FindSaddleCoil::BadLeadingError]; proceed = False];
 		
+		(* Check that kPhi is an integer >= 1. *)
+		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+			Message[FindSaddleCoil::BadNulledDegrees, k\[Phi]]; proceed = False];
+		
 		If[!proceed, $Failed,
-			(* Explicitly feed findSeparations all option->value pairs. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoil], {opts}}, Last]];
+			(* Explicitly feed findAzimuthalExtents and findSeparations all of their respective option->value pairs. *)
+			(* Separate the findAzimuthalExtents options (which all begin with "Azimuthal...") and the findSeparations options. *)
+			{allAzimuthalOpts, allSeparationOpts} = GatherBy[
+				(* Ensure GatherBy gives the azimuthal options first. *)
+				{{"Azimuthal"}} ~Join~ Normal[Merge[{Options[FindSaddleCoil], {opts}}, Last]],
+				StringQ[First[#]] && StringMatchQ[First[#], "Azimuthal*"]&];
+			allAzimuthalOpts = Sequence @@ Drop[allAzimuthalOpts, 1];
+			allSeparationOpts = Sequence @@ allSeparationOpts;
 			nNull = Replace[optValNull,
 				Automatic :> (
 					(* Calculate the nulled harmonics, and the leading error harmonic. *)
-					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, {nDes, mDes}];
+					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
 					(* Only take the nulled harmonics for nNull. *)
 					Drop[autoHarms, -1])];
 			nmNull = {#, mDes}& /@ nNull;
 			nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
-			findSeparations["Saddle", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, {None, None}, allOpts]]]
+			separations = FindSaddleCoilAxial[i\[Chi], {nDes, mDes}, minMax\[Chi]c, allSeparationOpts];
+			azimuthalExtents = FindSaddleCoilAzimuthal[mDes, k\[Phi], allAzimuthalOpts];
+			<|"AxialSeparations" -> separations, "AzimuthalExtents" -> azimuthalExtents|>]]
+
+
+(* ::Subsection::Closed:: *)
+(*Ellipses*)
 
 
 Options[FindEllipseCoil] = Replace[
 	findCoilOpts,
-	("MeshPointsPer\[Chi]c" -> 10) -> ("MeshPointsPer\[Chi]c" -> 5),
+	("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 5),
 	1];
 
 
@@ -355,6 +513,10 @@ FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:Options
 			findSeparations["Ellipse", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, minMaxT, allOpts]]]
 
 
+(* ::Subsection::Closed:: *)
+(*Solvers*)
+
+
 Options[findSeparations] = findCoilOpts;
 
 
@@ -372,7 +534,7 @@ findSeparations[
 		(* Scope the separation and tangent variables *)
 		{\[Chi]c, t},
 
-		(* Ensure Parallel kernels are running *)
+		(* Ensure parallel kernels are running *)
 		Quiet[LaunchKernels[]];
 		Quiet[DistributeDefinitions["CreateCoil`"]];
 
@@ -383,7 +545,7 @@ findSeparations[
 
 				(* Parameters *)
 				loopCount, nullCount, varCount, separations, tans, meshPoints,
-				dupProx, nullThresh, minSepDiff, expPoints, nearestPts, bleed, seed, coilsReturned, valsOnlyQ,
+				dupProx, nullThresh, minSepDiff, expPoints, nearestPts, bleed, seed, coilsReturned, valsOnlyQ, compQ,
 
 				(* Vars for storing calculated data *)
 				contourDim, totalHarms, totalHarmDes, totalHarmsNull, totalHarmErr, findRoot, rawInitialSols, filteredInitialSols,
@@ -415,7 +577,7 @@ findSeparations[
 				OptionValue["MinSeparationsDifference"]];
 			expPoints = If[# === Automatic, Ceiling[OptionValue["MeshPointsPer\[Chi]c"]/3], #]&[
 				OptionValue["ExpansionPointsPer\[Chi]c"]];
-			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nNull]), #]&[
+			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nmNull]), #]&[
 				OptionValue["ContourMeshNN"]];
 			bleed = OptionValue["ExpansionBleed"];
 			seed = OptionValue["Seed"];
@@ -565,7 +727,7 @@ findSeparations[
 									Array[
 										(* Add to the solution, the sum of each basis vector times the distance for that
 											vector given by the array. Perturb the points slightly to even out the overall mesh. *)
-										sol + Total[RandomReal[{-1,1}spread/(expPoints + 1)/2, contourDim] +  basisVs slots]&,
+										sol + Total[RandomReal[{-1,1}spread/(expPoints + 1)/2, contourDim] + basisVs slots]&,
 										(* An array of length expPoints in each contour dimension... *)
 										Table[expPoints, contourDim],
 										(* ...between -spread/2 and spread/2. *)
@@ -616,6 +778,77 @@ findSeparations[
 								If[ellipseQ, Identity, Catenate][
 									GatherBy[Drop[coil, -1], #[[1, 1]]&][[All, All, 2]]]] /@ coils,
 							coils]]]]]
+
+
+azimuthalTerm[\[Phi]c_, m_] := ChebyshevU[m - 1, \[Phi]c] Sqrt[1 - \[Phi]c^2]
+
+
+Options[findAzimuthalExtents] = azimuthalOpts;
+
+
+findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
+	Module[
+		{mNull, cos\[Phi], extentCosines, eqs, meshPoints, meshPointCount, squashingFactor, max\[Phi], lin, sols, echo, findRootOpts, solTolerance, coilsReturned, partSpec},
+
+		(* Ensure parallel kernels are running *)
+		Quiet[LaunchKernels[]];
+		Quiet[DistributeDefinitions["CreateCoil`"]];
+
+		meshPointCount = OptionValue["AzimuthalMeshPoints"];
+		squashingFactor = OptionValue["AzimuthalSquashingFactor"];
+		solTolerance = OptionValue["AzimuthalSolutionTolerance"];
+		coilsReturned = OptionValue["AzimuthalCoilsReturned"];
+
+		(* The FindRoot options of findAzimuthalExtents are of the form "Azimuthal" <> ToString[-FindRoot option-].
+			Hence we need to select options which begin "Azimuthal...", and assign their values to the corresponding FindRoot options. *)
+		findRootOpts = Options[FindRoot][[All, 1]];
+		findRootOpts = Function[{azimOpt, val},
+			FirstCase[findRootOpts,
+				opt_ /; ("Azimuthal" <> ToString[opt] === azimOpt) :> (opt -> val),
+				Nothing, 1]] @@@ {opts};
+		findRootOpts = Sequence @@ findRootOpts;
+
+		echo = echoFn[$DevMode];
+		(* Generate the degrees to null: mDes * 3, 5, 7, ...; k\[Phi] long. *)
+		mNull = mDes(2 Range[k\[Phi]] + 1);
+		extentCosines = cos\[Phi] /@ Range[k\[Phi]];
+		eqs = Total /@ Table[azimuthalTerm[j, i], {i, mNull}, {j, extentCosines}];
+		echo["Equations in cos(\[Phi])"][eqs /. cos\[Phi] -> Slot];
+		(* Mesh the cos(\[Phi]) space, applying FindRoot to each k\[Phi]-dimensional point. *)
+		(* Phi is half the azimuthal extent, so \[Phi] may extend from 0 to \[Pi]/(2 mDes). *)
+		max\[Phi] = Pi/(2 mDes);
+		(* Ideally, we want the \[Phi]'s to be equally spaced within the 0 to max\[Phi] region (with padding on each end).
+			First, linearly interpolate the region 0 to 1, with k\[Phi] points and padding each end: *)
+		lin = Array[Identity, k\[Phi] + 2, {0, 1}][[2 ;; -2]];
+		(* Now, produce a mesh of k\[Phi]-dimensional points by squashing the linear interpolation towards 0, through even spacing, to 1.
+			We use this non-linear mesh in order to only mesh around the desired spacing of \[Phi]'s, rather than across the entire solution space. *)
+		meshPoints = Array[
+			(* Use a squashing function that's symmetric about y = x and y = 1 - x so that squashing towards 0 and towards 1 are the same
+				(i.e. the mesh points squashed towards 0 are symmetric about 1/2 to the mesh points squashed towards 1). *)
+			Piecewise[{
+				{(1 - (1-lin)^-(#-1)) ^ (-1/(#-1)), # < 0},
+				{lin, # == 0},
+				{1 - (1 - lin^(#+1)) ^ (1/(#+1)), 0 < #}}]&,
+			meshPointCount,
+			squashingFactor {-1, 1}];
+		(* We have found the desired mesh points for \[Phi], but our equations are in terms of cos(\[Phi]), so take cosine of each value. *)
+		meshPoints = Map[Cos] /@ meshPoints;
+		(* Apply FindRoot to each mesh point. *)
+		sols = ParallelMap[
+			(* Burn in parameter values to ensure all required data are passed to each parallel kernel. *)
+			With[{eqs = eqs, extentCosines = extentCosines, findRootOpts = findRootOpts},
+				FindRoot[eqs, Transpose[{extentCosines, #}], findRootOpts]&],
+			meshPoints];
+		(* Keep only the solutions which solve the equations to the desired tolerance. *)
+		sols = Select[sols,
+			Function[sol, AllTrue[eqs /. sol, Quiet[# < solTolerance]&]]];
+		(* We've solved for cos(\[Phi]), so take the ArcCos of each point. *)
+		sols = Apply[#1 -> Chop @ Quiet @ ArcCos[#2] &, sols, {2}](* ;
+		(* Sort coils by their ease of manufacture, i.e. how close they are to being evenly distributed through max\[Phi]. *)
+
+		partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]];
+		(* Pretty up output. *)
+		sols = sols /. cos\[Phi] -> Coil\[Phi] *)]
 
 
 (* ::Section:: *)
