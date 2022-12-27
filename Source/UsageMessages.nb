@@ -1,0 +1,453 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24222,        445]
+NotebookOptionsPosition[     22269,        406]
+NotebookOutlinePosition[     22667,        422]
+CellTagsIndexPosition[     22624,        419]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Linear Syntax Generator for Usage Messages", "Title",
+ CellChangeTimes->{{3.88109187140938*^9, 
+  3.881091921796318*^9}},ExpressionUUID->"dc19a258-a2d7-48a2-9f22-\
+9cc58f905408"],
+
+Cell["\<\
+The input cells below generate linear syntax strings (required for message \
+text) when evaluated. These strings can then be copied and pasted into the \
+.wl file in the usage message definitions. Fraction boxes are used to force \
+parts of the string to be treated as boxes \[LongDash] these fraction boxes \
+will have to be manually edited out (FIXME: there\[CloseCurlyQuote]s almost \
+certainly a better way of constructing usage messages). Variables are \
+stylised using the \[OpenCurlyDoubleQuote]Documentation Tools\
+\[CloseCurlyDoubleQuote] palette.\
+\>", "Text",
+ CellChangeTimes->{{3.8810914586170473`*^9, 3.8810916217809057`*^9}, {
+  3.881135049038784*^9, 3.881135192751672*^9}, {3.881135245449272*^9, 
+  3.881135245546667*^9}, {3.8811445957516212`*^9, 
+  3.881144622056109*^9}},ExpressionUUID->"acea7a75-1143-4c2d-a398-\
+9dcc52105c33"],
+
+Cell[CellGroupData[{
+
+Cell["Coil-Finding Functions", "Section",
+ CellChangeTimes->{{3.881091838012656*^9, 
+  3.881091861922909*^9}},ExpressionUUID->"5cbfff5d-8ac2-4d9f-9ca9-\
+62517e38a824"],
+
+Cell[CellGroupData[{
+
+Cell["FindLoopCoil", "Subsection",
+ CellChangeTimes->{{3.881082651372726*^9, 
+  3.881082654268162*^9}},ExpressionUUID->"0a9795bf-a099-4a63-affc-\
+dc62b9421547"],
+
+Cell[BoxData[
+ RowBox[{"\"\<\!\(\*FractionBox[RowBox[{\"FindLoopCoil\", \"[\", \
+RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"1\", \"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", StyleBox[\"n\", \"TI\"], \",\", \" \", \
+RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"min\", \"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\"\[Chi]c\", \
+\"TI\"], StyleBox[\"max\", \"TI\"]]}], \"}\"}]}], \"]\"}], \"1\"]\) returns, \
+for loop pairs of turn ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
+\"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \
+\"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]\) optimised to generate the field harmonic of order \
+\!\(\*StyleBox[\"n\", \"TI\"]\).\>\"", "//", "FullForm"}]], "Input",
+ CellChangeTimes->{{3.881081024919752*^9, 3.881081030442997*^9}, {
+   3.881081063354095*^9, 3.881081088228352*^9}, {3.881081164736617*^9, 
+   3.881081198145648*^9}, {3.8810815232708483`*^9, 3.8810816264092503`*^9}, {
+   3.88108166615335*^9, 3.881081667863*^9}, {3.8810840462042093`*^9, 
+   3.8810840625999804`*^9}, {3.881085511052074*^9, 3.881085527578579*^9}, {
+   3.881132839097872*^9, 3.8811328424704123`*^9}, {3.881133263025461*^9, 
+   3.881133313629902*^9}, 3.881133367364361*^9, {3.881133427257958*^9, 
+   3.881133463776887*^9}, {3.881133511040922*^9, 3.881133513431294*^9}, {
+   3.88113430380464*^9, 3.8811343041817513`*^9}, {3.881134895647051*^9, 
+   3.88113489613898*^9}},
+ FontFamily->"SourceSansPro",
+ FontWeight->Plain,
+ CellLabel->"In[5]:=",ExpressionUUID->"8c8617cf-6799-4ff0-9125-b28ff0e3f090"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"FindLoopCoil\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\
+\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", \\\" \\\", StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", StyleBox[\\\"n\\\", \
+\\\"TI\\\"], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\
+\\\", \\\"TI\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"max\\\", \\\
+\"TI\\\"]]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns, for loop pairs of turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]\\), axial separations between \\!\\(\\*SubscriptBox[StyleBox[\\\"\
+\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \\\"TI\\\"]]\\) and \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"max\\\", \\\"TI\\\"]]\\) optimised to generate the field \
+harmonic of order \\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Input",
+ CellChangeTimes->{{3.881144408418831*^9, 
+  3.881144411988729*^9}},ExpressionUUID->"5f4ebd2e-869e-4193-afba-\
+9268d8aa0a61"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FindSaddleCoil", "Subsection",
+ CellChangeTimes->{{3.881082651372726*^9, 
+  3.881082662639344*^9}},ExpressionUUID->"9966c487-312b-4bd9-8685-\
+f4e081731b6b"],
+
+Cell[BoxData[
+ RowBox[{"\"\<\!\(\*FractionBox[RowBox[{\"FindSaddleCoil\", \"[\", \
+RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"1\", \"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\
+\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \" \", \
+StyleBox[\"k\[Phi]\", \"TI\"], \",\", \" \", RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\
+\"max\", \"TI\"]]}], \"}\"}]}], \"]\"}], \"1\"]\) returns, for arc groups of \
+turn ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"2\", \
+\"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \"TR\"]\), axial separations \
+between \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]]\) and \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"max\", \"TI\"]]\) and azimuthal extents, optimised to generate the \
+field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \
+\!\(\*StyleBox[\"m\", \"TI\"]\), while nulling the first \!\(\*StyleBox[\"k\
+\[Phi]\", \"TI\"]\) leading-order error harmonic degrees.\>\"", "//", 
+  "FullForm"}]], "Input",
+ CellChangeTimes->{{3.881081024919752*^9, 3.881081030442997*^9}, {
+   3.881081063354095*^9, 3.881081088228352*^9}, {3.881081164736617*^9, 
+   3.881081198145648*^9}, {3.8810815232708483`*^9, 3.8810816264092503`*^9}, {
+   3.88108166615335*^9, 3.881081667863*^9}, {3.8810826796554337`*^9, 
+   3.8810826807339487`*^9}, {3.881082724639936*^9, 3.881082751620049*^9}, {
+   3.881082826629065*^9, 3.881082827259686*^9}, {3.881083053869413*^9, 
+   3.881083087446464*^9}, {3.8810837916695337`*^9, 3.881083796197207*^9}, {
+   3.8810838301677103`*^9, 3.881083884245878*^9}, {3.881084002402462*^9, 
+   3.881084025784114*^9}, {3.881084072756815*^9, 3.881084095351178*^9}, {
+   3.881085965813221*^9, 3.8810860227899942`*^9}, {3.881088255829273*^9, 
+   3.8810882615097322`*^9}, 3.881090933686648*^9, 3.881133630137569*^9, {
+   3.881134233045192*^9, 3.881134252461533*^9}, {3.8811353079256763`*^9, 
+   3.8811353791002893`*^9}, {3.881141593088456*^9, 3.881141646658641*^9}},
+ FontFamily->"SourceSansPro",
+ FontWeight->Plain,
+ CellLabel->"In[6]:=",ExpressionUUID->"7fecf262-ca60-421e-93fe-7b9ef79213f8"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"FindSaddleCoil\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\
+\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", \\\" \\\", StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", \\\" \\\", StyleBox[\\\"m\
+\\\", \\\"TI\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", StyleBox[\\\"k\\[Phi]\
+\\\", \\\"TI\\\"], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\
+\\\", \\\"TI\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"max\\\", \\\
+\"TI\\\"]]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns, for arc groups of turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]\\), axial separations between \\!\\(\\*SubscriptBox[StyleBox[\\\"\
+\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \\\"TI\\\"]]\\) and \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"max\\\", \\\"TI\\\"]]\\) and azimuthal extents, optimised to \
+generate the field harmonic of order \\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\
+\\) and degree \\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\), while nulling the \
+first \\!\\(\\*StyleBox[\\\"k\\[Phi]\\\", \\\"TI\\\"]\\) leading-order error \
+harmonic degrees.\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Input",
+ CellChangeTimes->{{3.881144430768547*^9, 
+  3.881144434249262*^9}},ExpressionUUID->"dec493ad-777c-4df6-9a87-\
+2cfe86b39a38"],
+
+Cell[BoxData[
+ RowBox[{"\"\<\!\(\*FractionBox[RowBox[{\"FindSaddleCoilAxial\", \"[\", \
+RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"1\", \"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\
+\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \" \", RowBox[{\
+\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\
+\"max\", \"TI\"]]}], \"}\"}]}], \"]\"}], \"1\"]\) returns, for arc groups of \
+turn ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"2\", \
+\"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \"TR\"]\), axial separations \
+between \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]]\) and \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"max\", \"TI\"]]\) optimised to generate the field harmonic of \
+order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \
+\"TI\"]\).\>\"", "//", "FullForm"}]], "Input",
+ CellChangeTimes->{{3.881081024919752*^9, 3.881081030442997*^9}, {
+   3.881081063354095*^9, 3.881081088228352*^9}, {3.881081164736617*^9, 
+   3.881081198145648*^9}, {3.8810815232708483`*^9, 3.8810816264092503`*^9}, {
+   3.88108166615335*^9, 3.881081667863*^9}, {3.8810826796554337`*^9, 
+   3.8810826807339487`*^9}, {3.881082724639936*^9, 3.881082751620049*^9}, {
+   3.881082826629065*^9, 3.881082827259686*^9}, {3.881083053869413*^9, 
+   3.881083087446464*^9}, {3.8810837916695337`*^9, 3.881083796197207*^9}, {
+   3.8810838301677103`*^9, 3.881083884245878*^9}, {3.881084002402462*^9, 
+   3.881084025784114*^9}, {3.881084072756815*^9, 3.881084095351178*^9}, {
+   3.881085965813221*^9, 3.8810860227899942`*^9}, {3.881088255829273*^9, 
+   3.8810882615097322`*^9}, 3.881090933686648*^9, {3.881091042760713*^9, 
+   3.881091077823361*^9}, {3.8811363663736353`*^9, 3.881136416713625*^9}, {
+   3.8811442212342987`*^9, 3.88114429027065*^9}},
+ FontFamily->"SourceSansPro",
+ FontWeight->Plain,
+ CellLabel->"In[7]:=",ExpressionUUID->"f3ea2898-f110-4dd8-9ba7-42fc0f23bc96"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"FindSaddleCoilAxial\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\
+\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", \\\" \\\", StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", \\\" \\\", StyleBox[\\\"m\
+\\\", \\\"TI\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\
+\\\", \\\"TI\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"max\\\", \\\
+\"TI\\\"]]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns, for arc groups of turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]\\), axial separations between \\!\\(\\*SubscriptBox[StyleBox[\\\"\
+\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \\\"TI\\\"]]\\) and \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"max\\\", \\\"TI\\\"]]\\) optimised to generate the field \
+harmonic of order \\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \
+\\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Input",
+ CellChangeTimes->{{3.881144445327674*^9, 
+  3.881144450499406*^9}},ExpressionUUID->"f1708ad1-adf2-4e0d-b07b-\
+ab4597ffde78"],
+
+Cell[BoxData[
+ RowBox[{"\"\<\!\(\*FractionBox[RowBox[{\"FindSaddleCoilAzimuthal\", \"[\", \
+RowBox[{StyleBox[\"m\", \"TI\"], \",\", \" \", StyleBox[\"k\[Phi]\", \
+\"TI\"]}], \"]\"}], \"1\"]\) returns azimuthal arc extents optimised to \
+generate the field harmonic of degree \!\(\*StyleBox[\"m\", \"TI\"]\), while \
+nulling the first \!\(\*StyleBox[\"k\[Phi]\", \"TI\"]\) leading-order error \
+harmonic degrees.\>\"", "//", "FullForm"}]], "Input",
+ CellChangeTimes->{{3.881081024919752*^9, 3.881081030442997*^9}, {
+   3.881081063354095*^9, 3.881081088228352*^9}, {3.881081164736617*^9, 
+   3.881081198145648*^9}, {3.8810815232708483`*^9, 3.8810816264092503`*^9}, {
+   3.88108166615335*^9, 3.881081667863*^9}, {3.8810826796554337`*^9, 
+   3.8810826807339487`*^9}, {3.881082724639936*^9, 3.881082751620049*^9}, {
+   3.881082826629065*^9, 3.881082827259686*^9}, {3.881083053869413*^9, 
+   3.881083087446464*^9}, {3.8810837916695337`*^9, 3.881083796197207*^9}, {
+   3.8810838301677103`*^9, 3.881083884245878*^9}, {3.881084002402462*^9, 
+   3.881084025784114*^9}, {3.881084072756815*^9, 3.881084095351178*^9}, {
+   3.881085965813221*^9, 3.8810860227899942`*^9}, {3.881088255829273*^9, 
+   3.8810882615097322`*^9}, 3.881090933686648*^9, {3.881091042760713*^9, 
+   3.881091077823361*^9}, {3.881091111929262*^9, 3.8810911501487703`*^9}, {
+   3.881091195178515*^9, 3.881091211090871*^9}, 3.881091250239687*^9, {
+   3.881091713912943*^9, 3.881091716052227*^9}, {3.881136429433591*^9, 
+   3.881136440093301*^9}, {3.8811443072013597`*^9, 3.881144322653068*^9}},
+ FontFamily->"SourceSansPro",
+ FontWeight->Plain,
+ CellLabel->"In[8]:=",ExpressionUUID->"8a06a883-f2b0-4a4d-ac8b-f1488116193b"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"FindSaddleCoilAzimuthal\\\", \\\"[\\\", \
+RowBox[{StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \\\" \\\", StyleBox[\\\"k\
+\\[Phi]\\\", \\\"TI\\\"]}], \\\"]\\\"}]\\) returns azimuthal arc extents \
+optimised to generate the field harmonic of degree \
+\\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\), while nulling the first \
+\\!\\(\\*StyleBox[\\\"k\\[Phi]\\\", \\\"TI\\\"]\\) leading-order error \
+harmonic degrees.\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Input",
+ CellChangeTimes->{{3.88114448661264*^9, 
+  3.881144490095695*^9}},ExpressionUUID->"3574e28c-29c2-4d8f-be78-\
+f2a0a48bc52a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FindEllipseCoil", "Subsection",
+ CellChangeTimes->{{3.881091269146056*^9, 
+  3.881091271657785*^9}},ExpressionUUID->"7e55b714-69a0-44f3-b0a9-\
+8a1a3d5027e1"],
+
+Cell[BoxData[
+ RowBox[{"\"\<\!\(\*FractionBox[RowBox[{\"FindEllipseCoil\", \"[\", \
+RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"1\", \"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\
+\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \" \", RowBox[{\
+\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\
+\"max\", \"TI\"]]}], \"}\"}], \",\", \" \", RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"min\", \"TI\"]], \",\
+\", \" \", SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]}], \"}\"}]}], \"]\"}], \"1\"]\) returns, for ellipse groups of turn \
+ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \"TR\
+\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"2\", \
+\"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \"TR\"]\), axial separations \
+between \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]]\) and \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"max\", \"TI\"]]\) and tangents between \
+\!\(\*SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \"TI\"]]\), \
+optimised to generate the field harmonic of order \!\(\*StyleBox[\"n\", \
+\"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\).\>\"", "//", 
+  "FullForm"}]], "Input",
+ CellChangeTimes->{{3.881081024919752*^9, 3.881081030442997*^9}, {
+   3.881081063354095*^9, 3.881081088228352*^9}, {3.881081164736617*^9, 
+   3.881081198145648*^9}, {3.8810815232708483`*^9, 3.8810816264092503`*^9}, {
+   3.88108166615335*^9, 3.881081667863*^9}, {3.8810826796554337`*^9, 
+   3.8810826807339487`*^9}, {3.881082724639936*^9, 3.881082751620049*^9}, {
+   3.881082826629065*^9, 3.881082827259686*^9}, {3.881083053869413*^9, 
+   3.881083087446464*^9}, {3.8810837916695337`*^9, 3.881083796197207*^9}, {
+   3.8810838301677103`*^9, 3.881083884245878*^9}, {3.881084002402462*^9, 
+   3.881084025784114*^9}, {3.881084072756815*^9, 3.881084095351178*^9}, {
+   3.881085965813221*^9, 3.8810860227899942`*^9}, {3.881088255829273*^9, 
+   3.8810882615097322`*^9}, 3.881090933686648*^9, {3.88109129589812*^9, 
+   3.881091327632401*^9}, {3.881091365739044*^9, 3.881091367819417*^9}, {
+   3.8810913980685387`*^9, 3.8810914307192802`*^9}, {3.881141449119074*^9, 
+   3.881141506637348*^9}, {3.8811443366904383`*^9, 3.881144387741963*^9}},
+ FontFamily->"SourceSansPro",
+ FontWeight->Plain,
+ CellLabel->"In[9]:=",ExpressionUUID->"147e2895-d017-493d-a382-d831650fe344"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"FindEllipseCoil\\\", \\\"[\\\", RowBox[{RowBox[{\
+\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", \\\" \\\", StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", \\\" \\\", StyleBox[\\\"m\
+\\\", \\\"TI\\\"]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\
+\\\", \\\"TI\\\"]], \\\",\\\", \\\" \\\", \
+SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"max\\\", \\\
+\"TI\\\"]]}], \\\"}\\\"}], \\\",\\\", \\\" \\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"t\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \
+\\\"TI\\\"]], \\\",\\\", \\\" \\\", SubscriptBox[StyleBox[\\\"t\\\", \\\"TI\\\
+\"], StyleBox[\\\"max\\\", \\\"TI\\\"]]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) \
+returns, for ellipse groups of turn ratios \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\[Ellipsis]\\\", \
+\\\"TR\\\"]\\), axial separations between \\!\\(\\*SubscriptBox[StyleBox[\\\"\
+\\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \\\"TI\\\"]]\\) and \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"max\\\", \\\"TI\\\"]]\\) and tangents between \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"t\\\", \\\"TI\\\"], StyleBox[\\\"min\\\", \
+\\\"TI\\\"]]\\) and \\!\\(\\*SubscriptBox[StyleBox[\\\"t\\\", \\\"TI\\\"], \
+StyleBox[\\\"max\\\", \\\"TI\\\"]]\\), optimised to generate the field \
+harmonic of order \\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \
+\\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Input",
+ CellChangeTimes->{{3.881144501660887*^9, 
+  3.8811445054844713`*^9}},ExpressionUUID->"07cde185-880a-4cdb-867b-\
+2f14a8819774"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{Automatic, 249}, {18, Automatic}},
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (December 18, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"1dcc237f-06a4-4219-a9d0-da7758974117"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 184, 3, 176, "Title",ExpressionUUID->"dc19a258-a2d7-48a2-9f22-9cc58f905408"],
+Cell[767, 27, 856, 14, 142, "Text",ExpressionUUID->"acea7a75-1143-4c2d-a398-9dcc52105c33"],
+Cell[CellGroupData[{
+Cell[1648, 45, 167, 3, 72, "Section",ExpressionUUID->"5cbfff5d-8ac2-4d9f-9ca9-62517e38a824"],
+Cell[CellGroupData[{
+Cell[1840, 52, 160, 3, 58, "Subsection",ExpressionUUID->"0a9795bf-a099-4a63-affc-dc62b9421547"],
+Cell[2003, 57, 1973, 29, 91, "Input",ExpressionUUID->"8c8617cf-6799-4ff0-9125-b28ff0e3f090"],
+Cell[3979, 88, 1638, 29, 325, "Input",ExpressionUUID->"5f4ebd2e-869e-4193-afba-9268d8aa0a61"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5654, 122, 162, 3, 58, "Subsection",ExpressionUUID->"9966c487-312b-4bd9-8685-f4e081731b6b"],
+Cell[5819, 127, 2542, 36, 111, "Input",ExpressionUUID->"7fecf262-ca60-421e-93fe-7b9ef79213f8"],
+Cell[8364, 165, 2000, 34, 409, "Input",ExpressionUUID->"dec493ad-777c-4df6-9a87-2cfe86b39a38"],
+Cell[10367, 201, 2349, 33, 91, "Input",ExpressionUUID->"f3ea2898-f110-4dd8-9ba7-42fc0f23bc96"],
+Cell[12719, 236, 1801, 31, 367, "Input",ExpressionUUID->"f1708ad1-adf2-4e0d-b07b-ab4597ffde78"],
+Cell[14523, 269, 1677, 24, 89, "Input",ExpressionUUID->"8a06a883-f2b0-4a4d-ac8b-f1488116193b"],
+Cell[16203, 295, 715, 16, 115, "Input",ExpressionUUID->"3574e28c-29c2-4d8f-be78-f2a0a48bc52a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16955, 316, 163, 3, 58, "Subsection",ExpressionUUID->"7e55b714-69a0-44f3-b0a9-8a1a3d5027e1"],
+Cell[17121, 321, 2826, 40, 91, "Input",ExpressionUUID->"147e2895-d017-493d-a382-d831650fe344"],
+Cell[19950, 363, 2279, 38, 472, "Input",ExpressionUUID->"07cde185-880a-4cdb-867b-2f14a8819774"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

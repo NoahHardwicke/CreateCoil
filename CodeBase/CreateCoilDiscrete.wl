@@ -15,15 +15,103 @@ ClearAll["CreateCoil`*", "CreateCoil`Private`*"];
 BeginPackage["CreateCoil`"];
 
 
-FindLoopCoil::usage = "stub";
+FindLoopCoil::usage =
+"\!\(\*RowBox[{\"FindLoopCoil\", \"[\", RowBox[{RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", StyleBox[\"n\", \"TI\"], \",\", \" \
+\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \
+\"TI\"], StyleBox[\"min\", \"TI\"]], \",\", \" \", \
+SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]}], \"}\"}]}], \"]\"}]\) returns, for loop pairs of turn \
+ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\
+\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
+\"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\
+\[Chi]c\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]\) optimised to generate the field harmonic of order \
+\!\(\*StyleBox[\"n\", \"TI\"]\).";
 
-FindSaddleCoil::usage = "stub";
+FindSaddleCoil::usage =
+"\!\(\*RowBox[{\"FindSaddleCoil\", \"[\", RowBox[{RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\
+\", \"TI\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \
+\" \", StyleBox[\"k\[Phi]\", \"TI\"], \",\", \" \", RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"max\", \"TI\"]]}], \"}\"}]}], \"]\"}]\) returns, for arc \
+groups of turn ratios \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \
+\"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\
+\[Chi]\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\
+\[Ellipsis]\", \"TR\"]\), axial separations between \
+\!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"min\", \
+\"TI\"]]\) and \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], \
+StyleBox[\"max\", \"TI\"]]\) and azimuthal extents, optimised to \
+generate the field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) \
+and degree \!\(\*StyleBox[\"m\", \"TI\"]\), while nulling the first \
+\!\(\*StyleBox[\"k\[Phi]\", \"TI\"]\) leading-order error harmonic \
+degrees.";
 
-FindSaddleCoilAxial::usage = "stub";
+FindSaddleCoilAxial::usage = 
+"\!\(\*RowBox[{\"FindSaddleCoilAxial\", \"[\", RowBox[{RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\
+\", \"TI\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \
+\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\
+\"], StyleBox[\"min\", \"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\
+\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \"}\"}]}], \
+\"]\"}]\) returns, for arc groups of turn ratios \
+\!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
+\"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\
+\[Chi]c\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]\) optimised to generate the field harmonic of order \
+\!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\
+\"]\).";
 
-FindSaddleCoilAzimuthal::usage = "stub";
+FindSaddleCoilAzimuthal::usage = 
+"\!\(\*RowBox[{\"FindSaddleCoilAzimuthal\", \"[\", \
+RowBox[{StyleBox[\"m\", \"TI\"], \",\", \" \", StyleBox[\"k\[Phi]\", \
+\"TI\"]}], \"]\"}]\) returns azimuthal arc extents optimised to \
+generate the field harmonic of degree \!\(\*StyleBox[\"m\", \
+\"TI\"]\), while nulling the first \!\(\*StyleBox[\"k\[Phi]\", \
+\"TI\"]\) leading-order error harmonic degrees.";
 
-FindEllipseCoil::usage = "stub";
+FindEllipseCoil::usage = 
+"\!\(\*RowBox[{\"FindEllipseCoil\", \"[\", RowBox[{RowBox[{\"{\", \
+RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]], \",\", \" \", SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
+\"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\
+\", \"TI\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \
+\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\
+\"], StyleBox[\"min\", \"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\
+\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \"}\"}], \",\", \
+\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"t\", \"TI\"], \
+StyleBox[\"min\", \"TI\"]], \",\", \" \", \
+SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \
+\"}\"}]}], \"]\"}]\) returns, for ellipse groups of turn ratios \
+\!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
+\"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
+StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
+\"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\
+\[Chi]c\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]\) and tangents between \!\(\*SubscriptBox[StyleBox[\"t\", \
+\"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \
+\"TI\"]]\), optimised to generate the field harmonic of order \
+\!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\
+\"]\).";
 
 Coil\[Chi]c::usage = "Separation of loop/arc/ellipse pairs";
 
