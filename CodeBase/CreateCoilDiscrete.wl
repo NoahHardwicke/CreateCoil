@@ -4,7 +4,7 @@
 (*Discrete Coils*)
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Package Header*)
 
 
@@ -64,14 +64,14 @@ RowBox[{SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
 StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
 \"TR\"]}], \"}\"}], \",\", \" \", RowBox[{\"{\", RowBox[{StyleBox[\"n\
 \", \"TI\"], \",\", \" \", StyleBox[\"m\", \"TI\"]}], \"}\"}], \",\", \
-\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\
+\" \", StyleBox[\"k\[Phi]\", \"TI\"], \",\", \" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\
 \"], StyleBox[\"min\", \"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\
 \"\[Chi]c\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \"}\"}]}], \
 \"]\"}]\) returns, for arc groups of turn ratios \
 \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
 \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
 StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
-\"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\
+\"TR\"]\), and \!\(\*StyleBox[\"k\[Phi]\", \"TI\"]\) azimuthal extents, axial separations between \!\(\*SubscriptBox[StyleBox[\"\
 \[Chi]c\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
 \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
 \"TI\"]]\) optimised to generate the field harmonic of order \
@@ -96,9 +96,9 @@ StyleBox[\"2\", \"TR\"]], \",\", \" \", StyleBox[\"\[Ellipsis]\", \
 \" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\
 \"], StyleBox[\"min\", \"TI\"]], \",\", \" \", SubscriptBox[StyleBox[\
 \"\[Chi]c\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \"}\"}], \",\", \
-\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"t\", \"TI\"], \
+\" \", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], \
 StyleBox[\"min\", \"TI\"]], \",\", \" \", \
-SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \
+SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[\"max\", \"TI\"]]}], \
 \"}\"}]}], \"]\"}]\) returns, for ellipse groups of turn ratios \
 \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], StyleBox[\"1\", \
 \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\[Chi]\", \"TI\"], \
@@ -106,33 +106,57 @@ StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
 \"TR\"]\), axial separations between \!\(\*SubscriptBox[StyleBox[\"\
 \[Chi]c\", \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
 \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"max\", \
-\"TI\"]]\) and tangents between \!\(\*SubscriptBox[StyleBox[\"t\", \
+\"TI\"]]\) and ellipse extents between \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \
 \"TI\"], StyleBox[\"min\", \"TI\"]]\) and \
-\!\(\*SubscriptBox[StyleBox[\"t\", \"TI\"], StyleBox[\"max\", \
+\!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[\"max\", \
 \"TI\"]]\), optimised to generate the field harmonic of order \
 \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\
 \"]\).";
 
-Coil\[Chi]c::usage = "Separation of loop/arc/ellipse pairs";
+
+Coil\[Chi]c::usage = "Normalized separation of loop/arc/ellipse pairs";
+
 
 Coil\[Phi]::usage = "Azimuthal extent of a saddle";
 
-CoilT::usage = "Ellipse z-tangent";
+
+Coil\[Psi]::usage = "Normalized ellipse extent";
+
 
 DesToErr::usage = "Ratio of the desired-to-leading error harmonic magnitudes";
 
 
-(* ::Text:: *)
-(*Setting CreateCoil`$DevMode to True prints various stages of evaluation in some functions.*)
+LoopCoilPlot::usage = "stub";
 
 
-$DevMode = False;
+LoopCoilPlot3D::usage = "stub";
+
+
+SaddleCoilPlot::usage = "stub";
+
+
+SaddleCoilPlot3D::usage = "stub";
+
+
+EllipseCoilPlot::usage = "stub";
+
+
+EllipseCoilPlot3D::usage = "stub";
+
+
+LoopCoilFieldPlot::usage = "stub";
+
+
+SaddleCoilFieldPlot::usage = "stub";
+
+
+EllipseCoilFieldPlot::usage = "stub";
 
 
 Begin["`Private`"];
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Magnetic Field*)
 
 
@@ -174,7 +198,7 @@ bFieldHarmonicVector[{n_, m_}, r_, \[Theta]_, \[Phi]_] :=
 			(n + m) pm Cos[m \[Phi]]}]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Selecting Harmonics*)
 
 
@@ -289,7 +313,22 @@ harmonicsToNull["Loop"][loopCount_, nDes_] :=
 		DeleteCases[2 Range[nullCount + 1] - If[EvenQ[nDes], 0, 1], nDes][[;; nullCount]]]
 
 
-harmonicsToNull["Saddle"][loopCount_, nDes_] := harmonicsToNull["Loop"][loopCount, nDes]
+harmonicsToNull["Saddle"][loopCount_, {nDes_, mDes_}, k\[Phi]_] :=
+	Module[{nNull, mNullAz, mNull, nmNull, nullCount},
+		nullCount = loopCount - 1;
+		(* Degrees that will be nulled azimuthally *)
+		mNullAz = mDes(2 Range[k\[Phi]] + 1);
+		(* Degrees that will be nulled axially *)
+		mNull = Complement[2 Range[k\[Phi] + loopCount] - If[EvenQ[mDes], 0, 1], mNullAz];
+		(* Orders to null *)
+		nNull = harmonicsToNull["Loop"][loopCount, nDes];
+		(* List out the combinations of {n, m} where n >= m. *)
+		nmNull = Catenate @ Outer[
+			Function[{n, m}, If[m > n, Nothing, {n, m}]],
+			nNull, mNull];
+		(* Sort by n+m. Break ties by prioritising larger n. *)
+		nmNull = SortBy[nmNull, {Total, 1/First[#]&}];
+		nmNull[[;; nullCount]]]
 
 
 harmonicsToNull["Ellipse"][loopCount_ , {nDes_, mDes_}] :=
@@ -304,7 +343,7 @@ harmonicsToNull["Ellipse"][loopCount_ , {nDes_, mDes_}] :=
 		nmNull[[;; nullCount]]]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Nulling Code*)
 
 
@@ -319,17 +358,18 @@ findCoilOpts = Join[
 		"DuplicatesProximity" -> Scaled[.03],
 		"NullingThreshold" -> 10.^-5,
 		"MinSeparationsDifference" -> Scaled[.01],
-		"ExpansionPointsPer\[Chi]c" -> Automatic,
+		"ExpansionPointsPerContourDim" -> Automatic,
 		"ContourMeshNN" -> Automatic,
 		"ExpansionBleed" -> 1.5,
-		"Seed" -> 1}];
+		"Seed" -> 1,
+		"PrintSteps" -> False}];
 
 
 realQ[x_] := TrueQ[Element[x, Reals]]
 
 
-(* If $DevMode is on, we want to be able to return echoed, labeled, iconized expressions. Otherwise discard the label. *)
-echoFn[devMode_] := If[TrueQ[devMode], Function[label, Echo[#, label, Iconize]&], Identity &]
+(* If the "ShowSteps" option is True, we want to be able to return echoed, labeled, iconized expressions. Otherwise discard the label. *)
+echoFn[printQ_] := If[TrueQ[printQ], Function[label, Echo[#, label, Iconize[#, label]&]&], Identity &]
 
 
 (* ::Subsection::Closed:: *)
@@ -399,7 +439,8 @@ azimuthalOpts = Join[
 		"AzimuthalCoilsReturned" -> 1,
 		"AzimuthalMeshPoints" -> 20,
 		"AzimuthalSquashingFactor" -> .5,
-		"AzimuthalSolutionTolerance" -> 10.^-5
+		"AzimuthalSolutionTolerance" -> 10.^-5,
+		"AzimuthalDuplicatesProximity" -> 10.^-4
 	}];
 
 
@@ -409,7 +450,7 @@ Options[FindSaddleCoil] = Join[findCoilOpts, azimuthalOpts];
 Options[FindSaddleCoilAxial] = findCoilOpts;
 
 
-Options[FindSaddleCoilAzimuthal] = azimuthalOpts;
+Options[FindSaddleCoilAzimuthal] = Append[azimuthalOpts, "PrintSteps" -> False];
 
 
 saddleMessages = <|
@@ -433,14 +474,15 @@ FindSaddleCoilAxial::BadCurrents = saddleMessages["BadCurrents"];
 FindSaddleCoilAxial::BadDesiredNM = saddleMessages["BadDesiredNM"];
 FindSaddleCoilAxial::BadSeparations = saddleMessages["BadSeparations"];
 FindSaddleCoilAxial::BadLeadingError = saddleMessages["BadLeadingError"];
+FindSaddleCoilAxial::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
 
 
 FindSaddleCoilAzimuthal::BadDesiredM = saddleMessages["BadDesiredM"];
 FindSaddleCoilAzimuthal::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
 
 
-FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, nNull, nmErr, autoHarms, nmNull, optValNull, optValErr, allOpts},
+FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
+	Module[{proceed = True, nmErr, autoHarms, nmNull, optValNull, optValErr, allOpts},
 		
 		(* Check that arguments have been specified correctly, and issue messages if not. *)
 		
@@ -451,6 +493,10 @@ FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPatter
 		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
 		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 			Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
+		
+		(* Check that kPhi is an integer >= 1. *)
+		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+			Message[FindSaddleCoilAxial::BadNulledDegrees, k\[Phi]]; proceed = False];
 		
 		(* Check that 0 < min separation < max separation. *)
 		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
@@ -465,14 +511,13 @@ FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, opts:OptionsPatter
 		If[!proceed, $Failed,
 			(* Ensure findSeparations inherits all option values from FindSaddleCoilAxial. *)
 			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAxial], {opts}}, Last]];
-			nNull = Replace[optValNull,
+			nmNull = Replace[optValNull,
 				Automatic :> (
-					(* Calculate the nulled harmonics, and the leading error harmonic. *)
-					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
-					(* Only take the nulled harmonics for nNull. *)
+					(* Calculate the nulled harmonics, and the leading-order error harmonic. *)
+					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, {nDes, mDes}, k\[Phi]];
+					(* Only take the nulled harmonics for nmNull. *)
 					Drop[autoHarms, -1])];
-			nmNull = {#, mDes}& /@ nNull;
-			nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
+			nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
 			findSeparations["Saddle", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, {None, None}, allOpts]]]
 
 
@@ -529,6 +574,8 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 				(* Ensure GatherBy gives the azimuthal options first. *)
 				{{"Azimuthal"}} ~Join~ Normal[Merge[{Options[FindSaddleCoil], {opts}}, Last]],
 				StringQ[First[#]] && StringMatchQ[First[#], "Azimuthal*"]&];
+			(* "PrintSteps" should apply to both solvers. *)
+			AppendTo[allAzimuthalOpts, "PrintSteps" -> OptionValue["PrintSteps"]];
 			allAzimuthalOpts = Sequence @@ Drop[allAzimuthalOpts, 1];
 			allSeparationOpts = Sequence @@ allSeparationOpts;
 			nNull = Replace[optValNull,
@@ -539,7 +586,7 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 					Drop[autoHarms, -1])];
 			nmNull = {#, mDes}& /@ nNull;
 			nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
-			separations = FindSaddleCoilAxial[i\[Chi], {nDes, mDes}, minMax\[Chi]c, allSeparationOpts];
+			separations = FindSaddleCoilAxial[i\[Chi], {nDes, mDes}, k\[Phi], minMax\[Chi]c, allSeparationOpts];
 			azimuthalExtents = FindSaddleCoilAzimuthal[mDes, k\[Phi], allAzimuthalOpts];
 			<|"AxialSeparations" -> separations, "AzimuthalExtents" -> azimuthalExtents|>]]
 
@@ -557,7 +604,7 @@ Options[FindEllipseCoil] = Replace[
 FindEllipseCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
 FindEllipseCoil::BadDesiredNM = "Desired harmonic order N and degree M: `1` (N) and `2` (M) should be integers, where N \[GreaterEqual] M > 0.";
 FindEllipseCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
-FindEllipseCoil::BadTangents = "Search range: `1` should be of the form {minT, maxT}, where 0 < minT < maxT.";
+FindEllipseCoil::BadExtents = "Search range: `1` should be of the form {min\[Psi], max\[Psi]}, where 0 < min\[Psi] < max\[Psi].";
 FindEllipseCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
 
 
@@ -580,7 +627,7 @@ FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:Options
 		
 		(* Check that 0 < min tan < max tan. *)
 		If[!MatchQ[minMaxT, {min_, max_} /; 0 < min < max],
-			Message[FindEllipseCoil::BadTangents, minMaxT]; proceed = False];
+			Message[FindEllipseCoil::BadExtents, minMaxT]; proceed = False];
 		
 		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
 		optValNull = OptionValue["NulledHarmonics"];
@@ -628,7 +675,7 @@ findSeparations[
 
 		Module[
 			{
-				echo = echoFn[$DevMode],
+				echo = echoFn[OptionValue["PrintSteps"]],
 				ellipseQ = topology === "Ellipse",
 
 				(* Parameters *)
@@ -664,7 +711,7 @@ findSeparations[
 			minSepDiff = If[Head[#] === Scaled, (max\[Chi]c - min\[Chi]c)First[#], #]&[
 				OptionValue["MinSeparationsDifference"]];
 			expPoints = If[# === Automatic, Ceiling[OptionValue["MeshPointsPer\[Chi]c"]/3], #]&[
-				OptionValue["ExpansionPointsPer\[Chi]c"]];
+				OptionValue["ExpansionPointsPerContourDim"]];
 			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nmNull]), #]&[
 				OptionValue["ContourMeshNN"]];
 			bleed = OptionValue["ExpansionBleed"];
@@ -856,7 +903,7 @@ findSeparations[
 							ReverseSortBy[
 								Function[
 									Append[
-										rules /. {\[Chi]c -> Coil\[Chi]c, t -> CoilT},
+										rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]},
 										DesToErr -> (totalHarmDes/totalHarmErr /. rules)]] @@@ finalSols,
 								Last][[partSpec]]];
 						
@@ -871,12 +918,14 @@ findSeparations[
 azimuthalTerm[\[Phi]c_, m_] := ChebyshevU[m - 1, \[Phi]c] Sqrt[1 - \[Phi]c^2]
 
 
-Options[findAzimuthalExtents] = azimuthalOpts;
+Options[findAzimuthalExtents] = Append[azimuthalOpts, "PrintSteps" -> False];
 
 
 findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 	Module[
-		{mNull, cos\[Phi], extentCosines, eqs, meshPoints, meshPointCount, squashingFactor, max\[Phi], lin, sols, echo, findRootOpts, solTolerance, coilsReturned, partSpec},
+		{
+			mNull, cos\[Phi], extentCosines, eqs, meshPoints, meshPointCount, squashingFactor, max\[Phi],
+			lin, sols, echo, findRootOpts, solTolerance, coilsReturned, partSpec, duplicatesDist},
 
 		(* Ensure parallel kernels are running *)
 		Quiet[LaunchKernels[]];
@@ -886,6 +935,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		squashingFactor = OptionValue["AzimuthalSquashingFactor"];
 		solTolerance = OptionValue["AzimuthalSolutionTolerance"];
 		coilsReturned = OptionValue["AzimuthalCoilsReturned"];
+		duplicatesDist = OptionValue["AzimuthalDuplicatesProximity"];
 
 		(* The FindRoot options of findAzimuthalExtents are of the form "Azimuthal" <> ToString[-FindRoot option-].
 			Hence we need to select options which begin "Azimuthal...", and assign their values to the corresponding FindRoot options. *)
@@ -896,7 +946,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 				Nothing, 1]] @@@ {opts};
 		findRootOpts = Sequence @@ findRootOpts;
 
-		echo = echoFn[$DevMode];
+		echo = echoFn[OptionValue["PrintSteps"]];
 		(* Generate the degrees to null: mDes * 3, 5, 7, ...; k\[Phi] long. *)
 		mNull = mDes(2 Range[k\[Phi]] + 1);
 		extentCosines = cos\[Phi] /@ Range[k\[Phi]];
@@ -925,21 +975,26 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		sols = ParallelMap[
 			(* Burn in parameter values to ensure all required data are passed to each parallel kernel. *)
 			With[{eqs = eqs, extentCosines = extentCosines, findRootOpts = findRootOpts},
-				FindRoot[eqs, Transpose[{extentCosines, #}], findRootOpts]&],
+				Quiet @ FindRoot[eqs, Transpose[{extentCosines, #}], findRootOpts]&],
 			meshPoints];
 		(* Keep only the solutions which solve the equations to the desired tolerance. *)
 		sols = Select[sols,
 			Function[sol, AllTrue[eqs /. sol, Quiet[# < solTolerance]&]]];
+		If[sols === {}, Return[{}]];
 		(* We've solved for cos(\[Phi]), so take the ArcCos of each point. *)
-		sols = Apply[#1 -> Chop @ Quiet @ ArcCos[#2] &, sols, {2}](* ;
+		sols = Apply[Chop @ Quiet @ ArcCos[#2] &, sols, {2}];
+		(* Filter out duplicates. *)
+		sols = DeleteDuplicates[sols, SameQ @@ Round[{##}, duplicatesDist] &];
 		(* Sort coils by their ease of manufacture, i.e. how close they are to being evenly distributed through max\[Phi]. *)
-
+		sols = Nearest[sols, lin, All];
+		(* Label each extent. *)
+		sols = MapIndexed[Coil\[Phi][First[#2]] -> #1 &] /@ sols;
+		(* Return only the requested number of solutions. *)
 		partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]];
-		(* Pretty up output. *)
-		sols = sols /. cos\[Phi] -> Coil\[Phi] *)]
+		sols[[partSpec]]]
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Package Footer*)
 
 
