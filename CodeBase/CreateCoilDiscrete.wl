@@ -350,7 +350,7 @@ harmonicsToNull["Ellipse"][loopCount_ , {nDes_, mDes_}] :=
 findCoilOpts = Join[
 	Options[FindRoot],
 	{
-		"CoilsReturned" -> 1,
+		"CoilsReturned" -> 10,
 		"ValuesOnly" -> False,
 		"NulledHarmonics" -> Automatic,
 		"LeadingErrorHarmonic" -> Automatic,
@@ -358,6 +358,7 @@ findCoilOpts = Join[
 		"DuplicatesProximity" -> Scaled[.03],
 		"NullingThreshold" -> 10.^-5,
 		"MinSeparationsDifference" -> Scaled[.01],
+		"MinSeparationAndExtentDifference" -> Scaled[.01],
 		"ExpansionPointsPerContourDim" -> Automatic,
 		"ContourMeshNN" -> Automatic,
 		"ExpansionBleed" -> 1.5,
@@ -376,7 +377,7 @@ echoFn[printQ_] := If[TrueQ[printQ], Function[label, Echo[#, label, Iconize[#, l
 (*Loops*)
 
 
-Options[FindLoopCoil] = findCoilOpts;
+Options[FindLoopCoil] = FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]];
 
 
 FindLoopCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
@@ -436,18 +437,21 @@ azimuthalOpts = Join[
 	(* FindRoot options for the azimuthal solver are given as strings, preprended with "Azimuthal". *)
 	"Azimuthal" <> ToString[#1] -> #2 & @@@ Options[FindRoot],
 	{
-		"AzimuthalCoilsReturned" -> 1,
+		"AzimuthalCoilsReturned" -> 10,
 		"AzimuthalMeshPoints" -> 20,
 		"AzimuthalSquashingFactor" -> .5,
 		"AzimuthalSolutionTolerance" -> 10.^-5,
-		"AzimuthalDuplicatesProximity" -> 10.^-4
+		"AzimuthalDuplicatesProximity" -> 10.^-4,
+		"AzimuthalMinExtent" -> .1
 	}];
 
 
-Options[FindSaddleCoil] = Join[findCoilOpts, azimuthalOpts];
+Options[FindSaddleCoil] = Join[
+	FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]],
+	azimuthalOpts];
 
 
-Options[FindSaddleCoilAxial] = findCoilOpts;
+Options[FindSaddleCoilAxial] = FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]];
 
 
 Options[FindSaddleCoilAzimuthal] = Append[azimuthalOpts, "PrintSteps" -> False];
@@ -595,10 +599,9 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 (*Ellipses*)
 
 
-Options[FindEllipseCoil] = Replace[
-	findCoilOpts,
-	("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 5),
-	1];
+Options[FindEllipseCoil] = Join[
+	(* Use fewer mesh points for ellipses by default, given the doubled number of coil parameters. *)
+	Replace[findCoilOpts, ("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 5), 1]];
 
 
 FindEllipseCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
@@ -680,7 +683,7 @@ findSeparations[
 
 				(* Parameters *)
 				loopCount, nullCount, varCount, separations, tans, meshPoints,
-				dupProx, nullThresh, minSepDiff, expPoints, nearestPts, bleed, seed, coilsReturned, valsOnlyQ, compQ,
+				dupProx, nullThresh, minSepDiff, minSepTanDiff, expPoints, nearestPts, bleed, seed, coilsReturned, valsOnlyQ,
 
 				(* Vars for storing calculated data *)
 				contourDim, totalHarms, totalHarmDes, totalHarmsNull, totalHarmErr, findRoot, rawInitialSols, filteredInitialSols,
@@ -710,6 +713,8 @@ findSeparations[
 			nullThresh = OptionValue["NullingThreshold"];
 			minSepDiff = If[Head[#] === Scaled, (max\[Chi]c - min\[Chi]c)First[#], #]&[
 				OptionValue["MinSeparationsDifference"]];
+			minSepTanDiff = If[Head[#] === Scaled, (max\[Chi]c - min\[Chi]c)First[#], #]&[
+				OptionValue["MinSeparationAndExtentDifference"]];
 			expPoints = If[# === Automatic, Ceiling[OptionValue["MeshPointsPer\[Chi]c"]/3], #]&[
 				OptionValue["ExpansionPointsPerContourDim"]];
 			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nmNull]), #]&[
@@ -757,9 +762,9 @@ findSeparations[
 							{}]}]},
 				
 				With[
-					(* Ellipses: only operate on points for which \[Chi]c[n] >= t[n] *)
+					(* Ellipses: only operate on points for which \[Chi]c[n] - t[n] > minSepTanDiff *)
 					{tanCheck = If[ellipseQ,
-						And @@ GreaterEqual @@@ Transpose[{{\[Chi]cSlots}, {tSlots}}],
+						And @@ (#1 - #2 > minSepTanDiff &) @@@ Transpose[{{\[Chi]cSlots}, {tSlots}}],
 						True]},
 
 					(* Construct the FindRoot function. *)
@@ -925,7 +930,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 	Module[
 		{
 			mNull, cos\[Phi], extentCosines, eqs, meshPoints, meshPointCount, squashingFactor, max\[Phi],
-			lin, sols, echo, findRootOpts, solTolerance, coilsReturned, partSpec, duplicatesDist},
+			lin, sols, echo, findRootOpts, solTolerance, coilsReturned, partSpec, duplicatesDist, minExtent},
 
 		(* Ensure parallel kernels are running *)
 		Quiet[LaunchKernels[]];
@@ -936,6 +941,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		solTolerance = OptionValue["AzimuthalSolutionTolerance"];
 		coilsReturned = OptionValue["AzimuthalCoilsReturned"];
 		duplicatesDist = OptionValue["AzimuthalDuplicatesProximity"];
+		minExtent = OptionValue["AzimuthalMinExtent"];
 
 		(* The FindRoot options of findAzimuthalExtents are of the form "Azimuthal" <> ToString[-FindRoot option-].
 			Hence we need to select options which begin "Azimuthal...", and assign their values to the corresponding FindRoot options. *)
@@ -983,8 +989,11 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		If[sols === {}, Return[{}]];
 		(* We've solved for cos(\[Phi]), so take the ArcCos of each point. *)
 		sols = Apply[Chop @ Quiet @ ArcCos[#2] &, sols, {2}];
+		(* Filter out solutions with extents less than minExtent. *)
+		sols = Select[sols, AllTrue[# > minExtent &]];
 		(* Filter out duplicates. *)
 		sols = DeleteDuplicates[sols, SameQ @@ Round[{##}, duplicatesDist] &];
+		If[sols === {}, Return[{}]];
 		(* Sort coils by their ease of manufacture, i.e. how close they are to being evenly distributed through max\[Phi]. *)
 		sols = Nearest[sols, lin, All];
 		(* Label each extent. *)
