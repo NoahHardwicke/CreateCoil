@@ -354,7 +354,7 @@ findCoilOpts = Join[
 		"ValuesOnly" -> False,
 		"NulledHarmonics" -> Automatic,
 		"LeadingErrorHarmonic" -> Automatic,
-		"MeshPointsPer\[Chi]c" -> 10,
+		"MeshPointsPer\[Chi]c" -> 20,
 		"DuplicatesProximity" -> Scaled[.03],
 		"NullingThreshold" -> 10.^-5,
 		"MinSeparationsDifference" -> Scaled[.01],
@@ -363,7 +363,8 @@ findCoilOpts = Join[
 		"ContourMeshNN" -> Automatic,
 		"ExpansionBleed" -> 1.5,
 		"Seed" -> 1,
-		"PrintSteps" -> False}];
+		"PrintSteps" -> False,
+		"FinalSolutionChecks" -> False}];
 
 
 realQ[x_] := TrueQ[Element[x, Reals]]
@@ -601,7 +602,7 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 
 Options[FindEllipseCoil] = Join[
 	(* Use fewer mesh points for ellipses by default, given the doubled number of coil parameters. *)
-	Replace[findCoilOpts, ("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 5), 1]];
+	Replace[findCoilOpts, ("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 6), 1]];
 
 
 FindEllipseCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
@@ -682,7 +683,7 @@ findSeparations[
 				ellipseQ = topology === "Ellipse",
 
 				(* Parameters *)
-				loopCount, nullCount, varCount, separations, tans, meshPoints,
+				loopCount, nullCount, varCount, separations, tans, meshPoints, finalChecksQ,
 				dupProx, nullThresh, minSepDiff, minSepTanDiff, expPoints, nearestPts, bleed, seed, coilsReturned, valsOnlyQ,
 
 				(* Vars for storing calculated data *)
@@ -715,14 +716,18 @@ findSeparations[
 				OptionValue["MinSeparationsDifference"]];
 			minSepTanDiff = If[Head[#] === Scaled, (max\[Chi]c - min\[Chi]c)First[#], #]&[
 				OptionValue["MinSeparationAndExtentDifference"]];
-			expPoints = If[# === Automatic, Ceiling[OptionValue["MeshPointsPer\[Chi]c"]/3], #]&[
-				OptionValue["ExpansionPointsPerContourDim"]];
+			expPoints = Which[
+				# === Automatic && ellipseQ, Ceiling[5/3 OptionValue["MeshPointsPer\[Chi]c"]],
+				# === Automatic && !ellipseQ, Round[OptionValue["MeshPointsPer\[Chi]c"]],
+				True, #]&[
+					OptionValue["ExpansionPointsPerContourDim"]];
 			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nmNull]), #]&[
 				OptionValue["ContourMeshNN"]];
 			bleed = OptionValue["ExpansionBleed"];
 			seed = OptionValue["Seed"];
 			coilsReturned = OptionValue["CoilsReturned"];
 			valsOnlyQ = OptionValue["ValuesOnly"];
+			finalChecksQ = TrueQ[OptionValue["FinalSolutionChecks"]];
 
 
 			(* Dimensionality of the solution contour. *)
@@ -764,7 +769,7 @@ findSeparations[
 				With[
 					(* Ellipses: only operate on points for which \[Chi]c[n] - t[n] > minSepTanDiff *)
 					{tanCheck = If[ellipseQ,
-						And @@ (#1 - #2 > minSepTanDiff &) @@@ Transpose[{{\[Chi]cSlots}, {tSlots}}],
+						And @@ (#1 - #2 >= minSepTanDiff &) @@@ Transpose[{{\[Chi]cSlots}, {tSlots}}],
 						True]},
 
 					(* Construct the FindRoot function. *)
@@ -888,14 +893,16 @@ findSeparations[
 							ParallelMap[Apply[findRoot], contourMesh][[All, All, -1]]];
 						
 						(* Remove illegal solutions, as before. *)
-						finalSols = Parallelize @ Select[
-							finalSolsRaw,
-							Function[sol, And[
-								Less[\[Chi]cSlots] && tanCheck & @@ sol,
-								DuplicateFreeQ[sol[[;;loopCount]], Abs[#2-#1] < minSepDiff &],
-								AllTrue[
-									totalHarmsNull /. MapThread[#1 -> #2 &, {Join[separations, tans], sol}],
-									# < nullThresh &]]]];
+						finalSols = If[finalChecksQ,
+							Parallelize @ Select[
+								finalSolsRaw,
+								Function[sol, And[
+									Less[\[Chi]cSlots] && tanCheck & @@ sol,
+									DuplicateFreeQ[sol[[;;loopCount]], Abs[#2-#1] < minSepDiff &],
+									AllTrue[
+										totalHarmsNull /. MapThread[#1 -> #2 &, {Join[separations, tans], sol}],
+										# < nullThresh &]]]],
+							finalSolsRaw];
 						
 						(* Rank solutions by the ratio of the desired harmonic to the leading error harmonic. *)
 						coils = With[
