@@ -1,13 +1,10 @@
 # CreateCoil
 Create simple, discrete coils using current-carrying loops, arcs, or ellipses to generate magnetic fields
 
-## Usage
+## Information
+- Mathematica implementation.
+- This package is currently in beta. Coil and field plotting functions, and documentation of all functions and options to follow.
+- Ultimately, this package will be deployed through the Wolfram Paclet Repository. For now, run CodeBase/CreateCoilDiscrete.wl to load the package into a Mathematica kernel session (or call `Get` on the file).
 
-## To-Dos
-- Add docs to this README.
-- Populate the Examples folder.
-- Add usage messages to the functions in CreateCoilDiscrete.wl.
-- Add a function to plot the coil field.
-- Add a function to plot the coil itself.
-- Improve solution contour interpolation to create a more even mesh.
-- Produce a pre-computed catalogue of coils.
+## Paper: Designing optimal loop, saddle, and ellipse-based magnetic coils by spherical harmonic mapping
+Examples from the paper can be found in Examples/CreateCoilExamples.nb
