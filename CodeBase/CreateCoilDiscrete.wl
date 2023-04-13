@@ -382,7 +382,7 @@ Options[FindLoopCoil] = FilterRules[findCoilOpts, Except["MinSeparationAndExtent
 
 
 FindLoopCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
-FindLoopCoil::BadDesired = "Desired harmonic: `1` should be an integer greater than zero.";
+FindLoopCoil::BadDesired = "Desired harmonic N = `1` should be an integer greater than zero.";
 FindLoopCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
 FindLoopCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
 
@@ -460,11 +460,12 @@ Options[FindSaddleCoilAzimuthal] = Append[azimuthalOpts, "PrintSteps" -> False];
 
 saddleMessages = <|
 	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers.",
-	"BadDesiredNM" -> "Desired harmonic order N and degree M: `1` (N) and `2` (M) should be integers, where N \[GreaterEqual] M > 0.",
-	"BadDesiredM" -> "Desired harmonic order M (`1`) should be an integer greater than zero.",
+	"BadDesiredNM" -> "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M > 0.",
+	"BadDesiredM" -> "Desired harmonic order M = `1` should be an integer greater than zero.",
 	"BadSeparations" -> "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.",
 	"BadLeadingError" -> "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.",
-	"BadNulledDegrees" -> "The number of degrees to null, k\[Phi] = `1`, should be an integer greater than zero."
+	"BadNulledDegrees" -> "The number of degrees to null, k\[Phi] = `1`, should be an integer greater than zero.",
+	"BadCurrentRatios" -> "Coil is axially symmetric (N + M = `1` + `2` is odd), so for the arcs to be joined, an even number of currents is required, and sucessive pairs of currents must be equal in magnitude and opposite in parity (e.g. {2, -2, -1, 1, \[Ellipsis]})."
 |>;
 
 
@@ -473,6 +474,7 @@ FindSaddleCoil::BadDesiredNM = saddleMessages["BadDesiredNM"];
 FindSaddleCoil::BadSeparations = saddleMessages["BadSeparations"];
 FindSaddleCoil::BadLeadingError = saddleMessages["BadLeadingError"];
 FindSaddleCoil::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
+FindSaddleCoil::BadCurrentRatios = saddleMessages["BadCurrentRatios"];
 
 
 FindSaddleCoilAxial::BadCurrents = saddleMessages["BadCurrents"];
@@ -480,6 +482,7 @@ FindSaddleCoilAxial::BadDesiredNM = saddleMessages["BadDesiredNM"];
 FindSaddleCoilAxial::BadSeparations = saddleMessages["BadSeparations"];
 FindSaddleCoilAxial::BadLeadingError = saddleMessages["BadLeadingError"];
 FindSaddleCoilAxial::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
+FindSaddleCoilAxial::BadCurrentRatios = saddleMessages["BadCurrentRatios"];
 
 
 FindSaddleCoilAzimuthal::BadDesiredM = saddleMessages["BadDesiredM"];
@@ -498,6 +501,10 @@ FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:Opt
 		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
 		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 			Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
+		
+		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+			Message[FindSaddleCoilAxial::BadCurrentRatios, nDes, mDes]; proceed = False];
 		
 		(* Check that kPhi is an integer >= 1. *)
 		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
@@ -558,6 +565,10 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 			Message[FindSaddleCoil::BadDesiredNM, nDes, mDes]; proceed = False];
 		
+		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+			Message[FindSaddleCoil::BadCurrentRatios, nDes, mDes]; proceed = False];
+		
 		(* Check that 0 < min separation < max separation. *)
 		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
 			Message[FindSaddleCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
@@ -606,7 +617,7 @@ Options[FindEllipseCoil] = Join[
 
 
 FindEllipseCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
-FindEllipseCoil::BadDesiredNM = "Desired harmonic order N and degree M: `1` (N) and `2` (M) should be integers, where N \[GreaterEqual] M > 0.";
+FindEllipseCoil::BadDesiredNM = "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M > 0.";
 FindEllipseCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
 FindEllipseCoil::BadExtents = "Search range: `1` should be of the form {min\[Psi], max\[Psi]}, where 0 < min\[Psi] < max\[Psi].";
 FindEllipseCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
@@ -774,16 +785,21 @@ findSeparations[
 
 					(* Construct the FindRoot function. *)
 					findRoot = echo["FindRoot function"][
-						Function[
-							(* Only operate on points which satisfy \[Chi]c[1] < \[Chi]c[2] < \[Chi]c[3] < ... *)
-							If[
-								Less[\[Chi]cSlots] && tanCheck,
+						(* Only operate on points which satisfy \[Chi]c[1] < \[Chi]c[2] < \[Chi]c[3] < ... and other checks. *)
+						With[
+							{check = And @@ Join[
+								{Less[\[Chi]cSlots], tanCheck},
+								MovingMap[Apply[Abs @* Subtract, #] >= minSepDiff &, {\[Chi]cSlots}, 1]]},
+							Function @ If[
+								check,
 								(* Quiet needed to suppress message noise from initial guesses that are far from the solution set. *)
-								Quiet[FindRoot[exprs, varsAndLimits, findRootOpts]],
+								Quiet[With[
+									{sol = FindRoot[exprs, varsAndLimits, findRootOpts]},
+									If[TrueQ[Apply[check &, sol[[All, 2]]]], sol, Nothing]]],
 								Nothing]]];
 			
 					(* Mesh the solution space. *)
-					initialMesh = Flatten[
+					initialMesh = echo["Initial (coarse) mesh"][Flatten[
 						Array[List,
 							(* Number of points in each dimension *)
 							Table[meshPoints, varCount],
@@ -794,7 +810,7 @@ findSeparations[
 									Table[{mint, maxt}, loopCount],
 									{}]}]],
 						(* Flatten level *)
-						varCount - 1];
+						varCount - 1]];
 					
 					(* Apply findRoot to the mesh. *)
 					rawInitialSols = echo["Initial solutions (raw)"][
@@ -819,74 +835,89 @@ findSeparations[
 							(* Delete a point if it is within dupProx. *)
 							Norm[#2 - #1] < dupProx &]];
 						
-						(* Return {} if no legal solutions were found. *)
-						If[filteredInitialSols === {}, Throw[{}]];
-
-						(* Perform a very rough (but easy to calculate) mesh interpolation of the solution contour. These points
-							will be the new guesses for findRoot (hence why they only need to be near the contour, and why the
-							interpolation can be rough). *)
-						(* Around each solution, expand an array of points along the solution contour, matching the contour's
-							dimensionality. Firstly, find each point's nearestPts*n nearest neighbours (where n is the contour
-							dimensionality) so we can approximate the gradient at that point. *)
-						nearestNeighbours =
-							(* [[All, 2;;]] needed because the first nearest point will be the point itself. *)
-							Nearest[filteredInitialSols, filteredInitialSols, nearestPts contourDim + 1][[All, 2;;]];
-						(* Find the contour gradient vectors. *)
-						gradVsRaw = MapThread[
-							Function[{sol, nn}, # - sol & /@ nn],
-							{filteredInitialSols, nearestNeighbours}];
-						(* We want the vectors to be as orthoginal as possible in order to span the contour accurately. Therefore,
-							we found nearestPts*n vectors (n is contour dimensionality) and will now find the most orthogonal n
-							vectors in that set. *)
-						(* 1. Pick the shortest vector (i.e. the nearest point) to start the best set of n vectors, and group the
-							rest. i.e. {vShortest, {vOthers}} *)
-						starts = {First[#], Rest[#]}& /@ gradVsRaw;
-						gradVs = Map[
-							Function[start,
-								Reap[
-									Sow[First[start]];
-									Nest[
-										Function[vects,
-											(* 3. Pick the most orthogonal (and save it by sowing it), remove the worst ones, and group
-												the rest as before ({v2, {vothers}}). *)
-											{Sow[First[#]], Drop[Rest[#], -(nearestPts - 1)]}&[
-												(* 2. Sort the other vectors by how orthogonal they are to the first vector. *)
-												SortBy[Last[vects], Abs[Dot[Normalize[First[vects]], Normalize[#]]]&]]],
-										(* 4. Recurse one less times than the contour dimensionality, which will give contourDim vectors. *)
-										start, contourDim - 1
-									(* 5. Extract the vectors from Reap. *)
-									]][[-1, 1]]],
-							starts];
-						(* When expanding around a solution, use a spread size given by the furthest of the nearest neighbours
-							to ensure there are no large gaps in the mesh. (expPoints-1)/expPoints is needed so that there is a
-							gap between the edges of each expansion, which would otherwise coincide. *)
-						spreadSizes = ((expPoints-1)/expPoints)(Max /@ Map[Norm, gradVs, {2}]);
-						(* Orthonormalize the contour gradient vectors. *)
-						bases = Orthogonalize /@ gradVs;
-						(* Now expand around each solution. *)
-						SeedRandom[seed];
-						contourMeshRaw = With[
-							{slots = Slot /@ Range[contourDim]},
-							MapThread[
-								Function[{sol, basisVs, spread},
-									Array[
-										(* Add to the solution, the sum of each basis vector times the distance for that
-											vector given by the array. Perturb the points slightly to even out the overall mesh. *)
-										sol + Total[RandomReal[{-1,1}spread/(expPoints + 1)/2, contourDim] + basisVs slots]&,
-										(* An array of length expPoints in each contour dimension... *)
-										Table[expPoints, contourDim],
-										(* ...between -spread/2 and spread/2. *)
-										Table[spread bleed{-.5, .5}, contourDim]]],
-								{filteredInitialSols, bases, spreadSizes}]];
-						(* Remove points outside of the allowed separations. *)
-						contourMesh = echo["Contour Mesh"][
-							Select[
-								Flatten[contourMeshRaw, contourDim],
-								And[
-									AllTrue[#[[;; loopCount]], min\[Chi]c <= # <= max\[Chi]c &],
-									If[ellipseQ,
-										AllTrue[#[[loopCount + 1 ;; varCount]], mint <= # <= maxt &],
-										True]]&]];
+						Switch[filteredInitialSols,
+							(* Return {} if no legal solutions were found. *)
+							{}, Throw[{}],
+							(* If only one solution was found, expand a cloud of points around it. *)
+							{_},
+							contourMesh = Flatten[
+								Array[First[filteredInitialSols] + List[##] &,
+									Table[meshPoints, varCount],
+									(* The point cloud should fit within the grain size of the coarse mesh. *)
+									Catenate[{
+										Table[{-1, 1}(max\[Chi]c - min\[Chi]c)/(loopCount - 1), loopCount],
+										If[ellipseQ,
+											Table[{-1, 1}(maxt - mint)/(loopCount - 1), loopCount],
+											{}]}]],
+								(* Flatten level *)
+								varCount - 1],
+							(* Otherwise we have multiple points between which we can interpolate. *)
+							_,
+							(* Perform a very rough (but easy to calculate) mesh interpolation of the solution contour. These points
+								will be the new guesses for findRoot (hence why they only need to be near the contour, and why the
+								interpolation can be rough). *)
+							(* Around each solution, expand an array of points along the solution contour, matching the contour's
+								dimensionality. Firstly, find each point's nearestPts*n nearest neighbours (where n is the contour
+								dimensionality) so we can approximate the gradient at that point. *)
+							nearestNeighbours =
+								(* [[All, 2;;]] needed because the first nearest point will be the point itself. *)
+								Nearest[filteredInitialSols, filteredInitialSols, nearestPts contourDim + 1][[All, 2;;]];
+							(* Find the contour gradient vectors. *)
+							gradVsRaw = MapThread[
+								Function[{sol, nn}, # - sol & /@ nn],
+								{filteredInitialSols, nearestNeighbours}];
+							(* We want the vectors to be as orthoginal as possible in order to span the contour accurately. Therefore,
+								we found nearestPts*n vectors (n is contour dimensionality) and will now find the most orthogonal n
+								vectors in that set. *)
+							(* 1. Pick the shortest vector (i.e. the nearest point) to start the best set of n vectors, and group the
+								rest. i.e. {vShortest, {vOthers}} *)
+							starts = {First[#], Rest[#]}& /@ gradVsRaw;
+							gradVs = Map[
+								Function[start,
+									Reap[
+										Sow[First[start]];
+										Nest[
+											Function[vects,
+												(* 3. Pick the most orthogonal (and save it by sowing it), remove the worst ones, and group
+													the rest as before ({v2, {vothers}}). *)
+												{Sow[First[#]], Drop[Rest[#], -(nearestPts - 1)]}&[
+													(* 2. Sort the other vectors by how orthogonal they are to the first vector. *)
+													SortBy[Last[vects], Abs[Dot[Normalize[First[vects]], Normalize[#]]]&]]],
+											(* 4. Recurse one less times than the contour dimensionality, which will give contourDim vectors. *)
+											start, contourDim - 1
+										(* 5. Extract the vectors from Reap. *)
+										]][[-1, 1]]],
+								starts];
+							(* When expanding around a solution, use a spread size given by the furthest of the nearest neighbours
+								to ensure there are no large gaps in the mesh. (expPoints-1)/expPoints is needed so that there is a
+								gap between the edges of each expansion, which would otherwise coincide. *)
+							spreadSizes = ((expPoints-1)/expPoints)(Max /@ Map[Norm, gradVs, {2}]);
+							(* Orthonormalize the contour gradient vectors. *)
+							bases = Orthogonalize /@ gradVs;
+							(* Now expand around each solution. *)
+							SeedRandom[seed];
+							contourMeshRaw = With[
+								{slots = Slot /@ Range[contourDim]},
+								MapThread[
+									Function[{sol, basisVs, spread},
+										Array[
+											(* Add to the solution, the sum of each basis vector times the distance for that
+												vector given by the array. Perturb the points slightly to even out the overall mesh. *)
+											sol + Total[RandomReal[{-1,1}spread/(expPoints + 1)/2, contourDim] + basisVs slots]&,
+											(* An array of length expPoints in each contour dimension... *)
+											Table[expPoints, contourDim],
+											(* ...between -spread/2 and spread/2. *)
+											Table[spread bleed{-.5, .5}, contourDim]]],
+									{filteredInitialSols, bases, spreadSizes}]];
+							(* Remove points outside of the allowed separations. *)
+							contourMesh = echo["Contour Mesh"][
+								Select[
+									Flatten[contourMeshRaw, contourDim],
+									And[
+										AllTrue[#[[;; loopCount]], min\[Chi]c <= # <= max\[Chi]c &],
+										If[ellipseQ,
+											AllTrue[#[[loopCount + 1 ;; varCount]], mint <= # <= maxt &],
+											True]]&]]];
 						
 						(* Apply findRoot to the new mesh. *)
 						finalSolsRaw = echo["Final solutions (unfiltered)"][
@@ -896,12 +927,9 @@ findSeparations[
 						finalSols = If[finalChecksQ,
 							Parallelize @ Select[
 								finalSolsRaw,
-								Function[sol, And[
-									Less[\[Chi]cSlots] && tanCheck & @@ sol,
-									DuplicateFreeQ[sol[[;;loopCount]], Abs[#2-#1] < minSepDiff &],
-									AllTrue[
-										totalHarmsNull /. MapThread[#1 -> #2 &, {Join[separations, tans], sol}],
-										# < nullThresh &]]]],
+								Function[sol, AllTrue[
+									totalHarmsNull /. MapThread[#1 -> #2 &, {Join[separations, tans], sol}],
+									# < nullThresh &]]],
 							finalSolsRaw];
 						
 						(* Rank solutions by the ratio of the desired harmonic to the leading error harmonic. *)
@@ -1002,7 +1030,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		sols = DeleteDuplicates[sols, SameQ @@ Round[{##}, duplicatesDist] &];
 		If[sols === {}, Return[{}]];
 		(* Sort coils by their ease of manufacture, i.e. how close they are to being evenly distributed through max\[Phi]. *)
-		sols = Nearest[sols, lin, All];
+		sols = Nearest[sols, lin * (Pi / (2 mDes)), All];
 		(* Label each extent. *)
 		sols = MapIndexed[Coil\[Phi][First[#2]] -> #1 &] /@ sols;
 		(* Return only the requested number of solutions. *)
