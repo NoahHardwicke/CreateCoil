@@ -129,28 +129,19 @@ DesToErr::usage = "Ratio of the desired-to-leading error harmonic magnitudes";
 LoopCoilPlot::usage = "stub";
 
 
-LoopCoilPlot3D::usage = "stub";
-
-
 SaddleCoilPlot::usage = "stub";
-
-
-SaddleCoilPlot3D::usage = "stub";
 
 
 EllipseCoilPlot::usage = "stub";
 
 
-EllipseCoilPlot3D::usage = "stub";
+LoopFieldPlot::usage = "stub";
 
 
-LoopCoilFieldPlot::usage = "stub";
+SaddleFieldPlot::usage = "stub";
 
 
-SaddleCoilFieldPlot::usage = "stub";
-
-
-EllipseCoilFieldPlot::usage = "stub";
+EllipseFieldPlot::usage = "stub";
 
 
 Begin["`Private`"];
@@ -1036,6 +1027,155 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		(* Return only the requested number of solutions. *)
 		partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]];
 		sols[[partSpec]]]
+
+
+(* ::Section::Closed:: *)
+(*Coil Plots*)
+
+
+arrowHead = Graphics[{Red, RegularPolygon[{1, 0}, 3]}];
+
+
+schematicOpts = Join[
+	Replace[
+		Options[Graphics],
+		{
+			_[ImageSize, _] -> (ImageSize -> Large),
+			_[PlotRange, _] -> (PlotRange -> All),
+			_[Frame, _] -> (Frame -> True),
+			_[FrameLabel, _] -> Nothing
+		},
+		1],
+	{
+		"ThicknessScaling" -> .003,
+		"ArrowheadScaling" -> .006
+	}];
+
+
+(* ::Subsection::Closed:: *)
+(*Loops*)
+
+
+Options[LoopCoilPlot] = schematicOpts;
+
+
+LoopCoilPlot::BadSeparations = "Separations: `1` should either be a list of two or more ascending positive numbers, or a list of the form {Coil\[Chi]c[1] -> val1, Coil\[Chi]c[2] -> val2, \[Ellipsis]}, where val1 < val2 < \[Ellipsis]. In the latter case, the list can contain a DesToErr rule (which will be ignored).";
+LoopCoilPlot::BadCurrents = "Currents: `1` should be a list of two or more real numbers, equal in length to the number of separations.";
+LoopCoilPlot::BadDesired = "Desired harmonic N = `1` should be an integer greater than zero.";
+LoopCoilPlot::BadRadius = "Coil radius \[Rho]c = `1` should be a positive number.";
+
+
+LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
+	Module[{proceed = True, \[Chi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Check that arguments have been specified correctly, and issue messages if not. *)
+		
+		(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+			Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
+		If[
+			!MatchQ[\[Chi]c, Alternatives[
+
+				l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
+
+				l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
+						{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
+						TrueQ @ And[
+							(* Only one (or none) DesToErr rule. *)
+							Length[l] - Length[indicesAndVals] < 2,
+							(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
+							Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+							(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+							AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+				]]
+			]],
+			Message[LoopCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+		
+		(* Currents must be a list of reals, equal in length to the number of separations. *)
+		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
+			Message[LoopCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		
+		(* The desired harmonic must be an integer greater than zero. *)
+		If[!MatchQ[nDes, n_Integer /; n > 0],
+			Message[LoopCoilPlot::BadDesired, nDes]; proceed = False];
+		
+		(* Radius must be positive. *)
+		If[!Positive[\[Rho]c],
+			Message[LoopCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		
+		If[!proceed, $Failed,
+			(* Explicitly feed loopSchematic all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot,
+				which needs to propagate through to loopSchematic. *)
+			allOpts = Sequence @@ Normal[Merge[{Options[LoopCoilPlot], {opts}}, Last]];
+			(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+			\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+				Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+				First][[All, 2]]];
+			thicknessS = OptionValue["ThicknessScaling"];
+			arrowheadS = OptionValue["ArrowheadScaling"];
+			loopSchematic[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]]
+
+
+loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
+	{gPrims, symTransform},
+
+	(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
+	gPrims = MapThread[
+
+		Function[{\[Chi]cp, i\[Chi]p, flip}, {
+			(* Thickness, dashing *)
+			Thickness[thicknessS Abs[i\[Chi]p]],
+			(* Arrowheads (also scaled by i\[Chi]) *)
+			Arrowheads[Table[{arrowheadS Abs[i\[Chi]p], pos, arrowHead}, {pos, .25, .75, .25}]],
+			(* Arrow *)
+			Arrow[\[Rho]c Transpose[{flip[{0, 2 Pi}], {\[Chi]cp, \[Chi]cp}}]]}],
+
+		{\[Chi]c, i\[Chi], i\[Chi] /. {_?Negative -> Reverse, _?Positive -> Identity}}];
+	
+	(* Reverse the direction of the -ve z primitives' currents if the coil is axially symmetric. *)
+	symTransform = If[OddQ[nDes], Reverse, Identity];
+
+	(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+	gPrims = Join[
+		(* -ve z *)
+		gPrims /. {dir__, Arrow[c_]} :> {
+			dir, Arrow[symTransform[{{1, 0}, {0, -1}}.# & /@ c]]},
+		(* +ve z *)
+		gPrims];
+	
+	Graphics[
+		{Arrowheads[Table[{Automatic, pos}, {pos, .25, .75, .25}]], gPrims},
+		Sequence @@ FilterRules[{opts}, Options[Graphics]],
+		FrameLabel -> {
+			{
+				TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
+				None},
+			{
+				TraditionalForm @ RawBoxes["\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\""],
+				None}}]
+
+	(* integrand = Total @ MapThread[
+		Function @@ {#2 dl \[Cross] rp[{x, y, z}] / Norm[rp[{x, y, z}]]^3},
+		{Join[-\[Chi]c, \[Chi]c], Join[sym i\[Chi], i\[Chi]]}
+	] *)
+]
+
+
+(* loopPlot3D
+
+
+loopPrimitive[\[Chi]c_, \[Rho]c_] := \[Rho]c {Cos[2 \[Pi] \[FormalU]], Sin[2 \[Pi] \[FormalU]], \[Chi]c}
+
+
+SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
+	None
+
+
+EllipseCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
+	None *)
+
+
+(* ::Section::Closed:: *)
+(*Field Plots*)
 
 
 (* ::Section::Closed:: *)
