@@ -148,6 +148,35 @@ Begin["`Private`"];
 
 
 (* ::Section::Closed:: *)
+(*Messages*)
+
+
+finderMessages = <|
+	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers.",
+	"BadDesired" -> "Desired harmonic N = `1` should be an integer greater than zero.",
+	"BadSeparations" -> "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.",
+	"BadLeadingError" -> "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.",
+	"BadDesiredNM" -> "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M > 0.",
+	"BadDesiredM" -> "Desired harmonic order M = `1` should be an integer greater than zero.",
+	"BadNulledDegrees" -> "The number of degrees to null, k\[Phi] = `1`, should be an integer greater than zero.",
+	"BadCurrentRatios" -> "Coil is axially symmetric (N + M = `1` + `2` is odd), so for the arcs to be joined, an even number of currents is required, and sucessive pairs of currents must be equal in magnitude and opposite in parity (e.g. {2, -2, -1, 1, \[Ellipsis]}).",
+	"BadExtents" -> "Search range: `1` should be of the form {min\[Psi], max\[Psi]}, where 0 < min\[Psi] < max\[Psi]."
+|>;
+
+
+plotMessages = <|
+	"BadSeparations" -> "Separations: `1` should either be a list of two or more ascending positive numbers, or a list of Coil\[Chi]c[i] -> \[Chi]ci rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Chi]c[2] -> \[Chi]c2, \[Ellipsis]}, where \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
+	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers, equal in length to the number of separations.",
+	"BadDesired" -> finderMessages["BadDesired"],
+	"BadRadius" -> "Coil radius \[Rho]c = `1` should be a positive number.",
+	"BadExtents" -> "Extents: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Phi][i] -> \[Phi]i rules, e.g. {Coil\[Phi][1] -> \[Phi]1, Coil\[Phi][2] -> \[Phi]2, \[Ellipsis]}, where \[Phi]1 < \[Phi]2 < \[Ellipsis].",
+	"BadCurrentRatios" -> finderMessages["BadCurrentRatios"],
+	"BadDesiredNM" -> finderMessages["BadDesiredNM"],
+	"BadChiPsi" -> "Axial separations and extents: `1` should either be a list of separation and extent pairs, i.e. {{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]}, where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis] must be satisfied. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored)."
+|>;
+
+
+(* ::Section::Closed:: *)
 (*Magnetic Field*)
 
 
@@ -310,9 +339,9 @@ harmonicsToNull["Saddle"][loopCount_, {nDes_, mDes_}, k\[Phi]_] :=
 		(* Degrees that will be nulled azimuthally *)
 		mNullAz = mDes(2 Range[k\[Phi]] + 1);
 		(* Degrees that will be nulled axially *)
-		mNull = Complement[2 Range[k\[Phi] + loopCount] - If[EvenQ[mDes], 0, 1], mNullAz];
+		mNull = Complement[mDes(2 Range[0, k\[Phi] + loopCount] + 1), mNullAz];
 		(* Orders to null *)
-		nNull = harmonicsToNull["Loop"][loopCount, nDes];
+		nNull = harmonicsToNull["Loop"][mDes(2 mDes + 1) + loopCount + k\[Phi], nDes];
 		(* List out the combinations of {n, m} where n >= m. *)
 		nmNull = Catenate @ Outer[
 			Function[{n, m}, If[m > n, Nothing, {n, m}]],
@@ -372,10 +401,10 @@ echoFn[printQ_] := If[TrueQ[printQ], Function[label, Echo[#, label, Iconize[#, l
 Options[FindLoopCoil] = FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]];
 
 
-FindLoopCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
-FindLoopCoil::BadDesired = "Desired harmonic N = `1` should be an integer greater than zero.";
-FindLoopCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
-FindLoopCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
+FindLoopCoil::BadCurrents = finderMessages["BadCurrents"];
+FindLoopCoil::BadDesired = finderMessages["BadDesired"];
+FindLoopCoil::BadSeparations = finderMessages["BadSeparations"];
+FindLoopCoil::BadLeadingError = finderMessages["BadLeadingError"];
 
 
 FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
@@ -449,35 +478,24 @@ Options[FindSaddleCoilAxial] = FilterRules[findCoilOpts, Except["MinSeparationAn
 Options[FindSaddleCoilAzimuthal] = Append[azimuthalOpts, "PrintSteps" -> False];
 
 
-saddleMessages = <|
-	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers.",
-	"BadDesiredNM" -> "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M > 0.",
-	"BadDesiredM" -> "Desired harmonic order M = `1` should be an integer greater than zero.",
-	"BadSeparations" -> "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.",
-	"BadLeadingError" -> "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.",
-	"BadNulledDegrees" -> "The number of degrees to null, k\[Phi] = `1`, should be an integer greater than zero.",
-	"BadCurrentRatios" -> "Coil is axially symmetric (N + M = `1` + `2` is odd), so for the arcs to be joined, an even number of currents is required, and sucessive pairs of currents must be equal in magnitude and opposite in parity (e.g. {2, -2, -1, 1, \[Ellipsis]})."
-|>;
+FindSaddleCoil::BadCurrents = finderMessages["BadCurrents"];
+FindSaddleCoil::BadDesiredNM = finderMessages["BadDesiredNM"];
+FindSaddleCoil::BadSeparations = finderMessages["BadSeparations"];
+FindSaddleCoil::BadLeadingError = finderMessages["BadLeadingError"];
+FindSaddleCoil::BadNulledDegrees = finderMessages["BadNulledDegrees"];
+FindSaddleCoil::BadCurrentRatios = finderMessages["BadCurrentRatios"];
 
 
-FindSaddleCoil::BadCurrents = saddleMessages["BadCurrents"];
-FindSaddleCoil::BadDesiredNM = saddleMessages["BadDesiredNM"];
-FindSaddleCoil::BadSeparations = saddleMessages["BadSeparations"];
-FindSaddleCoil::BadLeadingError = saddleMessages["BadLeadingError"];
-FindSaddleCoil::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
-FindSaddleCoil::BadCurrentRatios = saddleMessages["BadCurrentRatios"];
+FindSaddleCoilAxial::BadCurrents = finderMessages["BadCurrents"];
+FindSaddleCoilAxial::BadDesiredNM = finderMessages["BadDesiredNM"];
+FindSaddleCoilAxial::BadSeparations = finderMessages["BadSeparations"];
+FindSaddleCoilAxial::BadLeadingError = finderMessages["BadLeadingError"];
+FindSaddleCoilAxial::BadNulledDegrees = finderMessages["BadNulledDegrees"];
+FindSaddleCoilAxial::BadCurrentRatios = finderMessages["BadCurrentRatios"];
 
 
-FindSaddleCoilAxial::BadCurrents = saddleMessages["BadCurrents"];
-FindSaddleCoilAxial::BadDesiredNM = saddleMessages["BadDesiredNM"];
-FindSaddleCoilAxial::BadSeparations = saddleMessages["BadSeparations"];
-FindSaddleCoilAxial::BadLeadingError = saddleMessages["BadLeadingError"];
-FindSaddleCoilAxial::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
-FindSaddleCoilAxial::BadCurrentRatios = saddleMessages["BadCurrentRatios"];
-
-
-FindSaddleCoilAzimuthal::BadDesiredM = saddleMessages["BadDesiredM"];
-FindSaddleCoilAzimuthal::BadNulledDegrees = saddleMessages["BadNulledDegrees"];
+FindSaddleCoilAzimuthal::BadDesiredM = finderMessages["BadDesiredM"];
+FindSaddleCoilAzimuthal::BadNulledDegrees = finderMessages["BadNulledDegrees"];
 
 
 FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
@@ -607,11 +625,11 @@ Options[FindEllipseCoil] = Join[
 	Replace[findCoilOpts, ("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 6), 1]];
 
 
-FindEllipseCoil::BadCurrents = "Currents: `1` should be a list of two or more real numbers.";
-FindEllipseCoil::BadDesiredNM = "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M > 0.";
-FindEllipseCoil::BadSeparations = "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.";
-FindEllipseCoil::BadExtents = "Search range: `1` should be of the form {min\[Psi], max\[Psi]}, where 0 < min\[Psi] < max\[Psi].";
-FindEllipseCoil::BadLeadingError = "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.";
+FindEllipseCoil::BadCurrents = finderMessages["BadCurrents"];
+FindEllipseCoil::BadDesiredNM = finderMessages["BadDesiredNM"];
+FindEllipseCoil::BadSeparations = finderMessages["BadSeparations"];
+FindEllipseCoil::BadExtents = finderMessages["BadExtents"];
+FindEllipseCoil::BadLeadingError = finderMessages["BadLeadingError"];
 
 
 FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:OptionsPattern[]] :=
@@ -1033,23 +1051,125 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 (*Coil Plots*)
 
 
+reflectX[prim_, x_] := GeometricTransformation[prim, ReflectionTransform[{-1, 0}, {x, 0}]]
+reflectX[x_] := GeometricTransformation[#, ReflectionTransform[{-1, 0}, {x, 0}]]&
+
+
+reflectY[prim_, y_] := GeometricTransformation[prim, ReflectionTransform[{0, -1}, {0, y}]]
+reflectY[y_] := GeometricTransformation[#, ReflectionTransform[{0, -1}, {0, y}]]&
+
+
 arrowHead = Graphics[{Red, RegularPolygon[{1, 0}, 3]}];
 
 
-schematicOpts = Join[
-	Replace[
+(* Arrow heads get too large if they scale linearly with current. *)
+scaleHead[s_] := .075 s^.5
+
+
+(* Due to a bug in the Mathematica front end, where ImagePadding -> All does not account for arrowheads and
+	thus arrowheads near the edges of plots can get clipped, we have to calculate the appropriate plot
+	padding ourselves. *)
+plotRangePaddingY[gWidth_, arrowheadS_, i\[Chi]_] :=
+	(* Calculate the padding for the outermost primitive. Add a further 4% of padding. *)
+	scaleHead[gWidth arrowheadS Last @ Abs[i\[Chi]]] + .04
+
+
+coilPlotFrameLabel = {
+	{
+		TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
+		None},
+	{
+		TraditionalForm @ RawBoxes["\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\""],
+		None}};
+
+
+schematicOpts = Normal @ Merge[
+	{
 		Options[Graphics],
 		{
-			_[ImageSize, _] -> (ImageSize -> Large),
-			_[PlotRange, _] -> (PlotRange -> All),
-			_[Frame, _] -> (Frame -> True),
-			_[FrameLabel, _] -> Nothing
-		},
-		1],
+			ImageSize -> Large,
+			PlotRange -> All,
+			Frame -> True,
+			FrameLabel -> coilPlotFrameLabel,
+			"ThicknessScaling" -> .0015,
+			"ArrowheadScaling" -> .006
+		}
+	},
+	Last];
+
+
+(* ::Subsection::Closed:: *)
+(*Dynamic Plot Elements*)
+
+
+dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, Dynamic[tracker_]] := dynPrim[prim,
 	{
-		"ThicknessScaling" -> .003,
-		"ArrowheadScaling" -> .006
-	}];
+		{
+			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{\[Chi]c\[Rho]c, " (m)"}]},
+		{
+			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+			Row[{i\[Chi], " (A)"}]}
+	},
+	{\[Chi]c\[Rho]c, i\[Chi]},
+	Dynamic[tracker]]
+
+
+dynSaddle[prim_, \[Chi]c\[Rho]c:{_, _}, i\[Chi]_, extent_, Dynamic[tracker_]] := dynPrim[prim,
+	{
+		{
+			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{\[Chi]c\[Rho]c[[1]], ", ", \[Chi]c\[Rho]c[[2]], " (m)"}]},
+		{
+			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{Abs[Subtract @@ extent]/2, " (m)"}]},
+		{
+			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+			Row[{i\[Chi], ", ", -i\[Chi], " (A)"}]}
+	},
+	{\[Chi]c\[Rho]c, i\[Chi], extent},
+	Dynamic[tracker]]
+
+
+dynSaddle[prim_, \[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, extent_, Dynamic[tracker_]] := dynPrim[prim,
+	{
+		{
+			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{\[Chi]c\[Rho]c, " (m)"}]},
+		{
+			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{Abs[Subtract @@ extent]/2, " (m)"}]},
+		{
+			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+			Row[{i\[Chi], " (A)"}]}
+	},
+	{\[Chi]c\[Rho]c, i\[Chi], extent},
+	Dynamic[tracker]]
+
+
+dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, phase_, Dynamic[tracker_]] := dynPrim[prim,
+	{
+		{
+			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{\[Chi]c\[Rho]c, " (m)"}]},
+		{
+			"\"\[Psi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			Row[{\[Psi]c\[Rho]c, " (m)"}]},
+		{
+			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+			Row[{i\[Chi], " (A)"}]}
+	},
+	{\[Chi]c\[Rho]c, \[Psi]c\[Rho]c, i\[Chi], phase},
+	Dynamic[tracker]]
+
+
+dynPrim[prim_, label:{{_, _}..}, key_, Dynamic[tracker_]] := Tooltip[
+	EventHandler[
+		Style[prim, LineColor -> Dynamic[If[tracker === key, Red, Black]]],
+		{"MouseEntered" :> (tracker = key), "MouseExited" :> (tracker = None)}],
+	Pane[
+		TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
+		FrameMargins -> {5{1, 1}, 2{1, 1}}]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1059,10 +1179,10 @@ schematicOpts = Join[
 Options[LoopCoilPlot] = schematicOpts;
 
 
-LoopCoilPlot::BadSeparations = "Separations: `1` should either be a list of two or more ascending positive numbers, or a list of the form {Coil\[Chi]c[1] -> val1, Coil\[Chi]c[2] -> val2, \[Ellipsis]}, where val1 < val2 < \[Ellipsis]. In the latter case, the list can contain a DesToErr rule (which will be ignored).";
-LoopCoilPlot::BadCurrents = "Currents: `1` should be a list of two or more real numbers, equal in length to the number of separations.";
-LoopCoilPlot::BadDesired = "Desired harmonic N = `1` should be an integer greater than zero.";
-LoopCoilPlot::BadRadius = "Coil radius \[Rho]c = `1` should be a positive number.";
+LoopCoilPlot::BadSeparations = plotMessages["BadSeparations"];
+LoopCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+LoopCoilPlot::BadDesired = plotMessages["BadDesired"];
+LoopCoilPlot::BadRadius = plotMessages["BadRadius"];
 
 
 LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
@@ -1078,14 +1198,14 @@ LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
 				l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
 
 				l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
-						{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
-						TrueQ @ And[
-							(* Only one (or none) DesToErr rule. *)
-							Length[l] - Length[indicesAndVals] < 2,
-							(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
-							Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
-							(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
-							AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+					{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
+					TrueQ @ And[
+						(* Only one (or none) DesToErr rule. *)
+						Length[l] - Length[indicesAndVals] < 2,
+						(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
+						Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+						AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
 				]]
 			]],
 			Message[LoopCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
@@ -1118,46 +1238,357 @@ LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
 loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
 	{gPrims, symTransform},
 
-	(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
-	gPrims = MapThread[
+	DynamicModule[{tracker},
+		(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
+		gPrims = MapThread[
 
-		Function[{\[Chi]cp, i\[Chi]p, flip}, {
-			(* Thickness, dashing *)
-			Thickness[thicknessS Abs[i\[Chi]p]],
-			(* Arrowheads (also scaled by i\[Chi]) *)
-			Arrowheads[Table[{arrowheadS Abs[i\[Chi]p], pos, arrowHead}, {pos, .25, .75, .25}]],
-			(* Arrow *)
-			Arrow[\[Rho]c Transpose[{flip[{0, 2 Pi}], {\[Chi]cp, \[Chi]cp}}]]}],
+			Function[{\[Chi]cp, i\[Chi]p, flip},
+				flip @ {
+					(* Thickness *)
+					Thickness[thicknessS Abs[i\[Chi]p]],
+					(* Arrowheads (also scaled by i\[Chi]) *)
+					Arrowheads[Table[{scaleHead[arrowheadS Abs[i\[Chi]p]], pos, arrowHead}, {pos, .25, .75, .25}]],
+					(* Arrow *)
+					dynLoop[
+						Arrow[\[Rho]c {{0, \[Chi]cp}, {2 Pi, \[Chi]cp}}],
+						\[Rho]c \[Chi]cp, i\[Chi]p,
+						Dynamic[tracker]]}],
 
-		{\[Chi]c, i\[Chi], i\[Chi] /. {_?Negative -> Reverse, _?Positive -> Identity}}];
-	
-	(* Reverse the direction of the -ve z primitives' currents if the coil is axially symmetric. *)
-	symTransform = If[OddQ[nDes], Reverse, Identity];
-
-	(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
-	gPrims = Join[
-		(* -ve z *)
-		gPrims /. {dir__, Arrow[c_]} :> {
-			dir, Arrow[symTransform[{{1, 0}, {0, -1}}.# & /@ c]]},
-		(* +ve z *)
-		gPrims];
-	
-	Graphics[
-		{Arrowheads[Table[{Automatic, pos}, {pos, .25, .75, .25}]], gPrims},
-		Sequence @@ FilterRules[{opts}, Options[Graphics]],
-		FrameLabel -> {
 			{
-				TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
-				None},
-			{
-				TraditionalForm @ RawBoxes["\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\""],
-				None}}]
+				\[Chi]c,
+				i\[Chi],
+				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+			}];
+		
+		(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+		symTransform = If[EvenQ[nDes], reflectX[Pi \[Rho]c], Identity];
+
+		(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+		gPrims = Join[reflectY[0] @* symTransform /@ gPrims, gPrims];
+		
+		Graphics[
+			{gPrims},
+			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
+			PlotRangeClipping -> True,
+			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
+		
+		UnsavedVariables :> {tracker}]
 
 	(* integrand = Total @ MapThread[
 		Function @@ {#2 dl \[Cross] rp[{x, y, z}] / Norm[rp[{x, y, z}]]^3},
 		{Join[-\[Chi]c, \[Chi]c], Join[sym i\[Chi], i\[Chi]]}
 	] *)
 ]
+
+
+(* ::Subsection::Closed:: *)
+(*Saddles*)
+
+
+Options[SaddleCoilPlot] = schematicOpts;
+
+
+SaddleCoilPlot::BadSeparations = plotMessages["BadSeparations"];
+SaddleCoilPlot::BadExtents = plotMessages["BadExtents"];
+SaddleCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+SaddleCoilPlot::BadCurrentRatios = plotMessages["BadCurrentRatios"];
+SaddleCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
+SaddleCoilPlot::BadRadius = plotMessages["BadRadius"];
+
+
+SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] :=
+	Module[{proceed = True, \[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Check that arguments have been specified correctly, and issue messages if not. *)
+		
+		(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+			Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
+		If[
+			!MatchQ[\[Chi]c, Alternatives[
+
+				l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
+
+				l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
+						{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
+						TrueQ @ And[
+							(* Only one (or none) DesToErr rule. *)
+							Length[l] - Length[indicesAndVals] < 2,
+							(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
+							Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+							(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+							AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+				]]
+			]],
+			Message[SaddleCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+		
+		(* Extents must either be a list of one or more positive reals in ascending order, or a list of
+			Coil\[Phi][...] -> ... rules. *)
+		If[
+			!MatchQ[\[Phi]c, Alternatives[
+
+				{_?Positive},
+
+				l:{__?Positive} /; AllTrue[Differences[l], Positive],
+
+				l:{(Coil\[Phi][_] -> _?Positive)..} /; With[
+					{indicesAndVals = Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1]},
+					TrueQ @ And[
+						(* Coil\[Phi] indices must be consecutive ascending integers, starting from 1. *)
+						Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+						AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+				]]
+			]],
+			Message[SaddleCoilPlot::BadExtents, \[Phi]c]; proceed = False];
+		
+		(* Currents must be a list of reals, equal in length to the number of separations. *)
+		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
+			Message[SaddleCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		
+		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+			Message[SaddleCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+		
+		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+			Message[SaddleCoilPlot::BadCurrentRatios, nDes, mDes]; proceed = False];
+		
+		(* Radius must be positive. *)
+		If[!Positive[\[Rho]c],
+			Message[SaddleCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		
+		If[!proceed, $Failed,
+			(* Explicitly feed saddleSchematic all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot,
+				which needs to propagate through to saddleSchematic. *)
+			allOpts = Sequence @@ Normal[Merge[{Options[SaddleCoilPlot], {opts}}, Last]];
+			(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+			\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+				Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+				First][[All, 2]]];
+			(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+			\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
+				Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+				First][[All, 2]]];
+			thicknessS = OptionValue["ThicknessScaling"];
+			arrowheadS = OptionValue["ArrowheadScaling"];
+			saddleSchematic[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]]
+
+
+saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{gPrims, symQ, arcCentres, arcExtents, \[Chi]cPairs},
+
+	(* Is the coil axially symmetric? *)
+	symQ = OddQ[nDes + mDes];
+	
+	(* Construct the primitives' coordinates. *)
+	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}];
+	arcExtents = \[Rho]c Riffle[
+		Table[{-#, #} + centre & /@ \[Phi]c, {centre, arcCentres[[;; ;; 2]]}],
+		Table[{#, -#} + centre & /@ \[Phi]c, {centre, arcCentres[[2 ;; ;; 2]]}]];
+	arcExtents = Flatten[arcExtents, 1];
+
+	DynamicModule[{tracker},
+
+		(* Connect the arcs into saddles. *)
+		If[symQ,
+
+			(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
+			\[Chi]cPairs = Partition[\[Chi]c, 2];
+			gPrims = Reverse @ MapThread[
+				Function[{zPair, i\[Chi]p, flip},
+					Reverse @ Table[
+						flip @ {
+							(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+							Thickness[thicknessS Abs[i\[Chi]p]],
+							Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
+							(* Collection of arrows (one for each line segment). *)
+							dynSaddle[
+								Arrow[{
+									(* All four segments of the saddle. *)
+									{{extent[[1]], zPair[[1]]}, {extent[[1]], zPair[[2]]}},
+									{{extent[[1]], zPair[[2]]}, {extent[[2]], zPair[[2]]}},
+									{{extent[[2]], zPair[[2]]}, {extent[[2]], zPair[[1]]}},
+									{{extent[[2]], zPair[[1]]}, {extent[[1]], zPair[[1]]}}
+								}],
+								zPair, i\[Chi]p, Abs[Subtract @@ extent]/2,
+								Dynamic[tracker]]
+						},
+						{extent, arcExtents}]],
+				{
+					\[Rho]c \[Chi]cPairs,
+					i\[Chi][[;; ;; 2]],
+					i\[Chi][[;; ;; 2]] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+				}];
+			(* Now add the primitives with -ve z coords. *)
+			gPrims = Join[reflectY[0] /@ gPrims, gPrims],
+			
+			(* If the coil is axially antisymmetric, then each arc with +ve z is joined to its corresponding arc with -ve z. *)
+			gPrims = Reverse @ MapThread[
+				Function[{z, i\[Chi]p, flip},
+					flip @ Reverse @ Table[
+						{
+							(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+							Thickness[thicknessS Abs[i\[Chi]p]],
+							Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
+							(* Collection of arrows (one for each line segment). *)
+							dynSaddle[
+								Arrow[{
+									(* All four segments of the saddle. *)
+									{{extent[[1]], -z}, {extent[[1]], z}},
+									{{extent[[1]], z}, {extent[[2]], z}},
+									{{extent[[2]], z}, {extent[[2]], -z}},
+									{{extent[[2]], -z}, {extent[[1]], -z}}
+								}],
+								z, i\[Chi]p, extent,
+								Dynamic[tracker]]
+						},
+						{extent, arcExtents}]],
+				{
+					\[Rho]c \[Chi]c,
+					i\[Chi],
+					i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+				}]
+		];
+
+		Graphics[
+			{gPrims},
+			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
+			PlotRangeClipping -> True,
+			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
+		
+		UnsavedVariables :> {tracker}]]
+
+
+(* ::Subsection::Closed:: *)
+(*Ellipses*)
+
+
+Options[EllipseCoilPlot] = schematicOpts;
+
+
+EllipseCoilPlot::BadChiPsi = plotMessages["BadChiPsi"];
+EllipseCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+EllipseCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
+EllipseCoilPlot::BadRadius = plotMessages["BadRadius"];
+
+
+EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] :=
+	Module[{proceed = True, \[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Check that arguments have been specified correctly, and issue messages if not. *)
+		
+		(* Separations and extents must either be a list of two or more paired positive reals, 
+			{{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, 
+			or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules,
+			{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]},
+			where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. *)
+		If[
+			!MatchQ[\[Chi]c\[Psi]c, Alternatives[
+
+				l:{{_?Positive, _?Positive}..} /; (Length[l] >= 2 && AllTrue[Differences[l[[All, 1]]], Positive]),
+
+				l:{(Coil\[Chi]c[_] | Coil\[Psi][_] | DesToErr -> _?Positive)..} /; Module[
+					{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals},
+					{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals} = Map[
+						SortBy[Cases[l, (#[i_] -> val_) :> {i, val}], First]&,
+						{Coil\[Chi]c, Coil\[Psi]}];
+					TrueQ @ And[
+						(* Same number of separations and extents. *)
+						Length[\[Chi]cIndicesAndVals] === Length[\[Psi]cIndicesAndVals],
+						(* Coil\[Chi]c and Coil\[Psi] indices must be consecutive ascending integers, starting from 1. *)
+						\[Chi]cIndicesAndVals[[All, 1]] == Range[Length[\[Chi]cIndicesAndVals]],
+						\[Psi]cIndicesAndVals[[All, 1]] == Range[Length[\[Psi]cIndicesAndVals]],
+						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+						AllTrue[Differences[\[Chi]cIndicesAndVals[[All, 2]]], Positive]
+				]]
+			]],
+			Message[EllipseCoilPlot::BadChiPsi, \[Chi]c\[Psi]c]; proceed = False];
+		
+		(* Currents must be a list of reals, equal in length to the number of separations. *)
+		If[
+			!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[
+				Cases[\[Chi]c\[Psi]c, (Coil\[Chi]c[_] -> _) | {_, _}]]],
+			Message[EllipseCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		
+		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+			Message[EllipseCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+		
+		(* Radius must be positive. *)
+		If[!Positive[\[Rho]c],
+			Message[EllipseCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		
+		If[!proceed, $Failed,
+			(* Explicitly feed ellipseSchematic all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot,
+				which needs to propagate through to ellipseSchematic. *)
+			allOpts = Sequence @@ Normal[Merge[{Options[EllipseCoilPlot], {opts}}, Last]];
+			{\[Chi]cVals, \[Psi]cVals} = Switch[
+				\[Chi]c\[Psi]c,
+				(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
+				{{_, _}..},
+				Transpose[\[Chi]c\[Psi]c],
+				(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+				{__Rule},
+				SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+			thicknessS = OptionValue["ThicknessScaling"];
+			arrowheadS = OptionValue["ArrowheadScaling"];
+			ellipseSchematic[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]]
+
+
+ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{gPrims, phase, symTransform},
+	
+	DynamicModule[{tracker},
+
+		(* Construct the primitives' coordinates. *)
+		phase = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;; -2]];
+		gPrims = MapThread[
+			Function[{z, t, i\[Chi]p, flip},
+				flip @ {
+					(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+					Thickness[thicknessS Abs[i\[Chi]p]],
+					Arrowheads @ Table[
+						{scaleHead[arrowheadS Abs[i\[Chi]p]], Mod[pos - #/(2 Pi), 1.0001], arrowHead},
+						{pos, 0, 1, .5}],
+					(* Arrows *)
+					dynEllipse[
+						Arrow @ FirstCase[
+							Plot[t Cos[\[Phi] / \[Rho]c + #] + z, {\[Phi], 0, 2 Pi \[Rho]c}],
+							Line[pts_] :> pts,
+							{}, Infinity],
+						z, t, i\[Chi]p, #,
+						Dynamic[tracker]]
+				}& /@ phase],
+			{
+				\[Rho]c \[Chi]c,
+				\[Rho]c \[Psi]c,
+				i\[Chi],
+				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+			}];
+		(* Reshape into {{dirs, Arrow[...]}, {dirs, Arrow[...]}, ...} *)
+		gPrims = Flatten[gPrims, 1];
+
+		(* Alternating periodicity so that there are mDes lines of symmetry. *)
+		gPrims = Join[
+			gPrims[[;; ;; 2]],
+			reflectX[Pi \[Rho]c] /@ gPrims[[2 ;; ;; 2]]];
+		
+		(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+		symTransform = If[EvenQ[nDes + mDes], reflectX[Pi \[Rho]c], Identity];
+
+		(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+		gPrims = Join[reflectY[0] @* symTransform /@ gPrims, gPrims];
+
+		Graphics[
+			{gPrims},
+			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
+			PlotRangeClipping -> True,
+			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
+		
+		UnsavedVariables :> {tracker}]]
 
 
 (* loopPlot3D
