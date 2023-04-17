@@ -1411,7 +1411,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 									{{extent[[2]], zPair[[2]]}, {extent[[2]], zPair[[1]]}},
 									{{extent[[2]], zPair[[1]]}, {extent[[1]], zPair[[1]]}}
 								}],
-								zPair, i\[Chi]p, Abs[Subtract @@ extent]/2,
+								zPair, i\[Chi]p, extent,
 								Dynamic[tracker]]
 						},
 						{extent, arcExtents}]],
