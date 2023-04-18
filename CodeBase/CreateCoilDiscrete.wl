@@ -1165,7 +1165,7 @@ dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, phase_, Dynamic[tr
 
 dynPrim[prim_, label:{{_, _}..}, key_, Dynamic[tracker_]] := Tooltip[
 	EventHandler[
-		Style[prim, LineColor -> Dynamic[If[tracker === key, Red, Black]]],
+		{Dynamic[If[tracker === key, Red, Black]], prim},
 		{"MouseEntered" :> (tracker = key), "MouseExited" :> (tracker = None)}],
 	Pane[
 		TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
