@@ -1070,8 +1070,8 @@ scaleHead[s_] := .075 s^.5
 	thus arrowheads near the edges of plots can get clipped, we have to calculate the appropriate plot
 	padding ourselves. *)
 plotRangePaddingY[gWidth_, arrowheadS_, i\[Chi]_] :=
-	(* Calculate the padding for the outermost primitive. Add a further 4% of padding. *)
-	scaleHead[gWidth arrowheadS Last @ Abs[i\[Chi]]] + .04
+	(* Calculate the padding for the outermost primitive. *)
+	2 gWidth scaleHead[arrowheadS Last @ Abs[i\[Chi]]]
 
 
 coilPlotFrameLabel = {
