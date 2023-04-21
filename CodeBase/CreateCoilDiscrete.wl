@@ -384,7 +384,7 @@ findCoilOpts = Join[
 		"ExpansionBleed" -> 1.5,
 		"Seed" -> 1,
 		"PrintSteps" -> False,
-		"FinalSolutionChecks" -> False}];
+		"FinalSolutionChecks" -> True}];
 
 
 realQ[x_] := TrueQ[Element[x, Reals]]
@@ -795,17 +795,11 @@ findSeparations[
 					(* Construct the FindRoot function. *)
 					findRoot = echo["FindRoot function"][
 						(* Only operate on points which satisfy \[Chi]c[1] < \[Chi]c[2] < \[Chi]c[3] < ... and other checks. *)
-						With[
-							{check = And @@ Join[
-								{Less[\[Chi]cSlots], tanCheck},
-								MovingMap[Apply[Abs @* Subtract, #] >= minSepDiff &, {\[Chi]cSlots}, 1]]},
-							Function @ If[
-								check,
-								(* Quiet needed to suppress message noise from initial guesses that are far from the solution set. *)
-								Quiet[With[
-									{sol = FindRoot[exprs, varsAndLimits, findRootOpts]},
-									If[TrueQ[Apply[check &, sol[[All, 2]]]], sol, Nothing]]],
-								Nothing]]];
+						Function @ If[
+							Less[\[Chi]cSlots] && tanCheck,
+							(* Quiet needed to suppress message noise from initial guesses that are far from the solution set. *)
+							Quiet[FindRoot[exprs, varsAndLimits, findRootOpts]],
+							Nothing]];
 			
 					(* Mesh the solution space. *)
 					initialMesh = echo["Initial (coarse) mesh"][Flatten[
@@ -934,11 +928,13 @@ findSeparations[
 						
 						(* Remove illegal solutions, as before. *)
 						finalSols = If[finalChecksQ,
-							Parallelize @ Select[
-								finalSolsRaw,
-								Function[sol, AllTrue[
-									totalHarmsNull /. MapThread[#1 -> #2 &, {Join[separations, tans], sol}],
-									# < nullThresh &]]],
+							With[
+								{check = And @@ Join[
+									{Less[\[Chi]cSlots], tanCheck},
+									MovingMap[Apply[Abs @* Subtract, #] >= minSepDiff &, {\[Chi]cSlots}, 1]]},
+								ParallelMap[
+									Apply[Function @ If[check, {##}, Nothing]],
+									finalSolsRaw]],
 							finalSolsRaw];
 						
 						(* Rank solutions by the ratio of the desired harmonic to the leading error harmonic. *)
