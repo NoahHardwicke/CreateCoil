@@ -1102,7 +1102,7 @@ schematicOpts = Normal @ Merge[
 (*Dynamic Plot Elements*)
 
 
-dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, Dynamic[tracker_]] := dynPrim[prim,
+dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_]] := dynPrimByKey[prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
@@ -1111,43 +1111,44 @@ dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, Dynamic[tracker_]] := dynPrim[prim,
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
 			Row[{i\[Chi], " (A)"}]}
 	},
+	transform,
 	{\[Chi]c\[Rho]c, i\[Chi]},
 	Dynamic[tracker]]
 
 
-dynSaddle[prim_, \[Chi]c\[Rho]c:{_, _}, i\[Chi]_, extent_, Dynamic[tracker_]] := dynPrim[prim,
+dynSaddle[prim_, \[Chi]c\[Rho]c:{_, _}, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_]] := dynPrimByEpilog[prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
 			Row[{\[Chi]c\[Rho]c[[1]], ", ", \[Chi]c\[Rho]c[[2]], " (m)"}]},
 		{
 			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
-			Row[{Abs[Subtract @@ extent]/2, " (m)"}]},
+			Row[{\[Phi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
 			Row[{i\[Chi], ", ", -i\[Chi], " (A)"}]}
 	},
-	{\[Chi]c\[Rho]c, i\[Chi], extent},
-	Dynamic[tracker]]
+	transform,
+	Dynamic[epilog]]
 
 
-dynSaddle[prim_, \[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, extent_, Dynamic[tracker_]] := dynPrim[prim,
+dynSaddle[prim_, \[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_]] := dynPrimByEpilog[prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
 			Row[{\[Chi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
-			Row[{Abs[Subtract @@ extent]/2, " (m)"}]},
+			Row[{\[Phi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
 			Row[{i\[Chi], " (A)"}]}
 	},
-	{\[Chi]c\[Rho]c, i\[Chi], extent},
-	Dynamic[tracker]]
+	transform,
+	Dynamic[epilog]]
 
 
-dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, phase_, Dynamic[tracker_]] := dynPrim[prim,
+dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_]] := dynPrimByKey[prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
@@ -1159,17 +1160,29 @@ dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, phase_, Dynamic[tr
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
 			Row[{i\[Chi], " (A)"}]}
 	},
-	{\[Chi]c\[Rho]c, \[Psi]c\[Rho]c, i\[Chi], phase},
+	transform,
+	{\[Chi]c\[Rho]c, \[Psi]c\[Rho]c, i\[Chi]},
 	Dynamic[tracker]]
 
 
-dynPrim[prim_, label:{{_, _}..}, key_, Dynamic[tracker_]] := Tooltip[
+dynPrimByKey[prim_, label:{{_, _}..}, transform_, key_, Dynamic[tracker_]] := Tooltip[
 	EventHandler[
-		{Dynamic[If[tracker === key, Red, Black]], prim},
+		{Dynamic[If[tracker === key, Red, Black]], transform[prim], prim},
 		{"MouseEntered" :> (tracker = key), "MouseExited" :> (tracker = None)}],
 	Pane[
 		TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
 		FrameMargins -> {5{1, 1}, 2{1, 1}}]]
+
+
+dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_]] := With[
+	{primPair = {transform[prim], prim}},
+	Tooltip[
+		EventHandler[primPair, {
+			"MouseEntered" :> (epilog = {Red, primPair}),
+			"MouseExited" :> (epilog = {})}],
+		Pane[
+			TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
+			FrameMargins -> {5{1, 1}, 2{1, 1}}]]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1238,21 +1251,28 @@ LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
 loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
 	{gPrims, symTransform},
 
+	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+	symTransform = If[EvenQ[nDes], reflectX[Pi \[Rho]c], Identity];
+
 	DynamicModule[{tracker},
 		(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
 		gPrims = MapThread[
 
 			Function[{\[Chi]cp, i\[Chi]p, flip},
-				flip @ {
-					(* Thickness *)
-					Thickness[thicknessS Abs[i\[Chi]p]],
-					(* Arrowheads (also scaled by i\[Chi]) *)
-					Arrowheads[Table[{scaleHead[arrowheadS Abs[i\[Chi]p]], pos, arrowHead}, {pos, .25, .75, .25}]],
-					(* Arrow *)
-					dynLoop[
-						Arrow[\[Rho]c {{0, \[Chi]cp}, {2 Pi, \[Chi]cp}}],
-						\[Rho]c \[Chi]cp, i\[Chi]p,
-						Dynamic[tracker]]}],
+				dynLoop[
+
+					flip @ {
+						(* Thickness *)
+						Thickness[thicknessS Abs[i\[Chi]p]],
+						(* Arrowheads (also scaled by i\[Chi]) *)
+						Arrowheads[Table[{scaleHead[arrowheadS Abs[i\[Chi]p]], pos, arrowHead}, {pos, .25, .75, .25}]],
+						(* Arrow *)
+						Arrow[\[Rho]c {{0, \[Chi]cp}, {2 Pi, \[Chi]cp}}]},
+
+					\[Rho]c \[Chi]cp, i\[Chi]p,
+					(* Add the primitive with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+					reflectY[0] @* symTransform,
+					Dynamic[tracker]]],
 
 			{
 				\[Chi]c,
@@ -1260,20 +1280,12 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
 			}];
 		
-		(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
-		symTransform = If[EvenQ[nDes], reflectX[Pi \[Rho]c], Identity];
-
-		(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
-		gPrims = Join[reflectY[0] @* symTransform /@ gPrims, gPrims];
-		
 		Graphics[
 			{gPrims},
 			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
-		
-		UnsavedVariables :> {tracker}]
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]
 
 	(* integrand = Total @ MapThread[
 		Function @@ {#2 dl \[Cross] rp[{x, y, z}] / Norm[rp[{x, y, z}]]^3},
@@ -1376,20 +1388,26 @@ SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opti
 
 
 saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{gPrims, symQ, arcCentres, arcExtents, \[Chi]cPairs},
+	{gPrims, symQ, arcCentres, arcExtents, wrappingTransforms, \[Chi]cPairs},
 
 	(* Is the coil axially symmetric? *)
 	symQ = OddQ[nDes + mDes];
 	
 	(* Construct the primitives' coordinates. *)
-	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}];
+	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;;-2]];
 	arcExtents = \[Rho]c Riffle[
 		Table[{-#, #} + centre & /@ \[Phi]c, {centre, arcCentres[[;; ;; 2]]}],
 		Table[{#, -#} + centre & /@ \[Phi]c, {centre, arcCentres[[2 ;; ;; 2]]}]];
 	arcExtents = Flatten[arcExtents, 1];
+	(* The first set of primitives have their left halves clipped, so we need to display another copy
+		of them on the other side of the plot. *)
+	wrappingTransforms = Transpose @ Join[
+		Table[Translate[#, {{0, 0}, {2 Pi \[Rho]c, 0}}]&, Length[\[Phi]c]],
+		Table[Identity, (Length[arcCentres] - 1) * Length[\[Phi]c]]];
 
-	DynamicModule[{tracker},
-
+	DynamicModule[{epilog = {}},(* 
+zPair, i\[Chi]p, extent, reflectY[0],
+						Dynamic[epilog] *)
 		(* Connect the arcs into saddles. *)
 		If[symQ,
 
@@ -1397,58 +1415,67 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 			\[Chi]cPairs = Partition[\[Chi]c, 2];
 			gPrims = Reverse @ MapThread[
 				Function[{zPair, i\[Chi]p, flip},
-					Reverse @ Table[
-						flip @ {
-							(* The thickness and head size of each arrow is proportional to i\[Chi] *)
-							Thickness[thicknessS Abs[i\[Chi]p]],
-							Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
-							(* Collection of arrows (one for each line segment). *)
-							dynSaddle[
-								Arrow[{
-									(* All four segments of the saddle. *)
-									{{extent[[1]], zPair[[1]]}, {extent[[1]], zPair[[2]]}},
-									{{extent[[1]], zPair[[2]]}, {extent[[2]], zPair[[2]]}},
-									{{extent[[2]], zPair[[2]]}, {extent[[2]], zPair[[1]]}},
-									{{extent[[2]], zPair[[1]]}, {extent[[1]], zPair[[1]]}}
-								}],
-								zPair, i\[Chi]p, extent,
-								Dynamic[tracker]]
-						},
-						{extent, arcExtents}]],
+					Reverse @ MapThread[
+						Function[{extent, wt},
+							{
+								wt @ flip[Mean[extent]] @ {
+									(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+									Thickness[thicknessS Abs[i\[Chi]p]],
+									Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
+									(* Collection of arrows (one for each line segment). *)
+									Arrow[{
+										(* All four segments of the saddle. *)
+										{{extent[[1]], zPair[[1]]}, {extent[[1]], zPair[[2]]}},
+										{{extent[[1]], zPair[[2]]}, {extent[[2]], zPair[[2]]}},
+										{{extent[[2]], zPair[[2]]}, {extent[[2]], zPair[[1]]}},
+										{{extent[[2]], zPair[[1]]}, {extent[[1]], zPair[[1]]}}
+									}]
+								},
+								(* Arguments for dynSaddle *)
+								{zPair, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], reflectY[0]}
+							}],
+							{arcExtents, wrappingTransforms}]],
 				{
 					\[Rho]c \[Chi]cPairs,
 					i\[Chi][[;; ;; 2]],
-					i\[Chi][[;; ;; 2]] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+					i\[Chi][[;; ;; 2]] /. {_?Negative -> reflectX, _?Positive -> (Identity&)}
 				}];
-			(* Now add the primitives with -ve z coords. *)
-			gPrims = Join[reflectY[0] /@ gPrims, gPrims],
+			
+			gPrims = KeyValueMap[
+				dynSaddle[#2[[All, 1]], Sequence @@ #1, Dynamic[epilog]]&,
+				GroupBy[Flatten[gPrims, 1], Last]],
 			
 			(* If the coil is axially antisymmetric, then each arc with +ve z is joined to its corresponding arc with -ve z. *)
 			gPrims = Reverse @ MapThread[
 				Function[{z, i\[Chi]p, flip},
-					flip @ Reverse @ Table[
-						{
-							(* The thickness and head size of each arrow is proportional to i\[Chi] *)
-							Thickness[thicknessS Abs[i\[Chi]p]],
-							Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
-							(* Collection of arrows (one for each line segment). *)
-							dynSaddle[
-								Arrow[{
-									(* All four segments of the saddle. *)
-									{{extent[[1]], -z}, {extent[[1]], z}},
-									{{extent[[1]], z}, {extent[[2]], z}},
-									{{extent[[2]], z}, {extent[[2]], -z}},
-									{{extent[[2]], -z}, {extent[[1]], -z}}
-								}],
-								z, i\[Chi]p, extent,
-								Dynamic[tracker]]
-						},
-						{extent, arcExtents}]],
+					Reverse @ MapThread[
+						Function[{extent, wt},
+							{
+								wt @ flip[Mean[extent]] @ {
+									(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+									Thickness[thicknessS Abs[i\[Chi]p]],
+									Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead}}],
+									(* Collection of arrows (one for each line segment). *)
+									Arrow[{
+										(* All four segments of the saddle. *)
+										{{extent[[1]], -z}, {extent[[1]], z}},
+										{{extent[[1]], z}, {extent[[2]], z}},
+										{{extent[[2]], z}, {extent[[2]], -z}},
+										{{extent[[2]], -z}, {extent[[1]], -z}}
+									}]
+								},
+								(* Arguments for dynSaddle *)
+								{z, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6]}}],
+						{arcExtents, wrappingTransforms}]],
 				{
 					\[Rho]c \[Chi]c,
 					i\[Chi],
-					i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
-				}]
+					i\[Chi] /. {_?Negative -> reflectX, _?Positive -> (Identity&)}
+				}];
+
+			gPrims = KeyValueMap[
+				dynSaddle[#2[[All, 1]], Sequence @@ #1, {}&, Dynamic[epilog]]&,
+				GroupBy[Flatten[gPrims, 1], Last]]
 		];
 
 		Graphics[
@@ -1456,9 +1483,8 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
-		
-		UnsavedVariables :> {tracker}]]
+			Epilog -> Dynamic[epilog],
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1538,57 +1564,57 @@ EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Option
 
 
 ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{gPrims, phase, symTransform},
-	
+	{gPrims, phases, symTransform, periodicityTransform},
+		
+	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+	symTransform = If[EvenQ[nDes + mDes], reflectX[Pi \[Rho]c], Identity];
+
 	DynamicModule[{tracker},
 
 		(* Construct the primitives' coordinates. *)
-		phase = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;; -2]];
+		phases = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;; -2]];
+
+		(* Alternating periodicity so that there are mDes lines of symmetry. *)
+		periodicityTransform = PadRight[{}, Length[phases], {Identity, reflectX[Pi \[Rho]c]}];
+
 		gPrims = MapThread[
 			Function[{z, t, i\[Chi]p, flip},
-				flip @ {
-					(* The thickness and head size of each arrow is proportional to i\[Chi] *)
-					Thickness[thicknessS Abs[i\[Chi]p]],
-					Arrowheads @ Table[
-						{scaleHead[arrowheadS Abs[i\[Chi]p]], Mod[pos - #/(2 Pi), 1.0001], arrowHead},
-						{pos, 0, 1, .5}],
-					(* Arrows *)
-					dynEllipse[
-						Arrow @ FirstCase[
-							Plot[t Cos[\[Phi] / \[Rho]c + #] + z, {\[Phi], 0, 2 Pi \[Rho]c}],
-							Line[pts_] :> pts,
-							{}, Infinity],
-						z, t, i\[Chi]p, #,
-						Dynamic[tracker]]
-				}& /@ phase],
+				dynEllipse[
+					flip @ MapThread[
+						Function[{phase, pt},
+							pt @ {
+								(* The thickness and head size of each arrow is proportional to i\[Chi] *)
+								Thickness[thicknessS Abs[i\[Chi]p]],
+								Arrowheads @ Table[
+									{scaleHead[arrowheadS Abs[i\[Chi]p]], Mod[pos - phase/(2 Pi), 1.0001], arrowHead},
+									{pos, 0, 1, .5}],
+								(* Arrows *)
+								Arrow @ FirstCase[
+									Plot[t Cos[\[Phi] / \[Rho]c + phase] + z, {\[Phi], 0, 2 Pi \[Rho]c}, MaxRecursion -> 3],
+									Line[pts_] :> pts,
+									{}, Infinity]
+							}],
+						{phases, periodicityTransform}],
+					z, t, i\[Chi]p,
+					(* Add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+					reflectY[0] @* symTransform,
+					Dynamic[tracker]]],
 			{
 				\[Rho]c \[Chi]c,
 				\[Rho]c \[Psi]c,
 				i\[Chi],
 				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
 			}];
+		
 		(* Reshape into {{dirs, Arrow[...]}, {dirs, Arrow[...]}, ...} *)
 		gPrims = Flatten[gPrims, 1];
-
-		(* Alternating periodicity so that there are mDes lines of symmetry. *)
-		gPrims = Join[
-			gPrims[[;; ;; 2]],
-			reflectX[Pi \[Rho]c] /@ gPrims[[2 ;; ;; 2]]];
-		
-		(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
-		symTransform = If[EvenQ[nDes + mDes], reflectX[Pi \[Rho]c], Identity];
-
-		(* Now add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
-		gPrims = Join[reflectY[0] @* symTransform /@ gPrims, gPrims];
 
 		Graphics[
 			{gPrims},
 			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]],
-		
-		UnsavedVariables :> {tracker}]]
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
 
 
 (* loopPlot3D
