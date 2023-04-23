@@ -1244,13 +1244,7 @@ dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_]] := With[
 (*Loops*)
 
 
-LoopCoilPlot::BadSeparations = plotMessages["BadSeparations"];
-LoopCoilPlot::BadCurrents = plotMessages["BadCurrents"];
-LoopCoilPlot::BadDesired = plotMessages["BadDesired"];
-LoopCoilPlot::BadRadius = plotMessages["BadRadius"];
-
-
-loopPlotChecks[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
+loopPlotChecks[head_][\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 
@@ -1272,19 +1266,19 @@ loopPlotChecks[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 					AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
 			]]
 		]],
-		Message[LoopCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+		Message[head::BadSeparations, \[Chi]c]; proceed = False];
 	
 	(* Currents must be a list of reals, equal in length to the number of separations. *)
 	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
-		Message[LoopCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		Message[head::BadCurrents, i\[Chi]]; proceed = False];
 	
 	(* The desired harmonic must be an integer greater than zero. *)
 	If[!MatchQ[nDes, n_Integer /; n > 0],
-		Message[LoopCoilPlot::BadDesired, nDes]; proceed = False];
+		Message[head::BadDesired, nDes]; proceed = False];
 	
 	(* Radius must be positive. *)
 	If[!Positive[\[Rho]c],
-		Message[LoopCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		Message[head::BadRadius, \[Rho]c]; proceed = False];
 	
 	proceed]
 
@@ -1292,8 +1286,14 @@ loopPlotChecks[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 Options[LoopCoilPlot] = schematicOpts;
 
 
+LoopCoilPlot::BadSeparations = plotMessages["BadSeparations"];
+LoopCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+LoopCoilPlot::BadDesired = plotMessages["BadDesired"];
+LoopCoilPlot::BadRadius = plotMessages["BadRadius"];
+
+
 LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
-	loopPlotChecks[\[Chi]c, i\[Chi], \[Rho]c, nDes]
+	loopPlotChecks[LoopCoilPlot][\[Chi]c, i\[Chi], \[Rho]c, nDes]
 ) :=
 	Module[{\[Chi]cVals, thicknessS, arrowheadS, allOpts},
 		
@@ -1359,15 +1359,7 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 (*Saddles*)
 
 
-SaddleCoilPlot::BadSeparations = plotMessages["BadSeparations"];
-SaddleCoilPlot::BadExtents = plotMessages["BadExtents"];
-SaddleCoilPlot::BadCurrents = plotMessages["BadCurrents"];
-SaddleCoilPlot::BadCurrentRatios = plotMessages["BadCurrentRatios"];
-SaddleCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
-SaddleCoilPlot::BadRadius = plotMessages["BadRadius"];
-
-
-saddlePlotChecks[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+saddlePlotChecks[head_][\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
@@ -1389,7 +1381,7 @@ saddlePlotChecks[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Modu
 						AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
 			]]
 		]],
-		Message[SaddleCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+		Message[head::BadSeparations, \[Chi]c]; proceed = False];
 	
 	(* Extents must either be a list of one or more positive reals in ascending order, or a list of
 		Coil\[Phi][...] -> ... rules. *)
@@ -1409,23 +1401,23 @@ saddlePlotChecks[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Modu
 					AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
 			]]
 		]],
-		Message[SaddleCoilPlot::BadExtents, \[Phi]c]; proceed = False];
+		Message[head::BadExtents, \[Phi]c]; proceed = False];
 	
 	(* Currents must be a list of reals, equal in length to the number of separations. *)
 	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
-		Message[SaddleCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		Message[head::BadCurrents, i\[Chi]]; proceed = False];
 	
 	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
 	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-		Message[SaddleCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+		Message[head::BadDesiredNM, nDes, mDes]; proceed = False];
 	
 	(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
 	If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
-		Message[SaddleCoilPlot::BadCurrentRatios, nDes, mDes]; proceed = False];
+		Message[head::BadCurrentRatios, nDes, mDes]; proceed = False];
 	
 	(* Radius must be positive. *)
 	If[!Positive[\[Rho]c],
-		Message[SaddleCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		Message[head::BadRadius, \[Rho]c]; proceed = False];
 	
 	proceed]
 
@@ -1433,8 +1425,16 @@ saddlePlotChecks[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Modu
 Options[SaddleCoilPlot] = schematicOpts;
 
 
+SaddleCoilPlot::BadSeparations = plotMessages["BadSeparations"];
+SaddleCoilPlot::BadExtents = plotMessages["BadExtents"];
+SaddleCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+SaddleCoilPlot::BadCurrentRatios = plotMessages["BadCurrentRatios"];
+SaddleCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
+SaddleCoilPlot::BadRadius = plotMessages["BadRadius"];
+
+
 SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
-	saddlePlotChecks[\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+	saddlePlotChecks[SaddleCoilPlot][\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ) :=
 	Module[{\[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
 		
@@ -1555,13 +1555,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 (*Ellipses*)
 
 
-EllipseCoilPlot::BadChiPsi = plotMessages["BadChiPsi"];
-EllipseCoilPlot::BadCurrents = plotMessages["BadCurrents"];
-EllipseCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
-EllipseCoilPlot::BadRadius = plotMessages["BadRadius"];
-
-
-ellipsePlotChecks[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+ellipsePlotChecks[head_][\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
@@ -1590,21 +1584,21 @@ ellipsePlotChecks[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module
 					AllTrue[Differences[\[Chi]cIndicesAndVals[[All, 2]]], Positive]
 			]]
 		]],
-		Message[EllipseCoilPlot::BadChiPsi, \[Chi]c\[Psi]c]; proceed = False];
+		Message[head::BadChiPsi, \[Chi]c\[Psi]c]; proceed = False];
 	
 	(* Currents must be a list of reals, equal in length to the number of separations. *)
 	If[
 		!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[
 			Cases[\[Chi]c\[Psi]c, (Coil\[Chi]c[_] -> _) | {_, _}]]],
-		Message[EllipseCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+		Message[head::BadCurrents, i\[Chi]]; proceed = False];
 	
 	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
 	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-		Message[EllipseCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+		Message[head::BadDesiredNM, nDes, mDes]; proceed = False];
 	
 	(* Radius must be positive. *)
 	If[!Positive[\[Rho]c],
-		Message[EllipseCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+		Message[head::BadRadius, \[Rho]c]; proceed = False];
 	
 	proceed]
 
@@ -1612,8 +1606,14 @@ ellipsePlotChecks[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module
 Options[EllipseCoilPlot] = schematicOpts;
 
 
+EllipseCoilPlot::BadChiPsi = plotMessages["BadChiPsi"];
+EllipseCoilPlot::BadCurrents = plotMessages["BadCurrents"];
+EllipseCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
+EllipseCoilPlot::BadRadius = plotMessages["BadRadius"];
+
+
 EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
-	ellipsePlotChecks[\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+	ellipsePlotChecks[EllipseCoilPlot][\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ) :=
 	Module[{\[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
 		
@@ -1691,6 +1691,39 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 (*Field Plots*)
 
 
+biotSavartPlot[integrand_, {zRange__}, {opts___}] := Module[
+	{integrandZ, const, g},
+
+	(* Plot along the z axis *)
+	integrandZ = integrand /. {\[FormalX] -> 0, \[FormalY] -> 0};
+
+	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
+
+	g = Plot[
+		Quiet @ NIntegrate[const integrandZ, {\[FormalU], 0, 1},
+			Method -> {Automatic, "SymbolicProcessing" -> 0},
+			AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10],
+		{\[FormalZ], zRange},
+		PlotLegends -> None,
+		opts];
+	
+	(* Colour each line according to default colours. *)
+	g = g /. {a:Except[_Line]..., l__Line, b:Except[_Line]...} :> {a, Riffle[ColorData[97] /@ Range[3], {l}], b};
+
+	Legended[
+		g,
+		SwatchLegend[
+			ColorData[97] /@ Range[3],
+			TraditionalForm /@ {
+				"\!\(\*SubscriptBox[\(B\), \(x\)]\)",
+				"\!\(\*SubscriptBox[\(B\), \(y\)]\)",
+				"\!\(\*SubscriptBox[\(B\), \(z\)]\)"},
+			LegendMarkers -> "Line",
+			First @ Normal @ Merge[
+				{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{opts}, LabelStyle]},
+				Flatten[#, 2]&]]]]
+
+
 biotSavartPlot2D[integrand_, \[Rho]c_, pad_, {zRange__}, {interpolationOpts___}, {plotOpts___}] := Module[
 	{data, const, integrandXZ},
 
@@ -1728,6 +1761,23 @@ biotSavartPlot2D[integrand_, \[Rho]c_, pad_, {zRange__}, {interpolationOpts___},
 						Flatten[#, 2]&]],
 				Sequence @@ Replace[{plotOpts}, (PlotRangePadding -> Automatic) -> (PlotRangePadding -> .05 \[Rho]c), 1]]],
 		{{1, 2, 3}, {"x", "y", "z"}}]]
+
+
+fieldPlotOpts = Normal @ Merge[
+	{
+		Options[Plot],
+		{
+			Axes -> None,
+			Frame -> True,
+			FrameLabel -> {
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*SubscriptBox[\\(B\\), \\(i\\)]\\) (T)\""], None},
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
+			PlotRange -> All,
+			"\[Rho]cPlotPadding" -> .1,
+			ImageSize -> Large
+		}
+	},
+	Last];
 
 
 interpolationOptions = {
@@ -1776,6 +1826,39 @@ loopIntegrand[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 		{l, dl, Join[sym i\[Chi], i\[Chi]]}]]
 
 
+Options[LoopFieldPlot] = fieldPlotOpts;
+
+
+LoopFieldPlot::BadSeparations = plotMessages["BadSeparations"];
+LoopFieldPlot::BadCurrents = plotMessages["BadCurrents"];
+LoopFieldPlot::BadDesired = plotMessages["BadDesired"];
+LoopFieldPlot::BadRadius = plotMessages["BadRadius"];
+
+
+LoopFieldPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
+	loopPlotChecks[LoopFieldPlot][\[Chi]c, i\[Chi], \[Rho]c, nDes]
+):=
+	Module[
+		{plotOpts, pad, \[Chi]cVals, zRange},
+
+		plotOpts = FilterRules[
+			Normal[Merge[{Options[LoopFieldPlot], {opts}}, Last]],
+			Options[Plot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		
+		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+
+		biotSavartPlot[
+			loopIntegrand[\[Chi]cVals, i\[Chi], \[Rho]c, nDes],
+			zRange, plotOpts]]
+
+
 Options[LoopFieldPlot2D] = fieldPlot2DOpts;
 
 
@@ -1786,7 +1869,7 @@ LoopFieldPlot2D::BadRadius = plotMessages["BadRadius"];
 
 
 LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
-	loopPlotChecks[\[Chi]c, i\[Chi], \[Rho]c, nDes]
+	loopPlotChecks[LoopFieldPlot2D][\[Chi]c, i\[Chi], \[Rho]c, nDes]
 ):=
 	Module[
 		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, zRange},
@@ -1816,7 +1899,7 @@ LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 
 
 saddleIntegrand[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
-	{symQ, arcCentres, periodicities, \[Chi]cPairs, saddleIs, prims, l, dl},
+	{symQ, arcCentres, periodicities, \[Chi]cPairs, saddleIs, prims},
 
 	(* Is the coil axially symmetric? *)
 	symQ = OddQ[nDes + mDes];
@@ -1935,14 +2018,14 @@ SaddleFieldPlot2D::BadRadius = plotMessages["BadRadius"];
 
 
 SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
-	saddlePlotChecks[\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+	saddlePlotChecks[SaddleFieldPlot2D][\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ):=
 	Module[
 		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Phi]cVals, zRange},
 
 		(* Split options into those for interpolation (fed to DensityPlot) and
 			those for plotting (fed to ListDensityPlot). *)
-		allOpts = Normal[Merge[{Options[LoopFieldPlot2D], {opts}}, Last]];
+		allOpts = Normal[Merge[{Options[SaddleFieldPlot2D], {opts}}, Last]];
 		interpolationOpts = FilterRules[allOpts, interpolationOptions];
 		plotOpts = FilterRules[Complement[allOpts, interpolationOpts], Options[ListDensityPlot]];
 
@@ -2018,14 +2101,14 @@ EllipseFieldPlot2D::BadRadius = plotMessages["BadRadius"];
 
 
 EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
-	ellipsePlotChecks[\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+	ellipsePlotChecks[EllipseFieldPlot2D][\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ):=
 	Module[
 		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Psi]cVals, zRange},
 
 		(* Split options into those for interpolation (fed to DensityPlot) and
 			those for plotting (fed to ListDensityPlot). *)
-		allOpts = Normal[Merge[{Options[LoopFieldPlot2D], {opts}}, Last]];
+		allOpts = Normal[Merge[{Options[EllipseFieldPlot2D], {opts}}, Last]];
 		interpolationOpts = FilterRules[allOpts, interpolationOptions];
 		plotOpts = FilterRules[Complement[allOpts, interpolationOpts], Options[ListDensityPlot]];
 
