@@ -138,10 +138,19 @@ EllipseCoilPlot::usage = "stub";
 LoopFieldPlot::usage = "stub";
 
 
+LoopFieldPlot2D::usage = "stub";
+
+
 SaddleFieldPlot::usage = "stub";
 
 
+SaddleFieldPlot2D::usage = "stub";
+
+
 EllipseFieldPlot::usage = "stub";
+
+
+EllipseFieldPlot2D::usage = "stub";
 
 
 Begin["`Private`"];
@@ -399,6 +408,7 @@ echoFn[printQ_] := If[TrueQ[printQ], Function[label, Echo[#, label, Iconize[#, l
 
 
 Options[FindLoopCoil] = FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]];
+Options[findLoopChecks] = Options[FindLoopCoil];
 
 
 FindLoopCoil::BadCurrents = finderMessages["BadCurrents"];
@@ -407,41 +417,51 @@ FindLoopCoil::BadSeparations = finderMessages["BadSeparations"];
 FindLoopCoil::BadLeadingError = finderMessages["BadLeadingError"];
 
 
-FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, nNull, nErr, autoHarms, optValNull, optValErr, allOpts},
+findLoopChecks[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] := Module[
+	{proceed = True, optValNull, optValErr},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Currents must be a list of two or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+		Message[FindLoopCoil::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* The desired harmonic must be an integer greater than zero... *)
+	If[!MatchQ[nDes, n_Integer /; n > 0],
+		Message[FindLoopCoil::BadDesired, nDes]; proceed = False];
+	
+	(* Check that 0 < min separation < max separation. *)
+	If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
+		Message[FindLoopCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
+	
+	(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
+	optValNull = OptionValue["NulledHarmonics"];
+	optValErr = OptionValue["LeadingErrorHarmonic"];
+	If[optValNull =!= Automatic && optValErr === Automatic,
+		Message[FindLoopCoil::BadLeadingError]; proceed = False];
+	
+	proceed]
+
+
+FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] /; (
+	findLoopChecks[i\[Chi], nDes, minMax\[Chi]c,
+		Sequence @@ Normal[Merge[{Options[FindLoopCoil], opts}, Last]]]
+) :=
+	Module[{nNull, nErr, autoHarms, optValNull, optValErr, allOpts},
 		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Currents must be a list of two or more reals. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
-			Message[FindLoopCoil::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* The desired harmonic must be an integer greater than zero... *)
-		If[!MatchQ[nDes, n_Integer /; n > 0],
-			Message[FindLoopCoil::BadDesired, nDes]; proceed = False];
-		
-		(* Check that 0 < min separation < max separation. *)
-		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
-			Message[FindLoopCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
-		
-		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
 		optValNull = OptionValue["NulledHarmonics"];
 		optValErr = OptionValue["LeadingErrorHarmonic"];
-		If[optValNull =!= Automatic && optValErr === Automatic,
-			Message[FindLoopCoil::BadLeadingError]; proceed = False];
 		
-		If[!proceed, $Failed,
-			(* Explicitly feed findSeparations all option->value pairs. This is incase the user has changed the default value of an option on FindLoopCoil,
-				which needs to propagate through to findSeparations. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[FindLoopCoil], {opts}}, Last]];
-			nNull = Replace[optValNull,
-				Automatic :> (
-					(* Calculate the nulled harmonics, and the leading error harmonic. *)
-					autoHarms = harmonicsToNull["Loop"][Length[i\[Chi]] + 1, nDes];
-					(* Only take the nulled harmonics for nNull. *)
-					Drop[autoHarms, -1])];
-			nErr = Replace[optValErr, Automatic :> Last[autoHarms]];
-			findSeparations["Loop", i\[Chi], nDes, nNull, nErr, minMax\[Chi]c, {None, None}, allOpts]]]
+		(* Explicitly feed findSeparations all option->value pairs. This is incase the user has changed the default value of an option on FindLoopCoil,
+			which needs to propagate through to findSeparations. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[FindLoopCoil], {opts}}, Last]];
+		nNull = Replace[optValNull,
+			Automatic :> (
+				(* Calculate the nulled harmonics, and the leading error harmonic. *)
+				autoHarms = harmonicsToNull["Loop"][Length[i\[Chi]] + 1, nDes];
+				(* Only take the nulled harmonics for nNull. *)
+				Drop[autoHarms, -1])];
+		nErr = Replace[optValErr, Automatic :> Last[autoHarms]];
+		findSeparations["Loop", i\[Chi], nDes, nNull, nErr, minMax\[Chi]c, {None, None}, allOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -470,12 +490,15 @@ azimuthalOpts = Join[
 Options[FindSaddleCoil] = Join[
 	FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]],
 	azimuthalOpts];
+Options[findSaddleChecks] = Options[FindSaddleCoil];
 
 
 Options[FindSaddleCoilAxial] = FilterRules[findCoilOpts, Except["MinSeparationAndExtentDifference"]];
+Options[findSaddleAxialChecks] = Options[FindSaddleCoilAxial];
 
 
 Options[FindSaddleCoilAzimuthal] = Append[azimuthalOpts, "PrintSteps" -> False];
+Options[findSaddleAzimuthalChecks] = Options[FindSaddleCoilAzimuthal];
 
 
 FindSaddleCoil::BadCurrents = finderMessages["BadCurrents"];
@@ -498,122 +521,147 @@ FindSaddleCoilAzimuthal::BadDesiredM = finderMessages["BadDesiredM"];
 FindSaddleCoilAzimuthal::BadNulledDegrees = finderMessages["BadNulledDegrees"];
 
 
-FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, nmErr, autoHarms, nmNull, optValNull, optValErr, allOpts},
+findSaddleAxialChecks[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] := Module[
+	{proceed = True, optValNull, optValErr},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Currents must be a list of two or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+		Message[FindSaddleCoilAxial::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+		Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
+	
+	(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+	If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+		Message[FindSaddleCoilAxial::BadCurrentRatios, nDes, mDes]; proceed = False];
+	
+	(* Check that kPhi is an integer >= 1. *)
+	If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+		Message[FindSaddleCoilAxial::BadNulledDegrees, k\[Phi]]; proceed = False];
+	
+	(* Check that 0 < min separation < max separation. *)
+	If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
+		Message[FindSaddleCoilAxial::BadSeparations, minMax\[Chi]c]; proceed = False];
+	
+	(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
+	optValNull = OptionValue["NulledHarmonics"];
+	optValErr = OptionValue["LeadingErrorHarmonic"];
+	If[optValNull =!= Automatic && optValErr === Automatic,
+		Message[FindSaddleCoilAxial::BadLeadingError]; proceed = False];
+	
+	proceed]
+
+
+FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] /; (
+	findSaddleAxialChecks[i\[Chi], {nDes, mDes}, k\[Phi], minMax\[Chi]c,
+		Sequence @@ Normal[Merge[{Options[FindSaddleCoilAxial], opts}, Last]]]
+) :=
+	Module[{nmErr, autoHarms, nmNull, optValNull, optValErr, allOpts},
 		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Currents must be a list of two or more reals. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
-			Message[FindSaddleCoilAxial::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
-		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-			Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
-		
-		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
-		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
-			Message[FindSaddleCoilAxial::BadCurrentRatios, nDes, mDes]; proceed = False];
-		
-		(* Check that kPhi is an integer >= 1. *)
-		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
-			Message[FindSaddleCoilAxial::BadNulledDegrees, k\[Phi]]; proceed = False];
-		
-		(* Check that 0 < min separation < max separation. *)
-		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
-			Message[FindSaddleCoilAxial::BadSeparations, minMax\[Chi]c]; proceed = False];
-		
-		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
 		optValNull = OptionValue["NulledHarmonics"];
 		optValErr = OptionValue["LeadingErrorHarmonic"];
-		If[optValNull =!= Automatic && optValErr === Automatic,
-			Message[FindSaddleCoilAxial::BadLeadingError]; proceed = False];
 		
-		If[!proceed, $Failed,
-			(* Ensure findSeparations inherits all option values from FindSaddleCoilAxial. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAxial], {opts}}, Last]];
-			nmNull = Replace[optValNull,
-				Automatic :> (
-					(* Calculate the nulled harmonics, and the leading-order error harmonic. *)
-					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, {nDes, mDes}, k\[Phi]];
-					(* Only take the nulled harmonics for nmNull. *)
-					Drop[autoHarms, -1])];
-			nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
-			findSeparations["Saddle", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, {None, None}, allOpts]]]
+		(* Ensure findSeparations inherits all option values from FindSaddleCoilAxial. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAxial], {opts}}, Last]];
+		nmNull = Replace[optValNull,
+			Automatic :> (
+				(* Calculate the nulled harmonics, and the leading-order error harmonic. *)
+				autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, {nDes, mDes}, k\[Phi]];
+				(* Only take the nulled harmonics for nmNull. *)
+				Drop[autoHarms, -1])];
+		nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
+		findSeparations["Saddle", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, {None, None}, allOpts]]
 
 
-FindSaddleCoilAzimuthal[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, allOpts},
-		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* mDes must be an integer greater than zero. *)
-		If[!MatchQ[mDes, m_Integer /; m > 0],
-			Message[FindSaddleCoilAzimuthal::BadDesiredM, mDes]; proceed = False];
-		
-		(* Check that kPhi is an integer >= 1. *)
-		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
-			Message[FindSaddleCoilAzimuthal::BadNulledDegrees, k\[Phi]]; proceed = False];
-		
-		If[!proceed, $Failed,
-			(* Ensure findAzimuthalExtents inherits all option values from FindSaddleCoilAzimuthal. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAzimuthal], {opts}}, Last]];
-			findAzimuthalExtents[mDes, k\[Phi], allOpts]]]
+findSaddleAzimuthalChecks[mDes_, k\[Phi]_] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* mDes must be an integer greater than zero. *)
+	If[!MatchQ[mDes, m_Integer /; m > 0],
+		Message[FindSaddleCoilAzimuthal::BadDesiredM, mDes]; proceed = False];
+	
+	(* Check that kPhi is an integer >= 1. *)
+	If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+		Message[FindSaddleCoilAzimuthal::BadNulledDegrees, k\[Phi]]; proceed = False];
+	
+	proceed]
 
 
-FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, nNull, nmErr, autoHarms, nmNull, optValNull, optValErr, allSeparationOpts, allAzimuthalOpts, separations, azimuthalExtents},
+FindSaddleCoilAzimuthal[mDes_, k\[Phi]_, opts:OptionsPattern[]] /; (
+	findSaddleAzimuthalChecks[mDes, k\[Phi]]
+) :=
+	Module[{allOpts},
+		(* Ensure findAzimuthalExtents inherits all option values from FindSaddleCoilAzimuthal. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[FindSaddleCoilAzimuthal], {opts}}, Last]];
+		findAzimuthalExtents[mDes, k\[Phi], allOpts]]
+
+
+findSaddleChecks[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Currents must be a list of two or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+		Message[FindSaddleCoil::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+		Message[FindSaddleCoil::BadDesiredNM, nDes, mDes]; proceed = False];
+	
+	(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+	If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+		Message[FindSaddleCoil::BadCurrentRatios, nDes, mDes]; proceed = False];
+	
+	(* Check that 0 < min separation < max separation. *)
+	If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
+		Message[FindSaddleCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
+	
+	(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
+	optValNull = OptionValue["NulledHarmonics"];
+	optValErr = OptionValue["LeadingErrorHarmonic"];
+	If[optValNull =!= Automatic && optValErr === Automatic,
+		Message[FindSaddleCoil::BadLeadingError]; proceed = False];
+	
+	(* Check that kPhi is an integer >= 1. *)
+	If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
+		Message[FindSaddleCoil::BadNulledDegrees, k\[Phi]]; proceed = False];
+	
+	proceed]
+
+
+FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsPattern[]] /; (
+	findSaddleChecks[i\[Chi], {nDes, mDes}, k\[Phi], minMax\[Chi]c,
+		Sequence @@ Normal[Merge[{Options[FindSaddleCoil], opts}, Last]]]
+) :=
+	Module[{nNull, nmErr, autoHarms, nmNull, optValNull, optValErr, allSeparationOpts, allAzimuthalOpts, separations, azimuthalExtents},
 		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Currents must be a list of two or more reals. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
-			Message[FindSaddleCoil::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
-		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-			Message[FindSaddleCoil::BadDesiredNM, nDes, mDes]; proceed = False];
-		
-		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
-		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
-			Message[FindSaddleCoil::BadCurrentRatios, nDes, mDes]; proceed = False];
-		
-		(* Check that 0 < min separation < max separation. *)
-		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
-			Message[FindSaddleCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
-		
-		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
 		optValNull = OptionValue["NulledHarmonics"];
 		optValErr = OptionValue["LeadingErrorHarmonic"];
-		If[optValNull =!= Automatic && optValErr === Automatic,
-			Message[FindSaddleCoil::BadLeadingError]; proceed = False];
 		
-		(* Check that kPhi is an integer >= 1. *)
-		If[!MatchQ[k\[Phi], int_Integer /; int >= 1],
-			Message[FindSaddleCoil::BadNulledDegrees, k\[Phi]]; proceed = False];
-		
-		If[!proceed, $Failed,
-			(* Explicitly feed findAzimuthalExtents and findSeparations all of their respective option->value pairs. *)
-			(* Separate the findAzimuthalExtents options (which all begin with "Azimuthal...") and the findSeparations options. *)
-			{allAzimuthalOpts, allSeparationOpts} = GatherBy[
-				(* Ensure GatherBy gives the azimuthal options first. *)
-				{{"Azimuthal"}} ~Join~ Normal[Merge[{Options[FindSaddleCoil], {opts}}, Last]],
-				StringQ[First[#]] && StringMatchQ[First[#], "Azimuthal*"]&];
-			(* "PrintSteps" should apply to both solvers. *)
-			AppendTo[allAzimuthalOpts, "PrintSteps" -> OptionValue["PrintSteps"]];
-			allAzimuthalOpts = Sequence @@ Drop[allAzimuthalOpts, 1];
-			allSeparationOpts = Sequence @@ allSeparationOpts;
-			nNull = Replace[optValNull,
-				Automatic :> (
-					(* Calculate the nulled harmonics, and the leading error harmonic. *)
-					autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
-					(* Only take the nulled harmonics for nNull. *)
-					Drop[autoHarms, -1])];
-			nmNull = {#, mDes}& /@ nNull;
-			nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
-			separations = FindSaddleCoilAxial[i\[Chi], {nDes, mDes}, k\[Phi], minMax\[Chi]c, allSeparationOpts];
-			azimuthalExtents = FindSaddleCoilAzimuthal[mDes, k\[Phi], allAzimuthalOpts];
-			<|"AxialSeparations" -> separations, "AzimuthalExtents" -> azimuthalExtents|>]]
+		(* Explicitly feed findAzimuthalExtents and findSeparations all of their respective option->value pairs. *)
+		(* Separate the findAzimuthalExtents options (which all begin with "Azimuthal...") and the findSeparations options. *)
+		{allAzimuthalOpts, allSeparationOpts} = GatherBy[
+			(* Ensure GatherBy gives the azimuthal options first. *)
+			{{"Azimuthal"}} ~Join~ Normal[Merge[{Options[FindSaddleCoil], {opts}}, Last]],
+			StringQ[First[#]] && StringMatchQ[First[#], "Azimuthal*"]&];
+		(* "PrintSteps" should apply to both solvers. *)
+		AppendTo[allAzimuthalOpts, "PrintSteps" -> OptionValue["PrintSteps"]];
+		allAzimuthalOpts = Sequence @@ Drop[allAzimuthalOpts, 1];
+		allSeparationOpts = Sequence @@ allSeparationOpts;
+		nNull = Replace[optValNull,
+			Automatic :> (
+				(* Calculate the nulled harmonics, and the leading error harmonic. *)
+				autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
+				(* Only take the nulled harmonics for nNull. *)
+				Drop[autoHarms, -1])];
+		nmNull = {#, mDes}& /@ nNull;
+		nmErr = Replace[optValErr, Automatic :> {Last[autoHarms], mDes}];
+		separations = FindSaddleCoilAxial[i\[Chi], {nDes, mDes}, k\[Phi], minMax\[Chi]c, allSeparationOpts];
+		azimuthalExtents = FindSaddleCoilAzimuthal[mDes, k\[Phi], allAzimuthalOpts];
+		<|"AxialSeparations" -> separations, "AzimuthalExtents" -> azimuthalExtents|>]
 
 
 (* ::Subsection::Closed:: *)
@@ -623,6 +671,7 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 Options[FindEllipseCoil] = Join[
 	(* Use fewer mesh points for ellipses by default, given the doubled number of coil parameters. *)
 	Replace[findCoilOpts, ("MeshPointsPer\[Chi]c" -> _) -> ("MeshPointsPer\[Chi]c" -> 6), 1]];
+Options[findEllipseChecks] = Options[FindEllipseCoil];
 
 
 FindEllipseCoil::BadCurrents = finderMessages["BadCurrents"];
@@ -632,44 +681,54 @@ FindEllipseCoil::BadExtents = finderMessages["BadExtents"];
 FindEllipseCoil::BadLeadingError = finderMessages["BadLeadingError"];
 
 
-FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, nmNull, nmErr, autoHarms, optValNull, optValErr, allOpts},
+findEllipseChecks[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:OptionsPattern[]] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Currents must be a list of two or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+		Message[FindEllipseCoil::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+		Message[FindEllipseCoil::BadDesiredNM, nDes, mDes]; proceed = False];
+	
+	(* Check that 0 < min separation < max separation. *)
+	If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
+		Message[FindEllipseCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
+	
+	(* Check that 0 < min tan < max tan. *)
+	If[!MatchQ[minMaxT, {min_, max_} /; 0 < min < max],
+		Message[FindEllipseCoil::BadExtents, minMaxT]; proceed = False];
+	
+	(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
+	optValNull = OptionValue["NulledHarmonics"];
+	optValErr = OptionValue["LeadingErrorHarmonic"];
+	If[optValNull =!= Automatic && optValErr === Automatic,
+		Message[FindEllipseCoil::BadLeadingError]; proceed = False];
+	
+	proceed]
+
+
+FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:OptionsPattern[]] /; (
+	findEllipseChecks[i\[Chi], {nDes, mDes}, minMax\[Chi]c, minMaxT,
+		Sequence @@ Normal[Merge[{Options[FindEllipseCoil], opts}, Last]]]
+) :=
+	Module[{nmNull, nmErr, autoHarms, optValNull, optValErr, allOpts},
 		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Currents must be a list of two or more reals. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
-			Message[FindEllipseCoil::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
-		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-			Message[FindEllipseCoil::BadDesiredNM, nDes, mDes]; proceed = False];
-		
-		(* Check that 0 < min separation < max separation. *)
-		If[!MatchQ[minMax\[Chi]c, {min_, max_} /; 0 < min < max],
-			Message[FindEllipseCoil::BadSeparations, minMax\[Chi]c]; proceed = False];
-		
-		(* Check that 0 < min tan < max tan. *)
-		If[!MatchQ[minMaxT, {min_, max_} /; 0 < min < max],
-			Message[FindEllipseCoil::BadExtents, minMaxT]; proceed = False];
-		
-		(* Check that if custom nulled harmonics have been given, then a leading error has also been given. *)
 		optValNull = OptionValue["NulledHarmonics"];
 		optValErr = OptionValue["LeadingErrorHarmonic"];
-		If[optValNull =!= Automatic && optValErr === Automatic,
-			Message[FindEllipseCoil::BadLeadingError]; proceed = False];
 		
-		If[!proceed, $Failed,
-			(* Explicitly feed findSeparations all option->value pairs. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[FindEllipseCoil], {opts}}, Last]];
-			nmNull = Replace[optValNull,
-				Automatic :> (
-					(* Calculate the nulled harmonics, and the leading error harmonic. *)
-					autoHarms = harmonicsToNull["Ellipse"][Length[i\[Chi]] + 1, {nDes, mDes}];
-					(* Only take the nulled harmonics for nmNull. *)
-					Drop[autoHarms, -1])];
-			nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
-			findSeparations["Ellipse", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, minMaxT, allOpts]]]
+		(* Explicitly feed findSeparations all option->value pairs. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[FindEllipseCoil], {opts}}, Last]];
+		nmNull = Replace[optValNull,
+			Automatic :> (
+				(* Calculate the nulled harmonics, and the leading error harmonic. *)
+				autoHarms = harmonicsToNull["Ellipse"][Length[i\[Chi]] + 1, {nDes, mDes}];
+				(* Only take the nulled harmonics for nmNull. *)
+				Drop[autoHarms, -1])];
+		nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
+		findSeparations["Ellipse", i\[Chi], {nDes, mDes}, nmNull, nmErr, minMax\[Chi]c, minMaxT, allOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1185,63 +1244,69 @@ dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_]] := With[
 (*Loops*)
 
 
-Options[LoopCoilPlot] = schematicOpts;
-
-
 LoopCoilPlot::BadSeparations = plotMessages["BadSeparations"];
 LoopCoilPlot::BadCurrents = plotMessages["BadCurrents"];
 LoopCoilPlot::BadDesired = plotMessages["BadDesired"];
 LoopCoilPlot::BadRadius = plotMessages["BadRadius"];
 
 
-LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] :=
-	Module[{proceed = True, \[Chi]cVals, thicknessS, arrowheadS, allOpts},
-		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Separations must either be a list of two or more positive reals in ascending order, or a list of
-			Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
-		If[
-			!MatchQ[\[Chi]c, Alternatives[
+loopPlotChecks[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
 
-				l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
+	(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+		Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
+	If[
+		!MatchQ[\[Chi]c, Alternatives[
 
-				l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
-					{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
-					TrueQ @ And[
-						(* Only one (or none) DesToErr rule. *)
-						Length[l] - Length[indicesAndVals] < 2,
-						(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
-						Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
-						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
-						AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
-				]]
-			]],
-			Message[LoopCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+			l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
+
+			l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
+				{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
+				TrueQ @ And[
+					(* Only one (or none) DesToErr rule. *)
+					Length[l] - Length[indicesAndVals] < 2,
+					(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
+					Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+					(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+					AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+			]]
+		]],
+		Message[LoopCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+	
+	(* Currents must be a list of reals, equal in length to the number of separations. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
+		Message[LoopCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* The desired harmonic must be an integer greater than zero. *)
+	If[!MatchQ[nDes, n_Integer /; n > 0],
+		Message[LoopCoilPlot::BadDesired, nDes]; proceed = False];
+	
+	(* Radius must be positive. *)
+	If[!Positive[\[Rho]c],
+		Message[LoopCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+	
+	proceed]
+
+
+Options[LoopCoilPlot] = schematicOpts;
+
+
+LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
+	loopPlotChecks[\[Chi]c, i\[Chi], \[Rho]c, nDes]
+) :=
+	Module[{\[Chi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Currents must be a list of reals, equal in length to the number of separations. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
-			Message[LoopCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* The desired harmonic must be an integer greater than zero. *)
-		If[!MatchQ[nDes, n_Integer /; n > 0],
-			Message[LoopCoilPlot::BadDesired, nDes]; proceed = False];
-		
-		(* Radius must be positive. *)
-		If[!Positive[\[Rho]c],
-			Message[LoopCoilPlot::BadRadius, \[Rho]c]; proceed = False];
-		
-		If[!proceed, $Failed,
-			(* Explicitly feed loopSchematic all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot,
-				which needs to propagate through to loopSchematic. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[LoopCoilPlot], {opts}}, Last]];
-			(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
-			\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
-				Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
-				First][[All, 2]]];
-			thicknessS = OptionValue["ThicknessScaling"];
-			arrowheadS = OptionValue["ArrowheadScaling"];
-			loopSchematic[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]]
+		(* Explicitly feed loopSchematic all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot,
+			which needs to propagate through to loopSchematic. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[LoopCoilPlot], {opts}}, Last]];
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		loopSchematic[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]
 
 
 loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
@@ -1294,9 +1359,6 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 (*Saddles*)
 
 
-Options[SaddleCoilPlot] = schematicOpts;
-
-
 SaddleCoilPlot::BadSeparations = plotMessages["BadSeparations"];
 SaddleCoilPlot::BadExtents = plotMessages["BadExtents"];
 SaddleCoilPlot::BadCurrents = plotMessages["BadCurrents"];
@@ -1305,82 +1367,91 @@ SaddleCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
 SaddleCoilPlot::BadRadius = plotMessages["BadRadius"];
 
 
-SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] :=
-	Module[{proceed = True, \[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
-		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Separations must either be a list of two or more positive reals in ascending order, or a list of
-			Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
-		If[
-			!MatchQ[\[Chi]c, Alternatives[
+saddlePlotChecks[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+		Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
+	If[
+		!MatchQ[\[Chi]c, Alternatives[
 
-				l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
+			l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
 
-				l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
-						{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
-						TrueQ @ And[
-							(* Only one (or none) DesToErr rule. *)
-							Length[l] - Length[indicesAndVals] < 2,
-							(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
-							Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
-							(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
-							AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
-				]]
-			]],
-			Message[SaddleCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
-		
-		(* Extents must either be a list of one or more positive reals in ascending order, or a list of
-			Coil\[Phi][...] -> ... rules. *)
-		If[
-			!MatchQ[\[Phi]c, Alternatives[
-
-				{_?Positive},
-
-				l:{__?Positive} /; AllTrue[Differences[l], Positive],
-
-				l:{(Coil\[Phi][_] -> _?Positive)..} /; With[
-					{indicesAndVals = Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1]},
+			l:{(Coil\[Chi]c[_] | DesToErr -> _?Positive)..} /; With[
+					{indicesAndVals = Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}]},
 					TrueQ @ And[
-						(* Coil\[Phi] indices must be consecutive ascending integers, starting from 1. *)
+						(* Only one (or none) DesToErr rule. *)
+						Length[l] - Length[indicesAndVals] < 2,
+						(* Coil\[Chi]c indices must be consecutive ascending integers, starting from 1. *)
 						Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
 						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
 						AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
-				]]
-			]],
-			Message[SaddleCoilPlot::BadExtents, \[Phi]c]; proceed = False];
+			]]
+		]],
+		Message[SaddleCoilPlot::BadSeparations, \[Chi]c]; proceed = False];
+	
+	(* Extents must either be a list of one or more positive reals in ascending order, or a list of
+		Coil\[Phi][...] -> ... rules. *)
+	If[
+		!MatchQ[\[Phi]c, Alternatives[
+
+			{_?Positive},
+
+			l:{__?Positive} /; AllTrue[Differences[l], Positive],
+
+			l:{(Coil\[Phi][_] -> _?Positive)..} /; With[
+				{indicesAndVals = Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1]},
+				TrueQ @ And[
+					(* Coil\[Phi] indices must be consecutive ascending integers, starting from 1. *)
+					Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
+					(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+					AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
+			]]
+		]],
+		Message[SaddleCoilPlot::BadExtents, \[Phi]c]; proceed = False];
+	
+	(* Currents must be a list of reals, equal in length to the number of separations. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
+		Message[SaddleCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+		Message[SaddleCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+	
+	(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
+	If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
+		Message[SaddleCoilPlot::BadCurrentRatios, nDes, mDes]; proceed = False];
+	
+	(* Radius must be positive. *)
+	If[!Positive[\[Rho]c],
+		Message[SaddleCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+	
+	proceed]
+
+
+Options[SaddleCoilPlot] = schematicOpts;
+
+
+SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	saddlePlotChecks[\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+) :=
+	Module[{\[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Currents must be a list of reals, equal in length to the number of separations. *)
-		If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[DeleteCases[\[Chi]c, DesToErr -> _]]],
-			Message[SaddleCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
-		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-			Message[SaddleCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
-		
-		(* If nDes + mDes is odd, then pairs of successive currents must be equal in magnitude and opposite in parity. *)
-		If[OddQ[nDes + mDes] && (OddQ[Length[i\[Chi]]] || !AllTrue[Partition[i\[Chi], 2], Total[#] == 0 &]),
-			Message[SaddleCoilPlot::BadCurrentRatios, nDes, mDes]; proceed = False];
-		
-		(* Radius must be positive. *)
-		If[!Positive[\[Rho]c],
-			Message[SaddleCoilPlot::BadRadius, \[Rho]c]; proceed = False];
-		
-		If[!proceed, $Failed,
-			(* Explicitly feed saddleSchematic all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot,
-				which needs to propagate through to saddleSchematic. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[SaddleCoilPlot], {opts}}, Last]];
-			(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
-			\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
-				Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
-				First][[All, 2]]];
-			(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
-			\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
-				Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
-				First][[All, 2]]];
-			thicknessS = OptionValue["ThicknessScaling"];
-			arrowheadS = OptionValue["ArrowheadScaling"];
-			saddleSchematic[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]]
+		(* Explicitly feed saddleSchematic all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot,
+			which needs to propagate through to saddleSchematic. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[SaddleCoilPlot], {opts}}, Last]];
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
+			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			First][[All, 2]]];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		saddleSchematic[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
 
 
 saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
@@ -1401,10 +1472,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 		Table[Translate[#, {{0, 0}, {2 Pi \[Rho]c, 0}}]&, Length[\[Phi]c]],
 		Table[Identity, (Length[arcCentres] - 1) * Length[\[Phi]c]]];
 
-	DynamicModule[{epilog = {}},(* 
-zPair, i\[Chi]p, extent, reflectY[0],
-						Dynamic[epilog] *)
-		(* Connect the arcs into saddles. *)
+	DynamicModule[{epilog = {}},
 		If[symQ,
 
 			(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
@@ -1487,76 +1555,82 @@ zPair, i\[Chi]p, extent, reflectY[0],
 (*Ellipses*)
 
 
-Options[EllipseCoilPlot] = schematicOpts;
-
-
 EllipseCoilPlot::BadChiPsi = plotMessages["BadChiPsi"];
 EllipseCoilPlot::BadCurrents = plotMessages["BadCurrents"];
 EllipseCoilPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
 EllipseCoilPlot::BadRadius = plotMessages["BadRadius"];
 
 
-EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] :=
-	Module[{proceed = True, \[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
-		
-		(* Check that arguments have been specified correctly, and issue messages if not. *)
-		
-		(* Separations and extents must either be a list of two or more paired positive reals, 
-			{{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, 
-			or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules,
-			{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]},
-			where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. *)
-		If[
-			!MatchQ[\[Chi]c\[Psi]c, Alternatives[
+ellipsePlotChecks[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+	
+	(* Separations and extents must either be a list of two or more paired positive reals, 
+		{{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, 
+		or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules,
+		{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]},
+		where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. *)
+	If[
+		!MatchQ[\[Chi]c\[Psi]c, Alternatives[
 
-				l:{{_?Positive, _?Positive}..} /; (Length[l] >= 2 && AllTrue[Differences[l[[All, 1]]], Positive]),
+			l:{{_?Positive, _?Positive}..} /; (Length[l] >= 2 && AllTrue[Differences[l[[All, 1]]], Positive]),
 
-				l:{(Coil\[Chi]c[_] | Coil\[Psi][_] | DesToErr -> _?Positive)..} /; Module[
-					{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals},
-					{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals} = Map[
-						SortBy[Cases[l, (#[i_] -> val_) :> {i, val}], First]&,
-						{Coil\[Chi]c, Coil\[Psi]}];
-					TrueQ @ And[
-						(* Same number of separations and extents. *)
-						Length[\[Chi]cIndicesAndVals] === Length[\[Psi]cIndicesAndVals],
-						(* Coil\[Chi]c and Coil\[Psi] indices must be consecutive ascending integers, starting from 1. *)
-						\[Chi]cIndicesAndVals[[All, 1]] == Range[Length[\[Chi]cIndicesAndVals]],
-						\[Psi]cIndicesAndVals[[All, 1]] == Range[Length[\[Psi]cIndicesAndVals]],
-						(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
-						AllTrue[Differences[\[Chi]cIndicesAndVals[[All, 2]]], Positive]
-				]]
-			]],
-			Message[EllipseCoilPlot::BadChiPsi, \[Chi]c\[Psi]c]; proceed = False];
+			l:{(Coil\[Chi]c[_] | Coil\[Psi][_] | DesToErr -> _?Positive)..} /; Module[
+				{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals},
+				{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals} = Map[
+					SortBy[Cases[l, (#[i_] -> val_) :> {i, val}], First]&,
+					{Coil\[Chi]c, Coil\[Psi]}];
+				TrueQ @ And[
+					(* Same number of separations and extents. *)
+					Length[\[Chi]cIndicesAndVals] === Length[\[Psi]cIndicesAndVals],
+					(* Coil\[Chi]c and Coil\[Psi] indices must be consecutive ascending integers, starting from 1. *)
+					\[Chi]cIndicesAndVals[[All, 1]] == Range[Length[\[Chi]cIndicesAndVals]],
+					\[Psi]cIndicesAndVals[[All, 1]] == Range[Length[\[Psi]cIndicesAndVals]],
+					(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
+					AllTrue[Differences[\[Chi]cIndicesAndVals[[All, 2]]], Positive]
+			]]
+		]],
+		Message[EllipseCoilPlot::BadChiPsi, \[Chi]c\[Psi]c]; proceed = False];
+	
+	(* Currents must be a list of reals, equal in length to the number of separations. *)
+	If[
+		!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[
+			Cases[\[Chi]c\[Psi]c, (Coil\[Chi]c[_] -> _) | {_, _}]]],
+		Message[EllipseCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
+	
+	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
+		Message[EllipseCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
+	
+	(* Radius must be positive. *)
+	If[!Positive[\[Rho]c],
+		Message[EllipseCoilPlot::BadRadius, \[Rho]c]; proceed = False];
+	
+	proceed]
+
+
+Options[EllipseCoilPlot] = schematicOpts;
+
+
+EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	ellipsePlotChecks[\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+) :=
+	Module[{\[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Currents must be a list of reals, equal in length to the number of separations. *)
-		If[
-			!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] === Length[
-				Cases[\[Chi]c\[Psi]c, (Coil\[Chi]c[_] -> _) | {_, _}]]],
-			Message[EllipseCoilPlot::BadCurrents, i\[Chi]]; proceed = False];
-		
-		(* nDes and mDes must be integers that satisfy n >= m > 0... *)
-		If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
-			Message[EllipseCoilPlot::BadDesiredNM, nDes, mDes]; proceed = False];
-		
-		(* Radius must be positive. *)
-		If[!Positive[\[Rho]c],
-			Message[EllipseCoilPlot::BadRadius, \[Rho]c]; proceed = False];
-		
-		If[!proceed, $Failed,
-			(* Explicitly feed ellipseSchematic all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot,
-				which needs to propagate through to ellipseSchematic. *)
-			allOpts = Sequence @@ Normal[Merge[{Options[EllipseCoilPlot], {opts}}, Last]];
-			{\[Chi]cVals, \[Psi]cVals} = Switch[
-				\[Chi]c\[Psi]c,
-				(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
-				{{_, _}..},
-				Transpose[\[Chi]c\[Psi]c],
-				(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
-				{__Rule},
-				SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
-			thicknessS = OptionValue["ThicknessScaling"];
-			arrowheadS = OptionValue["ArrowheadScaling"];
-			ellipseSchematic[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]]
+		(* Explicitly feed ellipseSchematic all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot,
+			which needs to propagate through to ellipseSchematic. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[EllipseCoilPlot], {opts}}, Last]];
+		{\[Chi]cVals, \[Psi]cVals} = Switch[
+			\[Chi]c\[Psi]c,
+			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
+			{{_, _}..},
+			Transpose[\[Chi]c\[Psi]c],
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			{__Rule},
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		ellipseSchematic[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
 
 
 ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
@@ -1613,22 +1687,364 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
 
 
-(* loopPlot3D
-
-
-loopPrimitive[\[Chi]c_, \[Rho]c_] := \[Rho]c {Cos[2 \[Pi] \[FormalU]], Sin[2 \[Pi] \[FormalU]], \[Chi]c}
-
-
-SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
-	None
-
-
-EllipseCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
-	None *)
-
-
 (* ::Section::Closed:: *)
 (*Field Plots*)
+
+
+biotSavartPlot2D[integrand_, \[Rho]c_, pad_, {zRange__}, {interpolationOpts___}, {plotOpts___}] := Module[
+	{data, const, integrandXZ},
+
+	(* Plot the x-z plane *)
+	integrandXZ = integrand /. \[FormalY] -> 0;
+
+	(* Integrating the integrand returns a 3D field vector. Therefore, we use DensityPlot to interpolate the field looking at
+		the z-component, and Sow each 3D point it calculates. We then call ListDensityPlot three times to make a plot of each
+		field component. *)
+	data = Reap[DensityPlot[
+
+		Sow[{\[FormalX], \[FormalZ],
+			Quiet @ NIntegrate[integrandXZ, {\[FormalU], 0, 1},
+				Method -> {Automatic, "SymbolicProcessing" -> 0},
+				AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10]}][[3]],
+
+		{\[FormalX], -(1 + pad) \[Rho]c, (1 + pad) \[Rho]c}, {\[FormalZ], zRange},
+		interpolationOpts
+	]][[-1, 1]];
+
+	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
+
+	MapThread[
+		Function[{dim, str},
+			ListDensityPlot[
+				{#1, #2, #3[[dim]]}& @@@ data,
+				(* Scale the colour bar by the appropriate physical constants. *)
+				ScalingFunctions -> {None, None, {const # &, # &}},
+				PlotLegends -> BarLegend[
+					Automatic,
+					ScalingFunctions -> None,
+					LegendLabel -> TraditionalForm @ StringReplacePart["\!\(\*SubscriptBox[\(B\), \(x\)]\) (T)", str, {23, 23}],
+					First @ Normal @ Merge[
+						{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{plotOpts}, LabelStyle]},
+						Flatten[#, 2]&]],
+				Sequence @@ Replace[{plotOpts}, (PlotRangePadding -> Automatic) -> (PlotRangePadding -> .05 \[Rho]c), 1]]],
+		{{1, 2, 3}, {"x", "y", "z"}}]]
+
+
+interpolationOptions = {
+	PlotPoints -> 10,
+	MaxRecursion -> 4
+};
+
+
+fieldPlot2DOpts = Normal @ Merge[
+	{
+		Options[ListDensityPlot],
+		interpolationOptions,
+		{
+			ImageSize -> Medium,
+			AspectRatio -> Automatic,
+			FrameLabel -> {
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None},
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
+			ColorFunction -> "ThermometerColors",
+			"\[Rho]cPlotPadding" -> .1,
+			PlotRangePadding -> Automatic
+		}
+	},
+	Last];
+
+
+(* ::Subsection::Closed:: *)
+(*Loops*)
+
+
+loopIntegrand[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
+	{sym, l, dl},
+
+	sym = If[EvenQ[nDes], -1, 1];
+
+	l = Map[
+		Function[{\[Chi]cp},
+			\[Rho]c {Cos[2 \[Pi] \[FormalU]], Sin[2 \[Pi] \[FormalU]], \[Chi]cp}],
+		Join[-\[Chi]c, \[Chi]c]];
+
+	dl = D[l, \[FormalU]];
+
+	Total @ MapThread[
+		Function[{li, dli, i},
+			i dli \[Cross] ({\[FormalX], \[FormalY], \[FormalZ]} - li) / Norm[({\[FormalX], \[FormalY], \[FormalZ]} - li)]^3],
+		{l, dl, Join[sym i\[Chi], i\[Chi]]}]]
+
+
+Options[LoopFieldPlot2D] = fieldPlot2DOpts;
+
+
+LoopFieldPlot2D::BadSeparations = plotMessages["BadSeparations"];
+LoopFieldPlot2D::BadCurrents = plotMessages["BadCurrents"];
+LoopFieldPlot2D::BadDesired = plotMessages["BadDesired"];
+LoopFieldPlot2D::BadRadius = plotMessages["BadRadius"];
+
+
+LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
+	loopPlotChecks[\[Chi]c, i\[Chi], \[Rho]c, nDes]
+):=
+	Module[
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, zRange},
+
+		(* Split options into those for interpolation (fed to DensityPlot) and
+			those for plotting (fed to ListDensityPlot). *)
+		allOpts = Normal[Merge[{Options[LoopFieldPlot2D], {opts}}, Last]];
+		interpolationOpts = FilterRules[allOpts, interpolationOptions];
+		plotOpts = FilterRules[Complement[allOpts, interpolationOpts], Options[ListDensityPlot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		
+		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+
+		biotSavartPlot2D[
+			loopIntegrand[\[Chi]cVals, i\[Chi], \[Rho]c, nDes],
+			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
+
+
+(* ::Subsection::Closed:: *)
+(*Saddles*)
+
+
+saddleIntegrand[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+	{symQ, arcCentres, periodicities, \[Chi]cPairs, saddleIs, prims, l, dl},
+
+	(* Is the coil axially symmetric? *)
+	symQ = OddQ[nDes + mDes];
+
+	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;;-2]];
+	periodicities = PadRight[{}, 2 mDes, {1, -1}];
+
+	If[symQ,
+		(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
+
+		\[Chi]cPairs = Partition[\[Chi]c, 2];
+		saddleIs = i\[Chi][[;; ;; 2]];
+
+		prims = Table[
+			Function[{centre, periodicity, sepPair, i},
+			
+				With[
+					{
+						x = Cos[2 \[Phi]cp (\[FormalU] - .5) + Abs[centre]],
+						xR = Cos[2 \[Phi]cp ((1 - \[FormalU]) - .5) + Abs[centre]],
+						y = Sin[2 \[Phi]cp (\[FormalU] - .5) + Abs[centre]],
+						yR = Sin[2 \[Phi]cp ((1 - \[FormalU]) - .5) + Abs[centre]]
+					},
+					{
+						(* Positive z *)
+						<|(* First arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {x, y, sepPair[[1]]}|>,
+						<|(* Right connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{x, y} /. \[FormalU] -> 1, sepPair[[1]] + \[FormalU] Abs[Subtract@@sepPair]]|>,
+						<|(* Second arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {xR, yR, sepPair[[2]]}|>,
+						<|(* Left connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{xR, yR} /. \[FormalU] -> 1, sepPair[[2]] - \[FormalU] Abs[Subtract@@sepPair]]|>,
+						
+						(* Negative z *)
+						<|(* First arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {x, y, -sepPair[[1]]}|>,
+						<|(* Right connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{x, y} /. \[FormalU] -> 1, -sepPair[[1]] - \[FormalU] Abs[Subtract@@sepPair]]|>,
+						<|(* Second arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {xR, yR, -sepPair[[2]]}|>,
+						<|(* Left connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{xR, yR} /. \[FormalU] -> 1, -sepPair[[2]] + \[FormalU] Abs[Subtract@@sepPair]]|>
+
+			}]] @@ Join[centrePeriod, \[Chi]cPairi\[Chi]],
+
+			{centrePeriod, Transpose[{arcCentres, periodicities}]},
+			{\[Phi]cp, \[Phi]c},
+			{\[Chi]cPairi\[Chi], Transpose[{\[Chi]cPairs, saddleIs}]}];
+		
+		prims = Flatten[prims, 3],
+
+
+		(* If the coil is axially antisymmetric, then each arc with +ve z is joined to its corresponding arc with -ve z. *)
+
+		prims = Table[
+			Function[{centre, periodicity, sep, i},
+			
+				With[
+					{
+						x = Cos[2 \[Phi]cp (\[FormalU] - .5) + Abs[centre]],
+						xR = Cos[2 \[Phi]cp ((1 - \[FormalU]) - .5) + Abs[centre]],
+						y = Sin[2 \[Phi]cp (\[FormalU] - .5) + Abs[centre]],
+						yR = Sin[2 \[Phi]cp ((1 - \[FormalU]) - .5) + Abs[centre]]
+					},
+					{
+						<|(* Top arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {x, y, sep}|>,
+						<|(* Right connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{x, y} /. \[FormalU] -> 1, sep(1 - 2 \[FormalU])]|>,
+						<|(* Bottom arc *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c {xR, yR, -sep}|>,
+						<|(* Left connector *)
+							"i" -> periodicity i,
+							"l" -> \[Rho]c Append[{xR, yR} /. \[FormalU] -> 1, sep(-1 + 2 \[FormalU])]|>
+
+			}]] @@ Join[centrePeriod, \[Chi]ci\[Chi]],
+
+			{centrePeriod, Transpose[{arcCentres, periodicities}]},
+			{\[Phi]cp, \[Phi]c},
+			{\[Chi]ci\[Chi], Transpose[{\[Chi]c, i\[Chi]}]}];
+
+		prims = Flatten[prims, 3]
+	];
+
+
+	prims = Append[#, "dl" -> D[#["l"], \[FormalU]]]& /@ prims;
+	
+	Total @ Map[
+		Function[
+			#["i"] #["dl"] \[Cross] ({\[FormalX], \[FormalY], \[FormalZ]} - #["l"]) / Norm[({\[FormalX], \[FormalY], \[FormalZ]} - #["l"])]^3],
+		prims]
+]
+
+
+Options[SaddleFieldPlot2D] = fieldPlot2DOpts;
+
+
+SaddleFieldPlot2D::BadSeparations = plotMessages["BadSeparations"];
+SaddleFieldPlot2D::BadExtents = plotMessages["BadExtents"];
+SaddleFieldPlot2D::BadCurrents = plotMessages["BadCurrents"];
+SaddleFieldPlot2D::BadCurrentRatios = plotMessages["BadCurrentRatios"];
+SaddleFieldPlot2D::BadDesiredNM = plotMessages["BadDesiredNM"];
+SaddleFieldPlot2D::BadRadius = plotMessages["BadRadius"];
+
+
+SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	saddlePlotChecks[\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+):=
+	Module[
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Phi]cVals, zRange},
+
+		(* Split options into those for interpolation (fed to DensityPlot) and
+			those for plotting (fed to ListDensityPlot). *)
+		allOpts = Normal[Merge[{Options[LoopFieldPlot2D], {opts}}, Last]];
+		interpolationOpts = FilterRules[allOpts, interpolationOptions];
+		plotOpts = FilterRules[Complement[allOpts, interpolationOpts], Options[ListDensityPlot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
+			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			First][[All, 2]]];
+		
+		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+
+		biotSavartPlot2D[
+			saddleIntegrand[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
+			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
+
+
+(* ::Subsection::Closed:: *)
+(*Ellipses*)
+
+
+ellipseIntegrand[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Module[
+	{sym, phases, periodicities, prims},
+
+	sym = If[EvenQ[nDes + mDes], -1, 1];
+
+	phases = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;;-2]];
+	periodicities = PadRight[{}, 2 mDes, {1, -1}];
+
+	prims = Table[
+		Function[{phase, periodicity, sep, i, t}, {
+
+			<|(* Positive z *)
+				"i" -> periodicity i,
+				"l" -> \[Rho]c {
+					Cos[2 \[Pi] \[FormalU]],
+					Sin[2 \[Pi] \[FormalU]],
+					sep + t Cos[2 \[Pi] \[FormalU] + phase]}|>,
+			<|(* Negative z *)
+				"i" -> sym periodicity i,
+				"l" -> \[Rho]c {
+					Cos[2 \[Pi] \[FormalU]],
+					Sin[2 \[Pi] \[FormalU]],
+					-sep - t Cos[2 \[Pi] \[FormalU] + phase]}|>
+
+		}] @@ Join[phasePeriod, \[Chi]ci\[Chi]\[Psi]c],
+
+		{phasePeriod, Transpose[{phases, periodicities}]},
+		{\[Chi]ci\[Chi]\[Psi]c, Transpose[{\[Chi]c, i\[Chi], \[Psi]c}]}];
+
+	prims = Flatten[prims, 3];
+
+	prims = Append[#, "dl" -> D[#["l"], \[FormalU]]]& /@ prims;
+	
+	Total @ Map[
+		Function[
+			#["i"] #["dl"] \[Cross] ({\[FormalX], \[FormalY], \[FormalZ]} - #["l"]) / Norm[({\[FormalX], \[FormalY], \[FormalZ]} - #["l"])]^3],
+		prims]
+]
+
+
+Options[EllipseFieldPlot2D] = fieldPlot2DOpts;
+
+
+EllipseFieldPlot2D::BadSeparations = plotMessages["BadSeparations"];
+EllipseFieldPlot2D::BadCurrents = plotMessages["BadCurrents"];
+EllipseFieldPlot2D::BadDesired = plotMessages["BadDesired"];
+EllipseFieldPlot2D::BadRadius = plotMessages["BadRadius"];
+
+
+EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	ellipsePlotChecks[\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+):=
+	Module[
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Psi]cVals, zRange},
+
+		(* Split options into those for interpolation (fed to DensityPlot) and
+			those for plotting (fed to ListDensityPlot). *)
+		allOpts = Normal[Merge[{Options[LoopFieldPlot2D], {opts}}, Last]];
+		interpolationOpts = FilterRules[allOpts, interpolationOptions];
+		plotOpts = FilterRules[Complement[allOpts, interpolationOpts], Options[ListDensityPlot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		{\[Chi]cVals, \[Psi]cVals} = Switch[
+			\[Chi]c\[Psi]c,
+			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
+			{{_, _}..},
+			Transpose[\[Chi]c\[Psi]c],
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			{__Rule},
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+		
+		zRange = \[Rho]c ({-1, 1} Max[\[Chi]cVals + \[Psi]cVals] + {-pad, pad});
+
+		biotSavartPlot2D[
+			ellipseIntegrand[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
+			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
 
 
 (* ::Section::Closed:: *)
