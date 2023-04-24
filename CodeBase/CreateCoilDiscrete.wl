@@ -1691,6 +1691,11 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 (*Field Plots*)
 
 
+integrationOpts = Sequence[
+	Method -> {Automatic, "SymbolicProcessing" -> 0},
+	AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10];
+
+
 biotSavartPlot[integrand_, {zRange__}, {opts___}] := Module[
 	{integrandZ, const, g},
 
@@ -1700,12 +1705,10 @@ biotSavartPlot[integrand_, {zRange__}, {opts___}] := Module[
 	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
 
 	g = Plot[
-		Quiet @ NIntegrate[const integrandZ, {\[FormalU], 0, 1},
-			Method -> {Automatic, "SymbolicProcessing" -> 0},
-			AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10],
+		Quiet @ NIntegrate[const integrandZ, {\[FormalU], 0, 1}, ##],
 		{\[FormalZ], zRange},
 		PlotLegends -> None,
-		opts];
+		opts]&[integrationOpts];
 	
 	(* Colour each line according to default colours. *)
 	g = g /. {a:Except[_Line]..., l__Line, b:Except[_Line]...} :> {a, Riffle[ColorData[97] /@ Range[3], {l}], b};
@@ -1724,8 +1727,8 @@ biotSavartPlot[integrand_, {zRange__}, {opts___}] := Module[
 				Flatten[#, 2]&]]]]
 
 
-biotSavartPlot2D[integrand_, \[Rho]c_, pad_, {zRange__}, {interpolationOpts___}, {plotOpts___}] := Module[
-	{data, const, integrandXZ},
+biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}] := Module[
+	{integrandXZ, data, const, bzAlongZ, bxbyAlongZ, bzAlongX, bxbyAlongX, zPlotRange},
 
 	(* Plot the x-z plane *)
 	integrandXZ = integrand /. \[FormalY] -> 0;
@@ -1733,33 +1736,67 @@ biotSavartPlot2D[integrand_, \[Rho]c_, pad_, {zRange__}, {interpolationOpts___},
 	(* Integrating the integrand returns a 3D field vector. Therefore, we use DensityPlot to interpolate the field looking at
 		the z-component, and Sow each 3D point it calculates. We then call ListDensityPlot three times to make a plot of each
 		field component. *)
+	(* We only need to calculate the field in one quadrant, and can deduce the field across the others by symmetry. *)
 	data = Reap[DensityPlot[
 
 		Sow[{\[FormalX], \[FormalZ],
-			Quiet @ NIntegrate[integrandXZ, {\[FormalU], 0, 1},
-				Method -> {Automatic, "SymbolicProcessing" -> 0},
-				AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10]}][[3]],
+			Chop[Quiet @ NIntegrate[integrandXZ, {\[FormalU], 0, 1}, ##], .000001]}][[3]],
 
-		{\[FormalX], -(1 + pad) \[Rho]c, (1 + pad) \[Rho]c}, {\[FormalZ], zRange},
+		{\[FormalX], 0, (1 + pad) \[Rho]c}, {\[FormalZ], 0, zMax},
 		interpolationOpts
-	]][[-1, 1]];
+	]][[-1, 1]]&[integrationOpts];
 
 	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
+	(* Micro Tesla *)
+	const = 10^6 const;
+
+	zPlotRange = const Replace[
+		Max @* Abs /@ Transpose[Select[data, Apply[.7 \[Rho]c < #1 <= .8 \[Rho]c &]][[All, -1]]],
+		0 | 0. -> 1/const,
+		1];
+
+	(* If n+m is odd, coil is symmetric along z. Bz symmetric along z; Bx, By antisymmetric along z. *)
+	If[OddQ[n + m],
+		bzAlongZ = 1; bxbyAlongZ = -1,
+		bzAlongZ = -1; bxbyAlongZ = 1];
+
+	(* If m is odd, coil is antisymmetric along x. Bz is antisymmetric along x; Bx, By, are symmetric along x. *)
+	If[OddQ[m],
+		bzAlongX = -1; bxbyAlongX = 1,
+		bzAlongX = 1; bxbyAlongX = -1];
+
+	(* Calculate data for the remaining quadrants. *)
+	data = Join[
+		(* +x, +z *)
+		data,
+		(* -x, +z *)
+		{-#1, #2, {bxbyAlongX, bxbyAlongX, bzAlongX}*#3}& @@@ data,
+		(* -x, -z *)
+		{-#1, -#2, {bxbyAlongX bxbyAlongZ, bxbyAlongX bxbyAlongZ, bzAlongX bzAlongZ}*#3}& @@@ data,
+		(* +x, -z *)
+		{#1, -#2, {bxbyAlongZ, bxbyAlongZ, bzAlongZ}*#3}& @@@ data];
 
 	MapThread[
+
 		Function[{dim, str},
 			ListDensityPlot[
-				{#1, #2, #3[[dim]]}& @@@ data,
-				(* Scale the colour bar by the appropriate physical constants. *)
-				ScalingFunctions -> {None, None, {const # &, # &}},
+				{#1, #2, const #3[[dim]]}& @@@ data,
 				PlotLegends -> BarLegend[
 					Automatic,
-					ScalingFunctions -> None,
-					LegendLabel -> TraditionalForm @ StringReplacePart["\!\(\*SubscriptBox[\(B\), \(x\)]\) (T)", str, {23, 23}],
+					LegendLabel -> TraditionalForm @ StringReplacePart[
+						"\!\(\*SubscriptBox[\(B\), \(x\)]\)\[VeryThinSpace]\!\(\*SuperscriptBox[SubscriptBox[\(I\), \(\[Chi]\)], \(-1\)]\) (\[Mu]T\[VeryThinSpace]/\[VeryThinSpace]A)",
+						str, {23, 23}],
 					First @ Normal @ Merge[
 						{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{plotOpts}, LabelStyle]},
 						Flatten[#, 2]&]],
-				Sequence @@ Replace[{plotOpts}, (PlotRangePadding -> Automatic) -> (PlotRangePadding -> .05 \[Rho]c), 1]]],
+				Sequence @@ Replace[{plotOpts},
+					{
+						(PlotRangePadding -> Automatic) -> (PlotRangePadding -> .05 \[Rho]c),
+						(PlotRange -> Automatic) -> (PlotRange -> {Full, Full, {-zPlotRange[[dim]], zPlotRange[[dim]]}}),
+						(PlotRange -> {x_, y_, Automatic}) :> (PlotRange -> {x, y, {-zPlotRange[[dim]], zPlotRange[[dim]]}})
+					},
+					1]]],
+
 		{{1, 2, 3}, {"x", "y", "z"}}]]
 
 
@@ -1781,7 +1818,7 @@ fieldPlotOpts = Normal @ Merge[
 
 
 interpolationOptions = {
-	PlotPoints -> 10,
+	PlotPoints -> 6,
 	MaxRecursion -> 4
 };
 
@@ -1796,9 +1833,11 @@ fieldPlot2DOpts = Normal @ Merge[
 			FrameLabel -> {
 				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None},
 				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
-			ColorFunction -> "ThermometerColors",
+			ColorFunction -> (Blend[{RGBColor[0, 0.36, 0.77], GrayLevel[.975], RGBColor[0.85, 0.27, 0.08]}, #]&),
 			"\[Rho]cPlotPadding" -> .1,
-			PlotRangePadding -> Automatic
+			PlotRangePadding -> Automatic,
+			MeshFunctions -> {#3 &},
+			Mesh -> True
 		}
 	},
 	Last];
@@ -1872,7 +1911,7 @@ LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 	loopPlotChecks[LoopFieldPlot2D][\[Chi]c, i\[Chi], \[Rho]c, nDes]
 ):=
 	Module[
-		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, zRange},
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, zMax},
 
 		(* Split options into those for interpolation (fed to DensityPlot) and
 			those for plotting (fed to ListDensityPlot). *)
@@ -1887,11 +1926,11 @@ LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
 			First][[All, 2]]];
 		
-		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
 
 		biotSavartPlot2D[
 			loopIntegrand[\[Chi]cVals, i\[Chi], \[Rho]c, nDes],
-			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
+			\[Rho]c, {nDes, 0}, pad, zMax, interpolationOpts, plotOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -2021,7 +2060,7 @@ SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:O
 	saddlePlotChecks[SaddleFieldPlot2D][\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ):=
 	Module[
-		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Phi]cVals, zRange},
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Phi]cVals, zMax},
 
 		(* Split options into those for interpolation (fed to DensityPlot) and
 			those for plotting (fed to ListDensityPlot). *)
@@ -2040,11 +2079,11 @@ SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:O
 			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
 			First][[All, 2]]];
 		
-		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
 
 		biotSavartPlot2D[
 			saddleIntegrand[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
-			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
+			\[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -2104,7 +2143,7 @@ EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 	ellipsePlotChecks[EllipseFieldPlot2D][\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
 ):=
 	Module[
-		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Psi]cVals, zRange},
+		{allOpts, interpolationOpts, plotOpts, pad, \[Chi]cVals, \[Psi]cVals, zMax},
 
 		(* Split options into those for interpolation (fed to DensityPlot) and
 			those for plotting (fed to ListDensityPlot). *)
@@ -2123,11 +2162,11 @@ EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 			{__Rule},
 			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
 		
-		zRange = \[Rho]c ({-1, 1} Max[\[Chi]cVals + \[Psi]cVals] + {-pad, pad});
+		zMax = \[Rho]c (Max[\[Chi]cVals + \[Psi]cVals] + pad);
 
 		biotSavartPlot2D[
 			ellipseIntegrand[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
-			\[Rho]c, pad, zRange, interpolationOpts, plotOpts]]
+			\[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts]]
 
 
 (* ::Section::Closed:: *)
