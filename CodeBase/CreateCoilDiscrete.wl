@@ -153,6 +153,9 @@ EllipseFieldPlot::usage = "stub";
 EllipseFieldPlot2D::usage = "stub";
 
 
+HarmonicFieldPlot::usage = "stub";
+
+
 Begin["`Private`"];
 
 
@@ -181,7 +184,8 @@ plotMessages = <|
 	"BadExtents" -> "Extents: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Phi][i] -> \[Phi]i rules, e.g. {Coil\[Phi][1] -> \[Phi]1, Coil\[Phi][2] -> \[Phi]2, \[Ellipsis]}, where \[Phi]1 < \[Phi]2 < \[Ellipsis].",
 	"BadCurrentRatios" -> finderMessages["BadCurrentRatios"],
 	"BadDesiredNM" -> finderMessages["BadDesiredNM"],
-	"BadChiPsi" -> "Axial separations and extents: `1` should either be a list of separation and extent pairs, i.e. {{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]}, where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis] must be satisfied. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored)."
+	"BadChiPsi" -> "Axial separations and extents: `1` should either be a list of separation and extent pairs, i.e. {{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]}, where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis] must be satisfied. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
+	"BadNM" -> "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M \[GreaterEqual] 0 and N > 0."
 |>;
 
 
@@ -1691,40 +1695,116 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 (*Field Plots*)
 
 
+fieldPlotOpts = Normal @ Merge[
+	{
+		Options[ListLinePlot],
+		Options[Plot],
+		{
+			MaxRecursion -> 2,
+			Axes -> None,
+			Frame -> True,
+			PlotRange -> All,
+			"\[Rho]cPlotPadding" -> .1,
+			ImageSize -> Medium,
+			FrameLabel -> Automatic,
+			PlotLegends -> Automatic
+		}
+	},
+	Last];
+
+
+interpolationOptions = {
+	PlotPoints -> 6,
+	MaxRecursion -> 4
+};
+
+
+fieldPlot2DOpts = Normal @ Merge[
+	{
+		Options[ListDensityPlot],
+		interpolationOptions,
+		{
+			ImageSize -> Medium,
+			AspectRatio -> Automatic,
+			FrameLabel -> {
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None},
+				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
+			ColorFunction -> (Blend[{RGBColor[0, 0.36, 0.77], GrayLevel[.975], RGBColor[0.85, 0.27, 0.08]}, #]&),
+			"\[Rho]cPlotPadding" -> .1,
+			PlotRangePadding -> Automatic,
+			MeshFunctions -> {#3 &},
+			Mesh -> True
+		}
+	},
+	Last];
+
+
 integrationOpts = Sequence[
 	Method -> {Automatic, "SymbolicProcessing" -> 0},
 	AccuracyGoal -> 4, PrecisionGoal -> 4, MaxRecursion -> 3, MaxPoints -> 10];
 
 
-biotSavartPlot[integrand_, {zRange__}, {opts___}] := Module[
-	{integrandZ, const, g},
+biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
+	{integrandX, integrandY, integrandZ, const, data, interpolationOpts, plotOpts, xyMax},
 
-	(* Plot along the z axis *)
+	interpolationOpts = Sequence @@ FilterRules[opts, Complement[Options[Plot][[All, 1]], Options[ListLinePlot][[All, 1]]]];
+	plotOpts = Sequence @@ FilterRules[opts, Options[ListLinePlot]];
+
+	xyMax = \[Rho]c (1 + pad);
+	
+	integrandX = integrand /. {\[FormalY] -> 0, \[FormalZ] -> 0};
+	integrandY = integrand /. {\[FormalX] -> 0, \[FormalZ] -> 0};
 	integrandZ = integrand /. {\[FormalX] -> 0, \[FormalY] -> 0};
 
 	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
+	(* Micro Tesla *)
+	const = 10^6 const;
 
-	g = Plot[
-		Quiet @ NIntegrate[const integrandZ, {\[FormalU], 0, 1}, ##],
-		{\[FormalZ], zRange},
-		PlotLegends -> None,
-		opts]&[integrationOpts];
+	data = MapThread[
+		Function[{int, var, dom},
+			Reap[
+				Plot[
+					Sow[{var,
+						Chop[Quiet @ NIntegrate[int, {\[FormalU], 0, 1}, ##], .000001]}
+					][[2]]&[integrationOpts],
+					{var, -dom, dom}, PlotRange -> All, ##
+				]][[-1, 1]]&[interpolationOpts]],
+		{
+			{integrandX, integrandY, integrandZ},
+			{\[FormalX], \[FormalY], \[FormalZ]},
+			{xyMax, xyMax, zMax}}];
 	
-	(* Colour each line according to default colours. *)
-	g = g /. {a:Except[_Line]..., l__Line, b:Except[_Line]...} :> {a, Riffle[ColorData[97] /@ Range[3], {l}], b};
+	data = Map[{1, const}*# &] /@ data;
 
-	Legended[
-		g,
-		SwatchLegend[
-			ColorData[97] /@ Range[3],
-			TraditionalForm /@ {
-				"\!\(\*SubscriptBox[\(B\), \(x\)]\)",
-				"\!\(\*SubscriptBox[\(B\), \(y\)]\)",
-				"\!\(\*SubscriptBox[\(B\), \(z\)]\)"},
-			LegendMarkers -> "Line",
-			First @ Normal @ Merge[
-				{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{opts}, LabelStyle]},
-				Flatten[#, 2]&]]]]
+	data = SortBy[First] /@ data;
+
+	MapThread[
+		Function[{dim, str},
+			ListLinePlot[
+				Transpose[First[Outer[List, {#1}, #2]]& @@@ data[[dim]]],
+				Sequence @@ Replace[{plotOpts},
+					{
+						(FrameLabel -> Automatic) -> (FrameLabel -> {
+							{
+								TraditionalForm[
+									"\!\(\*StyleBox[\"B\",FontSlant->\"Italic\"]\)\[VeryThinSpace]\!\(\*SuperscriptBox[SubscriptBox[\(I\), \(\[Chi]\)], \(-1\)]\) (\[Mu]T\[VeryThinSpace]/\[VeryThinSpace]A)"],
+								None},
+							{
+								TraditionalForm @ RawBoxes @ StringReplacePart[
+									"\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\"", str,
+									{19, 19}],
+								None}}),
+						(PlotLegends -> Automatic) -> (PlotLegends -> LineLegend[
+							TraditionalForm /@ {
+								"\!\(\*SubscriptBox[\(B\), \(x\)]\)\[VeryThinSpace]\!\(\*SuperscriptBox[SubscriptBox[\(I\), \(\[Chi]\)], \(-1\)]\)",
+								"\!\(\*SubscriptBox[\(B\), \(y\)]\)\[VeryThinSpace]\!\(\*SuperscriptBox[SubscriptBox[\(I\), \(\[Chi]\)], \(-1\)]\)",
+								"\!\(\*SubscriptBox[\(B\), \(z\)]\)\[VeryThinSpace]\!\(\*SuperscriptBox[SubscriptBox[\(I\), \(\[Chi]\)], \(-1\)]\)"},
+							First @ Normal @ Merge[
+								{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{opts}, LabelStyle]},
+								Flatten[#, 2]&]])
+					},
+					1]]],
+		{{1, 2, 3}, {"x", "y", "z"}}]]
 
 
 biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}] := Module[
@@ -1800,49 +1880,6 @@ biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts
 		{{1, 2, 3}, {"x", "y", "z"}}]]
 
 
-fieldPlotOpts = Normal @ Merge[
-	{
-		Options[Plot],
-		{
-			Axes -> None,
-			Frame -> True,
-			FrameLabel -> {
-				{TraditionalForm @ RawBoxes["\"\\!\\(\\*SubscriptBox[\\(B\\), \\(i\\)]\\) (T)\""], None},
-				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
-			PlotRange -> All,
-			"\[Rho]cPlotPadding" -> .1,
-			ImageSize -> Large
-		}
-	},
-	Last];
-
-
-interpolationOptions = {
-	PlotPoints -> 6,
-	MaxRecursion -> 4
-};
-
-
-fieldPlot2DOpts = Normal @ Merge[
-	{
-		Options[ListDensityPlot],
-		interpolationOptions,
-		{
-			ImageSize -> Medium,
-			AspectRatio -> Automatic,
-			FrameLabel -> {
-				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None},
-				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
-			ColorFunction -> (Blend[{RGBColor[0, 0.36, 0.77], GrayLevel[.975], RGBColor[0.85, 0.27, 0.08]}, #]&),
-			"\[Rho]cPlotPadding" -> .1,
-			PlotRangePadding -> Automatic,
-			MeshFunctions -> {#3 &},
-			Mesh -> True
-		}
-	},
-	Last];
-
-
 (* ::Subsection::Closed:: *)
 (*Loops*)
 
@@ -1878,7 +1915,7 @@ LoopFieldPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 	loopPlotChecks[LoopFieldPlot][\[Chi]c, i\[Chi], \[Rho]c, nDes]
 ):=
 	Module[
-		{plotOpts, pad, \[Chi]cVals, zRange},
+		{plotOpts, pad, \[Chi]cVals, zMax},
 
 		plotOpts = FilterRules[
 			Normal[Merge[{Options[LoopFieldPlot], {opts}}, Last]],
@@ -1891,11 +1928,11 @@ LoopFieldPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
 			First][[All, 2]]];
 		
-		zRange = \[Rho]c ({-1, 1} Last[\[Chi]cVals] + {-pad, pad});
+		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
 
 		biotSavartPlot[
 			loopIntegrand[\[Chi]cVals, i\[Chi], \[Rho]c, nDes],
-			zRange, plotOpts]]
+			\[Rho]c, pad, zMax, plotOpts]]
 
 
 Options[LoopFieldPlot2D] = fieldPlot2DOpts;
@@ -2045,6 +2082,45 @@ saddleIntegrand[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Modul
 ]
 
 
+Options[SaddleFieldPlot] = fieldPlotOpts;
+
+
+SaddleFieldPlot::BadSeparations = plotMessages["BadSeparations"];
+SaddleFieldPlot::BadExtents = plotMessages["BadExtents"];
+SaddleFieldPlot::BadCurrents = plotMessages["BadCurrents"];
+SaddleFieldPlot::BadCurrentRatios = plotMessages["BadCurrentRatios"];
+SaddleFieldPlot::BadDesiredNM = plotMessages["BadDesiredNM"];
+SaddleFieldPlot::BadRadius = plotMessages["BadRadius"];
+
+
+SaddleFieldPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	saddlePlotChecks[SaddleFieldPlot][\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+):=
+	Module[
+		{plotOpts, pad, \[Chi]cVals, \[Phi]cVals, zMax},
+
+		plotOpts = FilterRules[
+			Normal[Merge[{Options[SaddleFieldPlot], {opts}}, Last]],
+			Options[Plot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
+			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			First][[All, 2]]];
+		
+		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
+
+		biotSavartPlot[
+			saddleIntegrand[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
+			\[Rho]c, pad, zMax, plotOpts]]
+
+
 Options[SaddleFieldPlot2D] = fieldPlot2DOpts;
 
 
@@ -2130,6 +2206,43 @@ ellipseIntegrand[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] := Modu
 ]
 
 
+Options[EllipseFieldPlot] = fieldPlotOpts;
+
+
+EllipseFieldPlot::BadSeparations = plotMessages["BadSeparations"];
+EllipseFieldPlot::BadCurrents = plotMessages["BadCurrents"];
+EllipseFieldPlot::BadDesired = plotMessages["BadDesired"];
+EllipseFieldPlot::BadRadius = plotMessages["BadRadius"];
+
+
+EllipseFieldPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	ellipsePlotChecks[EllipseFieldPlot][\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+):=
+	Module[
+		{plotOpts, pad, \[Chi]cVals, \[Psi]cVals, zMax},
+
+		plotOpts = FilterRules[
+			Normal[Merge[{Options[EllipseFieldPlot], {opts}}, Last]],
+			Options[Plot]];
+
+		pad = Replace[OptionValue["\[Rho]cPlotPadding"], Except[_?NumericQ] -> .1];
+
+		{\[Chi]cVals, \[Psi]cVals} = Switch[
+			\[Chi]c\[Psi]c,
+			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
+			{{_, _}..},
+			Transpose[\[Chi]c\[Psi]c],
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			{__Rule},
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+		
+		zMax = \[Rho]c (Max[\[Chi]cVals + \[Psi]cVals] + pad);
+
+		biotSavartPlot[
+			ellipseIntegrand[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
+			\[Rho]c, pad, zMax, plotOpts]]
+
+
 Options[EllipseFieldPlot2D] = fieldPlot2DOpts;
 
 
@@ -2169,8 +2282,87 @@ EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 			\[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts]]
 
 
+(* ::Subsection::Closed:: *)
+(*Harmonic Plot*)
+
+
+harmonicPlotChecks[{n_, m_}] := Module[
+	{proceed = True},
+	(* Check that arguments have been specified correctly, and issue messages if not. *)
+
+	(* nDes and mDes must be integers that satisfy n >= m >= 0 and n > 0. *)
+	If[!MatchQ[{n, m}, {np_Integer, mp_Integer} /; np >= mp >= 0 && np > 0],
+		Message[HarmonicFieldPlot::BadNM, n, m]; proceed = False];
+	
+	proceed]
+
+
+Options[HarmonicFieldPlot] = fieldPlotOpts;
+
+
+HarmonicFieldPlot::BadNM = plotMessages["BadNM"];
+
+
+HarmonicFieldPlot[{n_, m_}, opts:OptionsPattern[]] /; (
+	harmonicPlotChecks[{n, m}]
+) :=
+	Module[
+		{data, allOpts, interpolationOpts, plotOpts},
+
+		(* Split options into those for interpolation (fed to Plot) and
+			those for plotting (fed to ListLinePlot). *)
+		allOpts = Normal[Merge[{Options[HarmonicFieldPlot], {opts}}, Last]];
+		interpolationOpts = Sequence @@ FilterRules[allOpts, Complement[Options[Plot][[All, 1]], Options[ListLinePlot][[All, 1]]]];
+		plotOpts = Sequence @@ FilterRules[allOpts, Options[ListLinePlot]];
+
+		data = MapThread[
+			Function[{\[Theta], \[Phi]},
+				Reap[
+					Plot[
+						Sow[{\[FormalR],
+							Quiet @ bFieldHarmonicVector[{n, m}, Abs[\[FormalR]], \[Theta], \[Phi]]}
+						][[2]],
+						{\[FormalR], -1, 1}, PlotRange -> All, ##
+					]][[-1, 1]]&[interpolationOpts]],
+			{
+				{Pi/2, Pi/2, If[\[FormalR] < 0, Pi, 0]},
+				{If[\[FormalR] < 0, Pi, 0], If[\[FormalR] < 0, 3 Pi/2, Pi/2], 0}}];
+		
+		data = SortBy[First] /@ data;
+
+		MapThread[
+			Function[{dim, str},
+				ListLinePlot[
+					Transpose[First[Outer[List, {#1}, #2]]& @@@ data[[dim]]],
+					Sequence @@ Replace[{plotOpts},
+						{
+							(FrameLabel -> Automatic) -> (FrameLabel -> {
+								{
+									TraditionalForm[Style["B", FontSlant -> Italic]],
+									None},
+								{
+									TraditionalForm @ RawBoxes @ StringReplacePart[
+										"\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\)\"", str,
+										{19, 19}],
+									None}}),
+							(PlotLegends -> Automatic) -> (PlotLegends -> LineLegend[
+								TraditionalForm /@ {
+									"\!\(\*SubscriptBox[\(B\), \(x\)]\)",
+									"\!\(\*SubscriptBox[\(B\), \(y\)]\)",
+									"\!\(\*SubscriptBox[\(B\), \(z\)]\)"},
+								First @ Normal @ Merge[
+									{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{plotOpts}, LabelStyle]},
+									Flatten[#, 2]&]])
+						},
+						1]]],
+			{{1, 2, 3}, {"x", "y", "z"}}]]
+
+
 (* ::Section::Closed:: *)
 (*Package Footer*)
+
+
+Protect["CreateCoil`*"];
 
 
 End[];
