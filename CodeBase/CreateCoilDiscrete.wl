@@ -117,10 +117,10 @@ StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\[Ellipsis]\", \
 Coil\[Chi]c::usage = "Normalized separation of loop/arc/ellipse pairs";
 
 
-Coil\[Phi]::usage = "Azimuthal extent of a saddle";
+Coil\[Phi]c::usage = "Azimuthal extent of a saddle";
 
 
-Coil\[Psi]::usage = "Normalized ellipse extent";
+Coil\[Psi]c::usage = "Normalized ellipse extent";
 
 
 DesToErr::usage = "Ratio of the desired-to-leading error harmonic magnitudes";
@@ -181,10 +181,10 @@ plotMessages = <|
 	"BadCurrents" -> "Currents: `1` should be a list of one or more real numbers, equal in length to the number of separations.",
 	"BadDesired" -> finderMessages["BadDesired"],
 	"BadRadius" -> "Coil radius \[Rho]c = `1` should be a positive number.",
-	"BadExtents" -> "Extents: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Phi][i] -> \[Phi]i rules, e.g. {Coil\[Phi][1] -> \[Phi]1, Coil\[Phi][2] -> \[Phi]2, \[Ellipsis]}, where \[Phi]1 < \[Phi]2 < \[Ellipsis].",
+	"BadExtents" -> "Extents: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Phi]c[i] -> \[Phi]ci rules, e.g. {Coil\[Phi]c[1] -> \[Phi]c1, Coil\[Phi]c[2] -> \[Phi]c2, \[Ellipsis]}, where \[Phi]c1 < \[Phi]c2 < \[Ellipsis].",
 	"BadCurrentRatios" -> finderMessages["BadCurrentRatios"],
 	"BadDesiredNM" -> finderMessages["BadDesiredNM"],
-	"BadChiPsi" -> "Axial separations and extents: `1` should either be a list of separation and extent pairs, i.e. {{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]}, where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis] must be satisfied. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
+	"BadChiPsi" -> "Axial separations and extents: `1` should either be a list of separation and extent pairs, i.e. {{\[Chi]c1, \[Psi]c1}, {\[Chi]c2, \[Psi]c2}, \[Ellipsis]}, or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi]c[i] -> \[Psi]ci rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi]c[1] -> \[Psi]c1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi]c[2] -> \[Psi]c2, \[Ellipsis]}, where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis] must be satisfied. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
 	"BadNM" -> "Desired harmonic order N = `1` and degree M = `2` should be integers, where N \[GreaterEqual] M \[GreaterEqual] 0 and N > 0."
 |>;
 
@@ -1033,7 +1033,7 @@ findSeparations[
 						ReverseSortBy[
 							Function[
 								Append[
-									rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]},
+									rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]c},
 									DesToErr -> (totalHarmDes/totalHarmErr /. rules)]] @@@ finalSols,
 							Last][[partSpec]]];
 					
@@ -1122,7 +1122,7 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 		(* Sort coils by their ease of manufacture, i.e. how close they are to being evenly distributed through max\[Phi]. *)
 		sols = Nearest[sols, lin * (Pi / (2 mDes)), All];
 		(* Label each extent. *)
-		sols = MapIndexed[Coil\[Phi][First[#2]] -> #1 &] /@ sols;
+		sols = MapIndexed[Coil\[Phi]c[First[#2]] -> #1 &] /@ sols;
 		(* Return only the requested number of solutions. *)
 		partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]];
 		sols[[partSpec]]]
@@ -1203,7 +1203,7 @@ dynSaddle[prim_, \[Chi]c\[Rho]c:{_, _}, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, D
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
 			Row[{\[Chi]c\[Rho]c[[1]], ", ", \[Chi]c\[Rho]c[[2]], " (m)"}]},
 		{
-			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
 			Row[{\[Phi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
@@ -1219,7 +1219,7 @@ dynSaddle[prim_, \[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, \[Phi]c\[Rho]c_, transform_,
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
 			Row[{\[Chi]c\[Rho]c, " (m)"}]},
 		{
-			"\"\[Phi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
 			Row[{\[Phi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
@@ -1235,7 +1235,7 @@ dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, transform_, Dynami
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
 			Row[{\[Chi]c\[Rho]c, " (m)"}]},
 		{
-			"\"\[Psi]\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+			"\!\(\*SubscriptBox[\"\[Psi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
 			Row[{\[Psi]c\[Rho]c, " (m)"}]},
 		{
 			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
@@ -1414,7 +1414,7 @@ saddlePlotChecks[head_][\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] 
 		Message[head::BadSeparations, \[Chi]c]; proceed = False];
 	
 	(* Extents must either be a list of one or more positive reals in ascending order, or a list of
-		Coil\[Phi][...] -> ... rules. *)
+		Coil\[Phi]c[...] -> ... rules. *)
 	If[
 		!MatchQ[\[Phi]c, Alternatives[
 
@@ -1422,10 +1422,10 @@ saddlePlotChecks[head_][\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] 
 
 			l:{__?Positive} /; AllTrue[Differences[l], Positive],
 
-			l:{(Coil\[Phi][_] -> _?Positive)..} /; With[
-				{indicesAndVals = Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1]},
+			l:{(Coil\[Phi]c[_] -> _?Positive)..} /; With[
+				{indicesAndVals = Replace[l, (Coil\[Phi]c[i_] -> val_) :> {i, val}, 1]},
 				TrueQ @ And[
-					(* Coil\[Phi] indices must be consecutive ascending integers, starting from 1. *)
+					(* Coil\[Phi]c indices must be consecutive ascending integers, starting from 1. *)
 					Sort[indicesAndVals[[All, 1]]] == Range[Length[indicesAndVals]],
 					(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
 					AllTrue[Differences[SortBy[indicesAndVals, First][[All, 2]]], Positive]
@@ -1475,9 +1475,9 @@ SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opti
 		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
 			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
 			First][[All, 2]]];
-		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		(* If \[Phi]c is a list of Coil\[Phi]c[index] -> val rules, then sort by index and take the vals. *)
 		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
-			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			Replace[l, (Coil\[Phi]c[i_] -> val_) :> {i, val}, 1],
 			First][[All, 2]]];
 		thicknessS = OptionValue["ThicknessScaling"];
 		arrowheadS = OptionValue["ArrowheadScaling"];
@@ -1590,9 +1590,9 @@ ellipsePlotChecks[head_][\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
 	(* Separations and extents must either be a list of one or more paired positive reals, 
-		{{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, 
-		or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules,
-		{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]},
+		{{\[Chi]c1, \[Psi]c1}, {\[Chi]c2, \[Psi]c2}, \[Ellipsis]}, 
+		or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi]c[i] -> \[Psi]ci rules,
+		{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi]c[1] -> \[Psi]c1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi]c[2] -> \[Psi]c2, \[Ellipsis]},
 		where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. *)
 	If[
 		!MatchQ[\[Chi]c\[Psi]c, Alternatives[
@@ -1601,15 +1601,15 @@ ellipsePlotChecks[head_][\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
 
 			l:{{_?Positive, _?Positive}..} /; (Length[l] >= 2 && AllTrue[Differences[l[[All, 1]]], Positive]),
 
-			l:{(Coil\[Chi]c[_] | Coil\[Psi][_] | DesToErr -> _?Positive)..} /; Module[
+			l:{(Coil\[Chi]c[_] | Coil\[Psi]c[_] | DesToErr -> _?Positive)..} /; Module[
 				{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals},
 				{\[Chi]cIndicesAndVals, \[Psi]cIndicesAndVals} = Map[
 					SortBy[Cases[l, (#[i_] -> val_) :> {i, val}], First]&,
-					{Coil\[Chi]c, Coil\[Psi]}];
+					{Coil\[Chi]c, Coil\[Psi]c}];
 				TrueQ @ And[
 					(* Same number of separations and extents. *)
 					Length[\[Chi]cIndicesAndVals] === Length[\[Psi]cIndicesAndVals],
-					(* Coil\[Chi]c and Coil\[Psi] indices must be consecutive ascending integers, starting from 1. *)
+					(* Coil\[Chi]c and Coil\[Psi]c indices must be consecutive ascending integers, starting from 1. *)
 					\[Chi]cIndicesAndVals[[All, 1]] == Range[Length[\[Chi]cIndicesAndVals]],
 					\[Psi]cIndicesAndVals[[All, 1]] == Range[Length[\[Psi]cIndicesAndVals]],
 					(* Coil\[Chi]c values, as sorted by index, must be ascending positive numbers. *)
@@ -1657,9 +1657,9 @@ EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Option
 			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
 			{{_, _}..},
 			Transpose[\[Chi]c\[Psi]c],
-			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi]c[index] -> val rules, then sort each by index and take the vals. *)
 			{__Rule},
-			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]c}];
 		thicknessS = OptionValue["ThicknessScaling"];
 		arrowheadS = OptionValue["ArrowheadScaling"];
 		ellipseSchematic[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
@@ -2137,9 +2137,9 @@ SaddleFieldPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
 			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
 			First][[All, 2]]];
-		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		(* If \[Phi]c is a list of Coil\[Phi]c[index] -> val rules, then sort by index and take the vals. *)
 		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
-			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			Replace[l, (Coil\[Phi]c[i_] -> val_) :> {i, val}, 1],
 			First][[All, 2]]];
 		
 		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
@@ -2178,9 +2178,9 @@ SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:O
 		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
 			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
 			First][[All, 2]]];
-		(* If \[Phi]c is a list of Coil\[Phi][index] -> val rules, then sort by index and take the vals. *)
+		(* If \[Phi]c is a list of Coil\[Phi]c[index] -> val rules, then sort by index and take the vals. *)
 		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
-			Replace[l, (Coil\[Phi][i_] -> val_) :> {i, val}, 1],
+			Replace[l, (Coil\[Phi]c[i_] -> val_) :> {i, val}, 1],
 			First][[All, 2]]];
 		
 		zMax = \[Rho]c (Last[\[Chi]cVals] + pad);
@@ -2260,9 +2260,9 @@ EllipseFieldPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Optio
 			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
 			{{_, _}..},
 			Transpose[\[Chi]c\[Psi]c],
-			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi]c[index] -> val rules, then sort each by index and take the vals. *)
 			{__Rule},
-			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]c}];
 		
 		zMax = \[Rho]c (Max[\[Chi]cVals + \[Psi]cVals] + pad);
 
@@ -2299,9 +2299,9 @@ EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
 			{{_, _}..},
 			Transpose[\[Chi]c\[Psi]c],
-			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi][index] -> val rules, then sort each by index and take the vals. *)
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi]c[index] -> val rules, then sort each by index and take the vals. *)
 			{__Rule},
-			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]}];
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]c}];
 		
 		zMax = \[Rho]c (Max[\[Chi]cVals + \[Psi]cVals] + pad);
 
