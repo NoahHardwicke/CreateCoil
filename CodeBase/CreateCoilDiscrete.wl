@@ -164,7 +164,7 @@ Begin["`Private`"];
 
 
 finderMessages = <|
-	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers.",
+	"BadCurrents" -> "Currents: `1` should be a list of one or more real numbers.",
 	"BadDesired" -> "Desired harmonic N = `1` should be an integer greater than zero.",
 	"BadSeparations" -> "Search range: `1` should be of the form {min\[Chi]c, max\[Chi]c}, where 0 < min\[Chi]c < max\[Chi]c.",
 	"BadLeadingError" -> "If \"NulledHarmonics\" is not Automatic, then \"LeadingErrorHarmonic\" must be given explicitly.",
@@ -177,8 +177,8 @@ finderMessages = <|
 
 
 plotMessages = <|
-	"BadSeparations" -> "Separations: `1` should either be a list of two or more ascending positive numbers, or a list of Coil\[Chi]c[i] -> \[Chi]ci rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Chi]c[2] -> \[Chi]c2, \[Ellipsis]}, where \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
-	"BadCurrents" -> "Currents: `1` should be a list of two or more real numbers, equal in length to the number of separations.",
+	"BadSeparations" -> "Separations: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Chi]c[i] -> \[Chi]ci rules, e.g. {Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Chi]c[2] -> \[Chi]c2, \[Ellipsis]}, where \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. In the latter case, the list can contain a DesToErr -> val rule (which will be ignored).",
+	"BadCurrents" -> "Currents: `1` should be a list of one or more real numbers, equal in length to the number of separations.",
 	"BadDesired" -> finderMessages["BadDesired"],
 	"BadRadius" -> "Coil radius \[Rho]c = `1` should be a positive number.",
 	"BadExtents" -> "Extents: `1` should either be a list of one or more ascending positive numbers, or a list of Coil\[Phi][i] -> \[Phi]i rules, e.g. {Coil\[Phi][1] -> \[Phi]1, Coil\[Phi][2] -> \[Phi]2, \[Ellipsis]}, where \[Phi]1 < \[Phi]2 < \[Ellipsis].",
@@ -425,11 +425,11 @@ findLoopChecks[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] := Module
 	{proceed = True, optValNull, optValErr},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
-	(* Currents must be a list of two or more reals. *)
-	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+	(* Currents must be a list of one or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 1],
 		Message[FindLoopCoil::BadCurrents, i\[Chi]]; proceed = False];
 	
-	(* The desired harmonic must be an integer greater than zero... *)
+	(* The desired harmonic must be an integer greater than zero. *)
 	If[!MatchQ[nDes, n_Integer /; n > 0],
 		Message[FindLoopCoil::BadDesired, nDes]; proceed = False];
 	
@@ -461,7 +461,10 @@ FindLoopCoil[i\[Chi]_, nDes_, minMax\[Chi]c_, opts:OptionsPattern[]] /; (
 		nNull = Replace[optValNull,
 			Automatic :> (
 				(* Calculate the nulled harmonics, and the leading error harmonic. *)
-				autoHarms = harmonicsToNull["Loop"][Length[i\[Chi]] + 1, nDes];
+				(* Length[i\[Chi]] is clipped between 2 and inf because findSeparations performs a 1-primitive
+					search differently, and it still needs harmonicsToNull to generate one nulled and
+					one leading error harmonic in that case (which the code below does for Length[i\[Chi]] = 2). *)
+				autoHarms = harmonicsToNull["Loop"][Clip[Length[i\[Chi]], {2, Infinity}] + 1, nDes];
 				(* Only take the nulled harmonics for nNull. *)
 				Drop[autoHarms, -1])];
 		nErr = Replace[optValErr, Automatic :> Last[autoHarms]];
@@ -530,10 +533,10 @@ findSaddleAxialChecks[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:O
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
 	(* Currents must be a list of two or more reals. *)
-	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 1],
 		Message[FindSaddleCoilAxial::BadCurrents, i\[Chi]]; proceed = False];
 	
-	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	(* nDes and mDes must be integers that satisfy n >= m > 0. *)
 	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 		Message[FindSaddleCoilAxial::BadDesiredNM, nDes, mDes]; proceed = False];
 	
@@ -572,7 +575,10 @@ FindSaddleCoilAxial[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:Opt
 		nmNull = Replace[optValNull,
 			Automatic :> (
 				(* Calculate the nulled harmonics, and the leading-order error harmonic. *)
-				autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, {nDes, mDes}, k\[Phi]];
+				(* Length[i\[Chi]] is clipped between 2 and inf because findSeparations performs a 1-primitive
+					search differently, and it still needs harmonicsToNull to generate one nulled and
+					one leading error harmonic in that case (which the code below does for Length[i\[Chi]] = 2). *)
+				autoHarms = harmonicsToNull["Saddle"][Clip[Length[i\[Chi]], {2, Infinity}] + 1, {nDes, mDes}, k\[Phi]];
 				(* Only take the nulled harmonics for nmNull. *)
 				Drop[autoHarms, -1])];
 		nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
@@ -607,11 +613,11 @@ findSaddleChecks[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:Option
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
-	(* Currents must be a list of two or more reals. *)
-	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+	(* Currents must be a list of one or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 1],
 		Message[FindSaddleCoil::BadCurrents, i\[Chi]]; proceed = False];
 	
-	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	(* nDes and mDes must be integers that satisfy n >= m > 0. *)
 	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 		Message[FindSaddleCoil::BadDesiredNM, nDes, mDes]; proceed = False];
 	
@@ -658,7 +664,10 @@ FindSaddleCoil[i\[Chi]_, {nDes_, mDes_}, k\[Phi]_, minMax\[Chi]c_, opts:OptionsP
 		nNull = Replace[optValNull,
 			Automatic :> (
 				(* Calculate the nulled harmonics, and the leading error harmonic. *)
-				autoHarms = harmonicsToNull["Saddle"][Length[i\[Chi]] + 1, nDes];
+				(* Length[i\[Chi]] is clipped between 2 and inf because findSeparations performs a 1-primitive
+					search differently, and it still needs harmonicsToNull to generate one nulled and
+					one leading error harmonic in that case (which the code below does for Length[i\[Chi]] = 2). *)
+				autoHarms = harmonicsToNull["Saddle"][Clip[Length[i\[Chi]], {2, Infinity}] + 1, nDes];
 				(* Only take the nulled harmonics for nNull. *)
 				Drop[autoHarms, -1])];
 		nmNull = {#, mDes}& /@ nNull;
@@ -689,11 +698,11 @@ findEllipseChecks[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:Optio
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
-	(* Currents must be a list of two or more reals. *)
-	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 2],
+	(* Currents must be a list of one or more reals. *)
+	If[!MatchQ[i\[Chi], l:{__?realQ} /; Length[l] >= 1],
 		Message[FindEllipseCoil::BadCurrents, i\[Chi]]; proceed = False];
 	
-	(* nDes and mDes must be integers that satisfy n >= m > 0... *)
+	(* nDes and mDes must be integers that satisfy n >= m > 0. *)
 	If[!MatchQ[{nDes, mDes}, {n_Integer, m_Integer} /; n >= m > 0],
 		Message[FindEllipseCoil::BadDesiredNM, nDes, mDes]; proceed = False];
 	
@@ -728,7 +737,10 @@ FindEllipseCoil[i\[Chi]_, {nDes_, mDes_}, minMax\[Chi]c_, minMaxT_, opts:Options
 		nmNull = Replace[optValNull,
 			Automatic :> (
 				(* Calculate the nulled harmonics, and the leading error harmonic. *)
-				autoHarms = harmonicsToNull["Ellipse"][Length[i\[Chi]] + 1, {nDes, mDes}];
+				(* Length[i\[Chi]] is clipped between 2 and inf because findSeparations performs a 1-primitive
+					search differently, and it still needs harmonicsToNull to generate one nulled and
+					one leading error harmonic in that case (which the code below does for Length[i\[Chi]] = 2). *)
+				autoHarms = harmonicsToNull["Ellipse"][Clip[Length[i\[Chi]], {2, Infinity}] + 1, {nDes, mDes}];
 				(* Only take the nulled harmonics for nmNull. *)
 				Drop[autoHarms, -1])];
 		nmErr = Replace[optValErr, Automatic :> Last[autoHarms]];
@@ -804,7 +816,7 @@ findSeparations[
 				# === Automatic && !ellipseQ, Round[OptionValue["MeshPointsPer\[Chi]c"]],
 				True, #]&[
 					OptionValue["ExpansionPointsPerContourDim"]];
-			nearestPts = If[# === Automatic, (Length[i\[Chi]] - Length[nmNull]), #]&[
+			nearestPts = If[# === Automatic, Replace[Length[i\[Chi]] - Length[nmNull], 0 -> 1], #]&[
 				OptionValue["ContourMeshNN"]];
 			bleed = OptionValue["ExpansionBleed"];
 			seed = OptionValue["Seed"];
@@ -868,7 +880,10 @@ findSeparations[
 					initialMesh = echo["Initial (coarse) mesh"][Flatten[
 						Array[List,
 							(* Number of points in each dimension *)
-							Table[meshPoints, varCount],
+							If[varCount =!= 1,
+								Table[meshPoints, varCount],
+								(* If we only have one variable, then our 1D search space is the contour, so produce a dense mesh. *)
+								{meshPoints * expPoints}],
 							(* Start and end values for each dimension *)
 							Catenate[{
 								Table[{min\[Chi]c, max\[Chi]c}, loopCount],
@@ -900,10 +915,16 @@ findSeparations[
 								All, All, -1],
 							(* Delete a point if it is within dupProx. *)
 							Norm[#2 - #1] < dupProx &]];
+					
+					(* Return {} if no legal solutions were found. *)
+					If[filteredInitialSols === {}, Throw[{}]];
 						
+					If[varCount === 1,
+						(* If the search space is one-dimensional, then we don't need to find a solution contour, so we are done. *)
+						finalSols = filteredInitialSols,
+
+						(* Otherwise, perform a further search. *)
 						Switch[filteredInitialSols,
-							(* Return {} if no legal solutions were found. *)
-							{}, Throw[{}],
 							(* If only one solution was found, expand a cloud of points around it. *)
 							{_},
 							contourMesh = Flatten[
@@ -911,9 +932,9 @@ findSeparations[
 									Table[meshPoints, varCount],
 									(* The point cloud should fit within the grain size of the coarse mesh. *)
 									Catenate[{
-										Table[{-1, 1}(max\[Chi]c - min\[Chi]c)/(loopCount - 1), loopCount],
+										Table[{-1, 1}(max\[Chi]c - min\[Chi]c)/(meshPoints - 1), loopCount],
 										If[ellipseQ,
-											Table[{-1, 1}(maxt - mint)/(loopCount - 1), loopCount],
+											Table[{-1, 1}(maxt - mint)/(meshPoints - 1), loopCount],
 											{}]}]],
 								(* Flatten level *)
 								varCount - 1],
@@ -994,33 +1015,34 @@ findSeparations[
 							With[
 								{check = And @@ Join[
 									{Less[\[Chi]cSlots], tanCheck},
-									MovingMap[Apply[Abs @* Subtract, #] >= minSepDiff &, {\[Chi]cSlots}, 1]]},
+									If[loopCount === 1, {},
+										MovingMap[Apply[Abs @* Subtract, #] >= minSepDiff &, {\[Chi]cSlots}, 1]]]},
 								ParallelMap[
 									Apply[Function @ If[check, {##}, Nothing]],
 									finalSolsRaw]],
-							finalSolsRaw];
-						
-						(* Rank solutions by the ratio of the desired harmonic to the leading error harmonic. *)
-						coils = With[
-							{
-								rules = Rule @@@ Transpose[{Join[separations, tans], Join[{\[Chi]cSlots}, {tSlots}]}],
-								slots = If[ellipseQ,
-									Transpose[{{\[Chi]cSlots}, {tSlots}}],
-									{\[Chi]cSlots}],
-								partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]]},
-							ReverseSortBy[
-								Function[
-									Append[
-										rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]},
-										DesToErr -> (totalHarmDes/totalHarmErr /. rules)]] @@@ finalSols,
-								Last][[partSpec]]];
-						
-						(* If "ValuesOnly" -> True, then only return the separation (and tan) values. *)
-						If[valsOnlyQ,
-							Function[coil,
-								If[ellipseQ, Identity, Catenate][
-									GatherBy[Drop[coil, -1], #[[1, 1]]&][[All, All, 2]]]] /@ coils,
-							coils]]]]]
+							finalSolsRaw]];
+					
+					(* Rank solutions by the ratio of the desired harmonic to the leading error harmonic. *)
+					coils = With[
+						{
+							rules = Rule @@@ Transpose[{Join[separations, tans], Join[{\[Chi]cSlots}, {tSlots}]}],
+							slots = If[ellipseQ,
+								Transpose[{{\[Chi]cSlots}, {tSlots}}],
+								{\[Chi]cSlots}],
+							partSpec = Replace[coilsReturned, Except[All] -> Span[1, UpTo[coilsReturned]]]},
+						ReverseSortBy[
+							Function[
+								Append[
+									rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]},
+									DesToErr -> (totalHarmDes/totalHarmErr /. rules)]] @@@ finalSols,
+							Last][[partSpec]]];
+					
+					(* If "ValuesOnly" -> True, then only return the separation (and tan) values. *)
+					If[valsOnlyQ,
+						Function[coil,
+							If[ellipseQ, Identity, Catenate][
+								GatherBy[Drop[coil, -1], #[[1, 1]]&][[All, All, 2]]]] /@ coils,
+						coils]]]]]
 
 
 azimuthalTerm[\[Phi]c_, m_] := ChebyshevU[m - 1, \[Phi]c] Sqrt[1 - \[Phi]c^2]
@@ -1252,10 +1274,12 @@ loopPlotChecks[head_][\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 
-	(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+	(* Separations must either be a list of one or more positive reals in ascending order, or a list of
 		Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
 	If[
 		!MatchQ[\[Chi]c, Alternatives[
+
+			{_?Positive},
 
 			l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
 
@@ -1367,10 +1391,12 @@ saddlePlotChecks[head_][\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] 
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
-	(* Separations must either be a list of two or more positive reals in ascending order, or a list of
+	(* Separations must either be a list of one or more positive reals in ascending order, or a list of
 		Coil\[Chi]c[...] -> ... rules (can contain a DesToErr -> ... rule, which will be ignored). *)
 	If[
 		!MatchQ[\[Chi]c, Alternatives[
+
+			{_?Positive},
 
 			l:{__?Positive} /; (Length[l] >= 2 && AllTrue[Differences[l], Positive]),
 
@@ -1563,13 +1589,15 @@ ellipsePlotChecks[head_][\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
 	{proceed = True},
 	(* Check that arguments have been specified correctly, and issue messages if not. *)
 	
-	(* Separations and extents must either be a list of two or more paired positive reals, 
+	(* Separations and extents must either be a list of one or more paired positive reals, 
 		{{\[Chi]c1, \[Psi]1}, {\[Chi]c2, \[Psi]2}, \[Ellipsis]}, 
 		or a flat list of Coil\[Chi]c[i] -> \[Chi]ci and Coil\[Psi][i] -> \[Psi]i rules,
 		{Coil\[Chi]c[1] -> \[Chi]c1, Coil\[Psi][1] -> \[Psi]1, Coil\[Chi]c[2] -> \[Chi]c2, Coil\[Psi][2] -> \[Psi]2, \[Ellipsis]},
 		where there are as many extents as separations. In both cases, \[Chi]c1 < \[Chi]c2 < \[Ellipsis]. *)
 	If[
 		!MatchQ[\[Chi]c\[Psi]c, Alternatives[
+
+			{{_?Positive, _?Positive}},
 
 			l:{{_?Positive, _?Positive}..} /; (Length[l] >= 2 && AllTrue[Differences[l[[All, 1]]], Positive]),
 
