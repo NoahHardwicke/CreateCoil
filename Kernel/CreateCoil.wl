@@ -8,11 +8,11 @@
 (*Package Header*)
 
 
-Unprotect["CreateCoil`*", "CreateCoil`Private`*"];
-ClearAll["CreateCoil`*", "CreateCoil`Private`*"];
+Unprotect["NoahH`CreateCoil`*", "NoahH`CreateCoil`Private`*"];
+ClearAll["NoahH`CreateCoil`*", "NoahH`CreateCoil`Private`*"];
 
 
-BeginPackage["CreateCoil`"];
+BeginPackage["NoahH`CreateCoil`"];
 
 
 FindLoopCoil::usage =
