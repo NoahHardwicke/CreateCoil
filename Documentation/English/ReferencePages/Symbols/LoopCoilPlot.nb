@@ -1,0 +1,2423 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     99005,       2415]
+NotebookOptionsPosition[     85869,       2161]
+NotebookOutlinePosition[     86646,       2187]
+CellTagsIndexPosition[     86566,       2182]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["LoopCoilPlot", "ObjectName",
+ CellID->1608776693,ExpressionUUID->"50b6b9fb-c40f-4220-b406-0bccb4305436"],
+
+Cell[TextData[{
+ Cell["   ", "ModInfo",ExpressionUUID->"b5b493e8-fdcf-4514-9b68-f1b75fca6fef"],
+ Cell[BoxData[
+  RowBox[{
+   ButtonBox["LoopCoilPlot",
+    BaseStyle->"Link",
+    ButtonData->"paclet:NoahH/CreateCoil/ref/LoopCoilPlot"], "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox[
+       StyleBox["\[Chi]", "TI"], 
+       StyleBox[
+        RowBox[{"c", " ", "1"}], "TR"]], ",", 
+      SubscriptBox[
+       StyleBox["\[Chi]", "TI"], 
+       StyleBox[
+        RowBox[{"c", " ", "2"}], "TR"]], ",", 
+      StyleBox["\[Ellipsis]", "TR"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      SubscriptBox[
+       StyleBox["i", "TI"], 
+       StyleBox[
+        RowBox[{"\[Chi]", " ", "1"}], "TR"]], ",", 
+      SubscriptBox[
+       StyleBox["i", "TI"], 
+       StyleBox[
+        RowBox[{"\[Chi]", " ", "2"}], "TR"]], ",", 
+      StyleBox["\[Ellipsis]", "TR"]}], "}"}], ",", 
+    SubscriptBox[
+     StyleBox["\[Rho]", "TI"], 
+     StyleBox["c", "TI"]], ",", 
+    StyleBox["n", "TI"]}], "]"}]], "InlineFormula",ExpressionUUID->
+  "76a13b33-2730-4230-ae06-3d9a2a73fd58"],
+ "\[LineSeparator]",
+ "plots a schematic in the ",
+ Cell[BoxData[
+  StyleBox["\[Phi]", "TI"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "98e46c27-d714-41de-85db-7fcfb1c02ee1"],
+ Cell[BoxData[
+  StyleBox["z", "TI"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "a45c5892-04c2-4f04-b129-a8c0b60928f7"],
+ "\[Hyphen]plane of the loop\[Hyphen]based coil with axial separations ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Chi]", "TI"], 
+   StyleBox[
+    RowBox[{"c", " ", "1"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "88bada67-9615-46a4-be3a-35e46442b5a0"],
+ ", ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Chi]", "TI"], 
+   StyleBox[
+    RowBox[{"c", " ", "2"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "e260701d-47a7-4a6e-84b1-215446d184a7"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["\<\"\[Ellipsis]\"\>", "TR"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "21bd45a2-d8ad-4c8a-b6eb-6e6c3eef3a7f"],
+ ", turn ratios ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["i", "TI"], 
+   StyleBox[
+    RowBox[{"\[Chi]", " ", "1"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "379fe33c-362b-4c86-8fa0-7c4d74f75ac4"],
+ ", ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["i", "TI"], 
+   StyleBox[
+    RowBox[{"\[Chi]", " ", "2"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "d7b50aa5-03ae-404e-8cdb-d0a70f8de119"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["\<\"\[Ellipsis]\"\>", "TR"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "0c51c7e1-407b-41b4-82b7-020cce4fe0b6"],
+ ", radius ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Rho]", "TI"], 
+   StyleBox["c", "TI"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "10827e4a-7bb1-4dbc-b18c-bc7eba719c31"],
+ " and target field harmonic of order ",
+ Cell[BoxData[
+  StyleBox["n", "TI"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "e8951c04-4cf6-45ad-8d57-953898d393a2"],
+ ".",
+ "\n",
+ Cell["   ", "ModInfo",ExpressionUUID->"7912a883-ce82-459d-96aa-24dc8724e8c4"],
+ Cell[BoxData[
+  RowBox[{
+   ButtonBox["LoopCoilPlot",
+    BaseStyle->"Link",
+    ButtonData->"paclet:NoahH/CreateCoil/ref/LoopCoilPlot"], "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+       SubscriptBox[
+        StyleBox["\[Chi]", "TI"], 
+        StyleBox[
+         RowBox[{"c", " ", "1"}], "TR"]]}], ",", 
+      RowBox[{
+       RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+       SubscriptBox[
+        StyleBox["\[Chi]", "TI"], 
+        StyleBox[
+         RowBox[{"c", " ", "2"}], "TR"]]}], ",", 
+      StyleBox["\[Ellipsis]", "TR"]}], "}"}], ",", 
+    StyleBox["\[Ellipsis]", "TR"]}], "]"}]], "InlineFormula",ExpressionUUID->
+  "32902753-4801-4abf-9aae-eb7a0c06c7b8"],
+ "\[LineSeparator]",
+ " is an alternative way of specifying the axial separations ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Chi]", "TI"], 
+   StyleBox[
+    RowBox[{"c", " ", "1"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "8b33750f-1fe8-41ab-b94f-a613b6f56b9d"],
+ ", ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Chi]", "TI"], 
+   StyleBox[
+    RowBox[{"c", " ", "2"}], "TR"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "ac2352ee-2f7b-489d-abbd-cdcc19251e8c"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["\<\"\[Ellipsis]\"\>", "TR"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "8986611c-3e18-44f5-9506-0d5afd8623b9"],
+ "."
+}], "Usage",
+ CellChangeTimes->{
+  3.32361883463229*^9, 3.32766004026563*^9, 3.32766011595313*^9, 
+   3.3278782058635*^9, 3.32958951928125*^9, {3.387566565476775*^9, 
+   3.387566576423758*^9}, {3.891757474038258*^9, 3.89175748359041*^9}, {
+   3.891757534518593*^9, 3.891757576526331*^9}, {3.891757643260845*^9, 
+   3.891757684054553*^9}, {3.891761179365919*^9, 3.891761194836556*^9}, {
+   3.8917612276970453`*^9, 3.891761250003751*^9}, {3.891761332024857*^9, 
+   3.891761333037122*^9}, {3.8917613963119717`*^9, 3.8917614206105022`*^9}, {
+   3.891761453147622*^9, 3.8917614830730352`*^9}, {3.891762382726779*^9, 
+   3.891762390765471*^9}, 3.891762692713839*^9, 3.891762779310782*^9, 
+   3.8917628364114122`*^9, 3.8917686490570307`*^9, 3.891768693259838*^9, {
+   3.891768730544623*^9, 3.8917687354105997`*^9}, {3.891768789991062*^9, 
+   3.891768791442759*^9}, 3.89176888601503*^9, 3.891769295479238*^9, {
+   3.891769503050569*^9, 3.8917695159923477`*^9}, {3.891894712283319*^9, 
+   3.8918947893204517`*^9}, {3.8918948803722067`*^9, 3.891894884866144*^9}},
+ CellID->7970,ExpressionUUID->"4f0cefcc-0bac-4479-afeb-5f7e1050f9ab"],
+
+Cell["Axial separations are normalised by the coil radius.", "Notes",
+ CellChangeTimes->{{3.891776797758864*^9, 3.891776880442172*^9}},
+ CellID->852838433,ExpressionUUID->"e18f1f69-e497-4f3a-921e-13435ea84692"],
+
+Cell[TextData[{
+ "Coil radius ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["\[Rho]", "TI"], 
+   StyleBox["c", "TI"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "766ee2fe-58a6-4ba1-8bf3-fedcb56245bb"],
+ " is specified in metres."
+}], "Notes",
+ CellChangeTimes->{{3.891895137156855*^9, 3.891895189896646*^9}},
+ CellID->2045382224,ExpressionUUID->"81fe79f6-2db0-4449-b267-851ac107d483"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["LoopCoilPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/LoopCoilPlot"]], "InlineFormula",
+  ExpressionUUID->"76897bb4-335d-4208-8087-e7bae4db7207"],
+ " has the same options as ",
+ Cell[BoxData[
+  ButtonBox["Graphics",
+   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
+  "6849d9ed-2757-48e1-b543-40aef216b930"],
+ ", with the following additions:"
+}], "Notes",
+ CellChangeTimes->{{3.891769900356114*^9, 3.891769960123384*^9}, {
+  3.8917705051101027`*^9, 3.891770506326747*^9}, {3.891894241939802*^9, 
+  3.891894269404687*^9}, {3.891894334985034*^9, 3.891894342121354*^9}},
+ CellID->1616593528,ExpressionUUID->"fd5e2ce8-dda8-4bea-903c-8eaf9fc45185"],
+
+Cell[BoxData[GridBox[{
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "bfec03d7-0cb0-47cb-90e2-c6c1ed057aab"], "\"\<ThicknessScaling\>\"", 
+    "0.0015", Cell[
+    "multiplied by turn ratio to determine the thickness of lines", 
+     "TableText",ExpressionUUID->"1c79e311-301d-433c-a64d-429cf4820b1d"]},
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "95df31c6-9b2d-4ec5-bf94-bf8cf8962e6f"], "\"\<ArrowheadScaling\>\"", 
+    "0.006", Cell[
+    "multiplied by turn ratio to determine the size of arrowheads", 
+     "TableText",ExpressionUUID->"ccb0b7ed-7ff2-44a0-bafe-d0309467f32e"]}
+  }]], "3ColumnTableMod",
+ CellID->809322769,ExpressionUUID->"a7d8419b-c513-4f0e-ae35-388023722a8a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "See Also",
+ Cell[BoxData[
+  TemplateBox[{"SeeAlso", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Insert links to any related reference (function) pages.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "f886b0a4-66d5-439c-953a-6b6420922495"]
+}], "SeeAlsoSection",
+ CellID->1030406620,ExpressionUUID->"1009c2b9-9184-409c-a88d-9f4840066495"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["FindLoopCoil",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindLoopCoil"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},ExpressionUUID->
+  "fc18180d-032b-425c-859e-14fdcc5d8909"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["LoopFieldPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/LoopFieldPlot"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"d2d300d5-2913-461a-92bc-3451c91cbe62",ExpressionUUID->
+  "7260c0c2-0380-4ac8-b6de-4dcebcd1f757"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["LoopFieldPlot2D",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/LoopFieldPlot2D"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"75165f59-887d-49b8-8cd3-81feaec88598",ExpressionUUID->
+  "74e366f7-74cf-40ff-b041-6d1b2ea29171"],
+ Cell[BoxData[
+  RowBox[{
+  Cell[TextData[StyleBox[
+   " \[FilledVerySmallSquare] ", "InlineSeparator"]],ExpressionUUID->
+    "da2ffec7-1dc0-4fdf-ace1-e4bd7c5ab009"], 
+   DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
+    "d3172edc-9b68-469a-a6e9-e31997439a22", 
+     "8269d53b-999f-4686-9653-5ac21df8df34"], $CellContext`cellobj$$ = 
+    CellObject[
+    "d7905b5f-b0c6-4490-8058-1ff43137e8af", 
+     "6041228a-c179-4e1a-8e8b-9fbabde95761"]}, 
+    TemplateBox[{
+      GraphicsBox[{{
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         CircleBox[{0, 0}]}, {
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         LineBox[{{0, 0.62}, {0, -0.62}}]}, {
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         LineBox[{{-0.62, 0}, {0.62, 0}}]}}, 
+       ImagePadding -> {{1., 1.}, {2.4, 1.}}, ImageSize -> 16, 
+       PlotRange -> {{-1.06, 1.06}, {-1.06, 1.06}}, 
+       BaselinePosition -> (Center -> 
+        Center)], $CellContext`nbobj$$, $CellContext`cellobj$$},
+     "InlineListingAddButton"],
+    Initialization:>($CellContext`nbobj$$ = 
+      EvaluationNotebook[]; $CellContext`cellobj$$ = EvaluationCell[])]}]], 
+  "InlineListingAddButton",ExpressionUUID->
+  "d7905b5f-b0c6-4490-8058-1ff43137e8af"]
+}], "SeeAlso",
+ CellChangeTimes->{{3.891894370912703*^9, 3.891894407493987*^9}},
+ CellID->735932932,ExpressionUUID->"06256b20-5159-4eea-962d-c870b879ada3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Tech Notes",
+ Cell[BoxData[
+  TemplateBox[{"TechNotes", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell["Insert links to related tech notes.", "MoreInfoText"], BaseStyle -> 
+       "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "3d42c2ea-ef04-4a4a-ac00-8d0e9da47ee2"]
+}], "TechNotesSection",
+ CellID->1466465051,ExpressionUUID->"2a70065e-991a-46f6-9121-ae6263941cef"],
+
+Cell["XXXX", "Tutorials",
+ CellID->208295538,ExpressionUUID->"3f5b80bb-88ad-45f7-9be1-41f277939728"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Guides", "MoreAboutSection",
+ CellID->424762556,ExpressionUUID->"05ac0c0a-9f26-4ab0-b9ad-9e6a59aba3dd"],
+
+Cell["XXXX", "MoreAbout",
+ CellID->748636064,ExpressionUUID->"80a506a8-0c20-4057-a127-8b043181a7f1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Related Links",
+ Cell[BoxData[
+  TemplateBox[{"RelatedLinks", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Insert links to any related page, including web pages.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "0d3c305a-be80-4b10-a5cb-325b570b682e"]
+}], "RelatedLinksSection",
+ CellID->219639875,ExpressionUUID->"105a6c1d-75bf-4186-b48d-9e12b3e60e86"],
+
+Cell["XXXX", "RelatedLinks",
+ CellID->2110473579,ExpressionUUID->"40423f2a-c48d-4f1d-b176-0d67d28a57c1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Examples Initialization",
+ Cell[BoxData[
+  TemplateBox[{"ExamplesInitialization", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Input that is to be evaluated before any examples are run, e.g. \
+Needs[\[Ellipsis]].", "MoreInfoText"], BaseStyle -> "IFrameBox"]], 
+     "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "f87b0814-7c23-4027-8b1c-77d4fa3987c9"]
+}], "ExamplesInitializationSection",
+ CellID->742044754,ExpressionUUID->"a66884b2-0f06-4ca9-a91d-5bb4fcab2769"],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<NoahH`CreateCoil`\>\"", 
+  "]"}]], "ExampleInitialization",
+ CellID->1108642349,ExpressionUUID->"ba666ae6-a16b-497a-9fd8-0b52ceeee339"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     StyleBox[
+      RowBox[{"Basic", " ", "Examples"}], "PrimaryExamplesSection"], 
+     ButtonBox[
+      RowBox[{
+       RowBox[{"More", " ", "Examples"}], " ", "\[RightTriangle]"}],
+      BaseStyle->"ExtendedExamplesLink",
+      ButtonData:>"ExtendedExamples"]}
+   }],
+  $Line = 0; Null]], "PrimaryExamplesSection",
+ CellID->1383838271,ExpressionUUID->"abbf236e-8bac-4104-b882-3617c7ba00aa"],
+
+Cell[TextData[{
+ "Plot a schematic of a loop coil optimised to generate the ",
+ Cell[BoxData[
+  RowBox[{
+   StyleBox["n", "TI"], "=", "1"}]], "InlineFormula",ExpressionUUID->
+  "d01e6c86-a478-46de-bef0-bc1e251fa529"],
+ " field harmonic, with a radius of 0.1 metres:"
+}], "ExampleText",
+ CellChangeTimes->{{3.891894956827355*^9, 3.891894975111248*^9}, {
+  3.891895044810533*^9, 3.891895056610599*^9}, {3.891895092579513*^9, 
+  3.891895095068861*^9}, {3.891895215501276*^9, 3.891895272835115*^9}, {
+  3.891895365202261*^9, 3.891895439651791*^9}},
+ CellID->477287128,ExpressionUUID->"d9bc4e16-f25d-4ad4-9941-c575ece3fed0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LoopCoilPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0.362", ",", "0.549", ",", "0.697"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", "0.1", ",", "1"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.891894303248321*^9, 3.891894326541934*^9}, {
+  3.891894418258594*^9, 3.8918944183839073`*^9}, {3.8918949830721273`*^9, 
+  3.891895018969946*^9}, {3.891895237608141*^9, 3.891895240966978*^9}, {
+  3.8918954915401697`*^9, 3.891895510071786*^9}},
+ CellLabel->"In[170]:=",
+ CellID->2028951105,ExpressionUUID->"fa55585f-e5b1-4890-85be-800ab2bbb339"],
+
+Cell[BoxData[
+ DynamicModuleBox[{NoahH`CreateCoil`Private`tracker$$ = None}, 
+  GraphicsBox[{
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[NoahH`CreateCoil`Private`tracker$$ === {0.0362, 1}, Red, Black], 
+          StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[
+         {Thickness[0.0015], Arrowheads[{{0.005809475019311125, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.0362}, {0.6283185307179586, 0.0362}}]}, {{{1, 0}, {
+          0, -1}}, {0, 0}}], 
+        {Thickness[0.0015], Arrowheads[{{0.005809475019311125, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.0362}, {0.6283185307179586, 0.0362}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (NoahH`CreateCoil`Private`tracker$$ = {0.0362, 1}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             TemplateBox[{"0.0362`", "\" (m)\""}, "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"1", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.0362, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{1, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.054900000000000004`, -2}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[GeometricTransformationBox[
+          {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}}], 
+           ArrowBox[{{0., 0.054900000000000004`}, {0.6283185307179586, 
+            0.054900000000000004`}}]}, {{{-1., 0.}, {0., 1.}}, {
+           0.6283185307179586, 0.}}], {{{1, 0}, {0, -1}}, {0, 0}}], 
+        GeometricTransformationBox[
+         {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.054900000000000004`}, {0.6283185307179586, 
+           0.054900000000000004`}}]}, {{{-1., 0.}, {0., 1.}}, {
+          0.6283185307179586, 0.}}]},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.054900000000000004`, -2}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.054900000000000004`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{
+               RowBox[{"-", "2"}], "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.054900000000000004`, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{-2, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[NoahH`CreateCoil`Private`tracker$$ === {0.0697, 2}, Red, Black], 
+          StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[
+         {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.0697}, {0.6283185307179586, 0.0697}}]}, {{{1, 0}, {
+          0, -1}}, {0, 0}}], 
+        {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.0697}, {0.6283185307179586, 0.0697}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (NoahH`CreateCoil`Private`tracker$$ = {0.0697, 2}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             TemplateBox[{"0.0697`", "\" (m)\""}, "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"2", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.0697, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{2, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ]},
+   AlignmentPoint->Center,
+   AspectRatio->Automatic,
+   Axes->False,
+   AxesLabel->None,
+   AxesOrigin->Automatic,
+   AxesStyle->{},
+   Background->None,
+   BaseStyle->{},
+   BaselinePosition->Automatic,
+   ColorOutput->Automatic,
+   ContentSelectable->Automatic,
+   CoordinatesToolOptions:>Automatic,
+   DisplayFunction:>Last[{
+      Last[{$DisplayFunction}]}],
+   Epilog->{},
+   FormatType:>Last[{
+      Last[{TraditionalForm}]}],
+   Frame->True,
+   FrameLabel->{{
+      FormBox[
+      "\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\"", 
+       TraditionalForm], None}, {
+      FormBox[
+      "\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\
+\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\"", TraditionalForm], None}},
+   FrameStyle->{},
+   FrameTicks->Automatic,
+   FrameTicksStyle->{},
+   GridLines->None,
+   GridLinesStyle->{},
+   ImageMargins->0.,
+   ImagePadding->All,
+   ImageSize->Large,
+   ImageSizeRaw->Automatic,
+   LabelStyle->{},
+   Method->Automatic,
+   PlotLabel->None,
+   PlotRange->{{0, 0.6283185307179586}, All},
+   PlotRangeClipping->True,
+   PlotRangePadding->{0, 0.010324326977181858`},
+   PlotRegion->Automatic,
+   PreserveImageOptions->Automatic,
+   Prolog->{},
+   RotateLabel->True,
+   Ticks->Automatic,
+   TicksStyle->{}],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{{3.891894305004273*^9, 3.891894326770645*^9}, 
+   3.8918944187630577`*^9, {3.89189523259881*^9, 3.8918952414804277`*^9}, 
+   3.891895510624153*^9},
+ CellLabel->"Out[170]=",
+ CellID->1981731668,ExpressionUUID->"914f5c8c-ceef-43f5-9b77-6aff7ad2d894"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\t", "ExampleDelimiter",ExpressionUUID->
+   "16ae3315-79a2-4961-85ed-598a7c2f7b0c"],
+  $Line = 0; Null]], "ExampleDelimiter",
+ CellID->1080700999,ExpressionUUID->"e79eace6-b981-4604-be2e-cc23795123c7"],
+
+Cell[TextData[{
+ "Directly use the output of ",
+ Cell[BoxData[
+  ButtonBox["FindLoopCoil",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindLoopCoil"]], "InlineFormula",
+  ExpressionUUID->"1082dc2e-413e-4620-8e83-23ba486c4b14"],
+ ":"
+}], "ExampleText",
+ CellChangeTimes->{{3.891895615740065*^9, 3.8918956442720737`*^9}},
+ CellID->2072487514,ExpressionUUID->"13b945b1-a6c9-4f10-9ccc-46d176939eb5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"sols", "=", 
+  RowBox[{"FindLoopCoil", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", 
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", "2", ",", 
+    RowBox[{"{", 
+     RowBox[{"0.1", ",", 
+      RowBox[{
+       SqrtBox["3"], "/", "2"}]}], "}"}], ",", 
+    RowBox[{"\"\<CoilsReturned\>\"", "->", "3"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.891895687898085*^9, 3.8918957085511627`*^9}},
+ CellLabel->"In[171]:=",
+ CellID->610837034,ExpressionUUID->"18a59c5d-7724-4eb1-befb-0692fce5e9a6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.5543723393646441`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+      "0.6747664450975882`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "3", "]"}], "\[Rule]", 
+      "0.8660254037844386`"}], ",", 
+     RowBox[{"DesToErr", "\[Rule]", "34.519847734652814`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.5531000991681341`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+      "0.6736082719169847`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "3", "]"}], "\[Rule]", 
+      "0.8651421835079809`"}], ",", 
+     RowBox[{"DesToErr", "\[Rule]", "33.58522173842624`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.5525990956822886`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+      "0.673065119398009`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "3", "]"}], "\[Rule]", 
+      "0.8646285886678198`"}], ",", 
+     RowBox[{"DesToErr", "\[Rule]", "33.22770376865214`"}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.891895709947747*^9},
+ CellLabel->"Out[171]=",
+ CellID->1660944024,ExpressionUUID->"8c584a9b-d8ee-4563-8a95-e35cef94df40"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LoopCoilPlot", "[", 
+  RowBox[{
+   RowBox[{"First", "[", "sols", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", "0.1", ",", "2"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.891895718168435*^9, 3.89189572474508*^9}},
+ CellLabel->"In[172]:=",
+ CellID->346284015,ExpressionUUID->"0074e952-c6fc-4729-9c5e-081590196f8e"],
+
+Cell[BoxData[
+ DynamicModuleBox[{NoahH`CreateCoil`Private`tracker$$ = None}, 
+  GraphicsBox[{
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.055437233936464415`, 1}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[GeometricTransformationBox[
+          {Thickness[0.0015], Arrowheads[{{0.005809475019311125, 0.25, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.5, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.75, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}}], 
+           ArrowBox[{{0., 0.055437233936464415`}, {0.6283185307179586, 
+            0.055437233936464415`}}]}, {{{-1., 0.}, {0., 1.}}, {
+           0.6283185307179586, 0.}}], {{{1, 0}, {0, -1}}, {0, 0}}], 
+        {Thickness[0.0015], Arrowheads[{{0.005809475019311125, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.005809475019311125, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.055437233936464415`}, {0.6283185307179586, 
+          0.055437233936464415`}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.055437233936464415`, 1}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.055437233936464415`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"1", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.055437233936464415`, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{1, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.06747664450975882, -2}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[
+         GeometricTransformationBox[GeometricTransformationBox[
+           {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+               GraphicsBox[{
+                 RGBColor[1, 0, 0], 
+                 InterpretationBox[
+                  PolygonBox[
+                   NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                  RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+               GraphicsBox[{
+                 RGBColor[1, 0, 0], 
+                 InterpretationBox[
+                  PolygonBox[
+                   NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                  RegularPolygon[{1, 0}, 3]]}]}, {
+              0.008215838362577492, 0.75, 
+               GraphicsBox[{
+                 RGBColor[1, 0, 0], 
+                 InterpretationBox[
+                  PolygonBox[
+                   NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                  RegularPolygon[{1, 0}, 3]]}]}}], 
+            ArrowBox[{{0., 0.06747664450975882}, {0.6283185307179586, 
+             0.06747664450975882}}]}, {{{-1., 0.}, {0., 1.}}, {
+            0.6283185307179586, 0.}}], {{{-1., 0.}, {0., 1.}}, {
+           0.6283185307179586, 0.}}], {{{1, 0}, {0, -1}}, {0, 0}}], 
+        GeometricTransformationBox[
+         {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.06747664450975882}, {0.6283185307179586, 
+           0.06747664450975882}}]}, {{{-1., 0.}, {0., 1.}}, {
+          0.6283185307179586, 0.}}]},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.06747664450975882, -2}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.06747664450975882`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{
+               RowBox[{"-", "2"}], "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.06747664450975882, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{-2, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.08660254037844387, 2}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[GeometricTransformationBox[
+          {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+              GraphicsBox[{
+                RGBColor[1, 0, 0], 
+                InterpretationBox[
+                 PolygonBox[
+                  NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                    0}, {-0.5, 
+                    0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                 RegularPolygon[{1, 0}, 3]]}]}}], 
+           ArrowBox[{{0., 0.08660254037844387}, {0.6283185307179586, 
+            0.08660254037844387}}]}, {{{-1., 0.}, {0., 1.}}, {
+           0.6283185307179586, 0.}}], {{{1, 0}, {0, -1}}, {0, 0}}], 
+        {Thickness[0.003], Arrowheads[{{0.008215838362577492, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.008215838362577492, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.08660254037844387}, {0.6283185307179586, 
+          0.08660254037844387}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.08660254037844387, 2}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.08660254037844387`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"2", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.08660254037844387, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{2, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ]},
+   AlignmentPoint->Center,
+   AspectRatio->Automatic,
+   Axes->False,
+   AxesLabel->None,
+   AxesOrigin->Automatic,
+   AxesStyle->{},
+   Background->None,
+   BaseStyle->{},
+   BaselinePosition->Automatic,
+   ColorOutput->Automatic,
+   ContentSelectable->Automatic,
+   CoordinatesToolOptions:>Automatic,
+   DisplayFunction:>Last[{
+      Last[{$DisplayFunction}]}],
+   Epilog->{},
+   FormatType:>Last[{
+      Last[{TraditionalForm}]}],
+   Frame->True,
+   FrameLabel->{{
+      FormBox[
+      "\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\"", 
+       TraditionalForm], None}, {
+      FormBox[
+      "\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\
+\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\"", TraditionalForm], None}},
+   FrameStyle->{},
+   FrameTicks->Automatic,
+   FrameTicksStyle->{},
+   GridLines->None,
+   GridLinesStyle->{},
+   ImageMargins->0.,
+   ImagePadding->All,
+   ImageSize->Large,
+   ImageSizeRaw->Automatic,
+   LabelStyle->{},
+   Method->Automatic,
+   PlotLabel->None,
+   PlotRange->{{0, 0.6283185307179586}, All},
+   PlotRangeClipping->True,
+   PlotRangePadding->{0, 0.010324326977181858`},
+   PlotRegion->Automatic,
+   PreserveImageOptions->Automatic,
+   Prolog->{},
+   RotateLabel->True,
+   Ticks->Automatic,
+   TicksStyle->{}],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.891895730193405*^9},
+ CellLabel->"Out[172]=",
+ CellID->822581864,ExpressionUUID->"5fd0182e-a30b-4a54-bec8-ae811ac5776c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\t", "ExampleDelimiter",ExpressionUUID->
+   "3caecdbe-c949-4a38-a823-bbbe059867b9"],
+  $Line = 0; Null]], "ExampleDelimiter",
+ CellID->2083946763,ExpressionUUID->"dc37fc3c-6649-42b7-b2f4-97b5bdb89b5a"],
+
+Cell["Make a smaller plot with heaver lines and arrowheads:", "ExampleText",
+ CellChangeTimes->{{3.8918962142005157`*^9, 3.8918962326352863`*^9}},
+ CellID->1582446818,ExpressionUUID->"e3d909fd-071c-446c-92b5-6fda65d4e53e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"sol", "=", 
+  RowBox[{"First", "@", 
+   RowBox[{"FindLoopCoil", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}], ",", "1", ",", 
+     RowBox[{"{", 
+      RowBox[{"0.1", ",", "2"}], "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.891895868261306*^9, 3.891895919824686*^9}, {
+  3.891896063330611*^9, 3.891896072461664*^9}},
+ CellLabel->"In[191]:=",
+ CellID->775889267,ExpressionUUID->"7a101e8e-278e-482e-ad57-71235d426574"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+    "0.3843854265369966`"}], ",", 
+   RowBox[{
+    RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+    "1.0520724785320525`"}], ",", 
+   RowBox[{"DesToErr", "\[Rule]", "18.104622564671693`"}]}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.8918960735360203`*^9, 3.8918962409869127`*^9},
+ CellLabel->"Out[191]=",
+ CellID->681488803,ExpressionUUID->"6d4b69e9-2118-4e2e-b5bd-61319ad323a1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LoopCoilPlot", "[", 
+  RowBox[{"sol", ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", "0.1", ",", "1", ",", 
+   RowBox[{"ImageSize", "->", "400"}], ",", 
+   RowBox[{"\"\<ThicknessScaling\>\"", "->", "0.0025"}], ",", 
+   RowBox[{"\"\<ArrowheadScaling\>\"", "->", "0.015"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.891895924520721*^9, 3.8918959845272837`*^9}, {
+  3.8918960662840014`*^9, 3.891896066421667*^9}, {3.891896244745425*^9, 
+  3.891896318993866*^9}},
+ CellLabel->"In[194]:=",
+ CellID->54122057,ExpressionUUID->"9c90f640-3547-4b6f-967b-da110357a5d0"],
+
+Cell[BoxData[
+ DynamicModuleBox[{NoahH`CreateCoil`Private`tracker$$ = None}, 
+  GraphicsBox[{
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.03843854265369966, 1}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[
+         {Thickness[0.0025], Arrowheads[{{0.009185586535436918, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.03843854265369966}, {0.6283185307179586, 
+           0.03843854265369966}}]}, {{{1, 0}, {0, -1}}, {0, 0}}], 
+        {Thickness[0.0025], Arrowheads[{{0.009185586535436918, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.03843854265369966}, {0.6283185307179586, 
+          0.03843854265369966}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.03843854265369966, 1}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.03843854265369966`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"1", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.03843854265369966, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{1, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[{
+        DynamicBox[Typeset`ToBoxes[
+          If[
+          NoahH`CreateCoil`Private`tracker$$ === {0.10520724785320526`, 1}, 
+           Red, Black], StandardForm, Graphics],
+         ImageSizeCache->{{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], 
+        GeometricTransformationBox[
+         {Thickness[0.0025], Arrowheads[{{0.009185586535436918, 0.25, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.5, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.75, 
+             GraphicsBox[{
+               RGBColor[1, 0, 0], 
+               InterpretationBox[
+                PolygonBox[
+                 NCache[{{1, 0}, {
+                    Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                    Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                   0}, {-0.5, 
+                   0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+                RegularPolygon[{1, 0}, 3]]}]}}], 
+          ArrowBox[{{0., 0.10520724785320526`}, {0.6283185307179586, 
+           0.10520724785320526`}}]}, {{{1, 0}, {0, -1}}, {0, 0}}], 
+        {Thickness[0.0025], Arrowheads[{{0.009185586535436918, 0.25, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.5, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}, {0.009185586535436918, 0.75, 
+            GraphicsBox[{
+              RGBColor[1, 0, 0], 
+              InterpretationBox[
+               PolygonBox[
+                NCache[{{1, 0}, {
+                   Rational[-1, 2], Rational[1, 2] 3^Rational[1, 2]}, {
+                   Rational[-1, 2], Rational[-1, 2] 3^Rational[1, 2]}}, {{1, 
+                  0}, {-0.5, 
+                  0.8660254037844386}, {-0.5, -0.8660254037844386}}]], 
+               RegularPolygon[{1, 0}, 3]]}]}}], 
+         ArrowBox[{{0., 0.10520724785320526`}, {0.6283185307179586, 
+          0.10520724785320526`}}]}},
+       EventHandlerTag[{
+        "MouseEntered" :> (
+          NoahH`CreateCoil`Private`tracker$$ = {0.10520724785320526`, 1}), 
+         "MouseExited" :> (NoahH`CreateCoil`Private`tracker$$ = None), Method -> 
+         "Preemptive", PassEventsDown -> Automatic, PassEventsUp -> True}]],
+      PaneBox[
+       TagBox[
+        FormBox[
+         TagBox[
+          
+          GridBox[{{
+            "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"", "\" = \"", 
+             
+             TemplateBox[{"0.10520724785320526`", "\" (m)\""}, 
+              "RowDefault"]}, {
+            "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\
+\\\"], \\\"\[Chi]\\\"]\\)\"", "\" = \"", 
+             TemplateBox[{"1", "\" (A)\""}, "RowDefault"]}}, 
+           GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> False, 
+           GridBoxItemSize -> {
+            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Grid"], 
+         TraditionalForm], TraditionalForm, Editable -> True], 
+       FrameMargins -> {{5, 5}, {2, 2}}]],
+     Annotation[#, 
+      Pane[
+       TraditionalForm[
+        Grid[{{
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*\
+SubscriptBox[\\\"\[Rho]\\\", \
+StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\""], " = ", 
+           Row[{0.10520724785320526`, " (m)"}]}, {
+           RawBoxes[
+           "\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\
+\"], \\\"\[Chi]\\\"]\\)\""], " = ", 
+           Row[{1, " (A)"}]}}, Alignment -> Left]], 
+       FrameMargins -> {{5, 5}, {2, 2}}], "Tooltip"]& ]},
+   AlignmentPoint->Center,
+   AspectRatio->Automatic,
+   Axes->False,
+   AxesLabel->None,
+   AxesOrigin->Automatic,
+   AxesStyle->{},
+   Background->None,
+   BaseStyle->{},
+   BaselinePosition->Automatic,
+   ColorOutput->Automatic,
+   ContentSelectable->Automatic,
+   CoordinatesToolOptions:>Automatic,
+   DisplayFunction:>Last[{
+      Last[{$DisplayFunction}]}],
+   Epilog->{},
+   FormatType:>Last[{
+      Last[{TraditionalForm}]}],
+   Frame->True,
+   FrameLabel->{{
+      FormBox[
+      "\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\"", 
+       TraditionalForm], None}, {
+      FormBox[
+      "\"\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\
+\\\"Italic\\\"]]\\)\[ThinSpace]\[Phi] (m)\"", TraditionalForm], None}},
+   FrameStyle->{},
+   FrameTicks->Automatic,
+   FrameTicksStyle->{},
+   GridLines->None,
+   GridLinesStyle->{},
+   ImageMargins->0.,
+   ImagePadding->All,
+   ImageSize->400,
+   ImageSizeRaw->Automatic,
+   LabelStyle->{},
+   Method->Automatic,
+   PlotLabel->None,
+   PlotRange->{{0, 0.6283185307179586}, All},
+   PlotRangeClipping->True,
+   PlotRangePadding->{0, 0.011542948471456777`},
+   PlotRegion->Automatic,
+   PreserveImageOptions->Automatic,
+   Prolog->{},
+   RotateLabel->True,
+   Ticks->Automatic,
+   TicksStyle->{}],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{{3.891896283170802*^9, 3.891896319779106*^9}},
+ CellLabel->"Out[194]=",
+ CellID->275418690,ExpressionUUID->"600ae78d-4c55-42d4-a2d5-79c273d796da"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "More Examples",
+ Cell[BoxData[
+  TemplateBox[{"MoreExamples", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell["Extended examples in standardized sections.", "MoreInfoText"], 
+       BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "b7284a27-213e-4528-9119-cb409a5f2337"]
+}], "ExtendedExamplesSection",
+ CellTags->"ExtendedExamples",
+ CellID->921923687,ExpressionUUID->"6576fa0f-634d-4e47-a667-664d9d44268d"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Scope", "ExampleSection",ExpressionUUID->
+   "f1a66a53-d389-4c1e-a4e1-f556f7bd0f36"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->676894304,ExpressionUUID->"501bd781-67c9-43e2-ab38-3b5bc384ff58"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Generalizations & Extensions", "ExampleSection",ExpressionUUID->
+   "01341542-8fd0-4dbb-b2ed-9fff5dbd79bf"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->1341689169,ExpressionUUID->"38fdd193-f121-4b9b-b299-736fc9859884"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Options", "ExampleSection",ExpressionUUID->
+   "ff5217d7-043d-465a-b46c-bdb48277eb37"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->899032684,ExpressionUUID->"640a63bb-0571-422f-bd86-f3812fe635d9"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "AlignmentPoint", "ExampleSubsection",ExpressionUUID->
+   "384c5aca-0726-47ad-8696-c3ef56d99c23"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->347379696,ExpressionUUID->"9b24f575-bc5f-43b6-a579-c080ac8c5511"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "AspectRatio", "ExampleSubsection",ExpressionUUID->
+   "bfb992d0-05bf-4449-9def-fd2067d9794b"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1549998126,ExpressionUUID->"33554b68-5ccc-4c58-9baa-b7347df80b40"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Axes", "ExampleSubsection",ExpressionUUID->
+   "b78d706e-6a13-4c89-a866-1428bb7795a6"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1841865572,ExpressionUUID->"7e30731a-62db-4d65-9377-f5bb7fcb427f"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "AxesLabel", "ExampleSubsection",ExpressionUUID->
+   "adc5ce99-d231-47b6-bab9-7c8a0f75e1b9"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->257897099,ExpressionUUID->"92adc66d-1762-4259-a32d-d1a0248c7cd6"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "AxesOrigin", "ExampleSubsection",ExpressionUUID->
+   "780ede68-0154-4e0e-a4e7-9848e42d2ede"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->854543247,ExpressionUUID->"5aab30cc-5a8d-4f46-bca3-7b55ef0df849"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "AxesStyle", "ExampleSubsection",ExpressionUUID->
+   "b09616e3-7827-4b05-9f4a-dd4feed83d6f"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->2085204840,ExpressionUUID->"487cad5a-c7b6-46b3-b7c8-82c63415a6b9"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Background", "ExampleSubsection",ExpressionUUID->
+   "f89c513e-eec6-48cc-ae61-90f9a29cb7c0"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1252110487,ExpressionUUID->"a5fbee84-151f-45c3-bc78-a7bc61eb63bf"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "BaselinePosition", "ExampleSubsection",ExpressionUUID->
+   "4316182c-0dce-443d-be14-df8baa5774bd"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1028698056,ExpressionUUID->"382baa2f-4fa6-4770-ba05-7718635915e1"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "BaseStyle", "ExampleSubsection",ExpressionUUID->
+   "dc2e09f7-a333-4c3f-a7be-95fbff3eaa3c"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->2084868842,ExpressionUUID->"dcb554d3-d8d9-40ed-884b-1d3870e020e9"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ColorOutput", "ExampleSubsection",ExpressionUUID->
+   "8e3e8c2b-58e6-4039-b397-4d701397d516"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->2047443042,ExpressionUUID->"f9565109-2af1-478b-888c-8799c8519524"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ContentSelectable", "ExampleSubsection",ExpressionUUID->
+   "1c01db74-bc18-4e41-9314-11d43ed1b32f"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->97247366,ExpressionUUID->"58e497da-2d41-4f3d-8e05-f0da1c68aa85"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "CoordinatesToolOptions", "ExampleSubsection",ExpressionUUID->
+   "f946328f-8479-44b8-bb4a-1305cc4f306d"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->201424995,ExpressionUUID->"2b33156f-efd8-4638-a438-fd5095bb3c76"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "DisplayFunction", "ExampleSubsection",ExpressionUUID->
+   "bcf78a4b-00bb-49d3-b2e3-368751e60394"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->915663293,ExpressionUUID->"55a04a06-cce6-41e3-9884-40d06a8a0ca1"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Epilog", "ExampleSubsection",ExpressionUUID->
+   "c2e5df15-ed96-45bc-ac3f-f0fda8aed5ae"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->685151049,ExpressionUUID->"accde683-6611-4522-99af-a18d88a6ba44"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "FormatType", "ExampleSubsection",ExpressionUUID->
+   "63f2e1e7-e418-4f23-9910-d780b53375d1"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->526365329,ExpressionUUID->"9d8d260d-8e14-4130-a42b-24fa3a96734c"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Frame", "ExampleSubsection",ExpressionUUID->
+   "d9ae7629-b2f1-4854-8e84-b9ba529fc990"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1136942510,ExpressionUUID->"d7723cc3-b1e1-4b87-8962-c04ad20f8baa"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "FrameLabel", "ExampleSubsection",ExpressionUUID->
+   "fc4a4ac8-0ada-4bcd-b40e-9dae2d8cf761"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->283274564,ExpressionUUID->"1286c824-4537-456b-90c2-b790d8ae6fe7"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "FrameStyle", "ExampleSubsection",ExpressionUUID->
+   "e290dace-5eb9-4c58-88e1-5502f23e5bc4"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->24351749,ExpressionUUID->"f302c227-3447-447c-b29d-48b3b8d99d73"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "FrameTicks", "ExampleSubsection",ExpressionUUID->
+   "6c676da3-6faa-434e-8f0e-b6332d71ac62"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1257952513,ExpressionUUID->"fe71ffc4-1eb3-47d0-a012-a37642b98e78"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "FrameTicksStyle", "ExampleSubsection",ExpressionUUID->
+   "eb2c6273-e352-411c-b51a-68582c729841"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->431381276,ExpressionUUID->"eb0a7063-2f23-46ba-9467-49a41b81620c"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "GridLines", "ExampleSubsection",ExpressionUUID->
+   "143c5067-c4d6-449e-9484-ce97c3028d63"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->320313460,ExpressionUUID->"2ae94637-56be-4cb7-bcd6-8cb5c62f65ff"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "GridLinesStyle", "ExampleSubsection",ExpressionUUID->
+   "b00a2615-632c-46d2-8b8d-eb0f7a09eaf3"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1914302838,ExpressionUUID->"46aea288-1277-44ec-96ec-f19da96dbe57"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ImageMargins", "ExampleSubsection",ExpressionUUID->
+   "b4d04774-4f75-44c6-b32c-58940c8f26cc"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->87798912,ExpressionUUID->"3fa6e943-1ff5-4b69-8694-84e71ebd181d"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ImagePadding", "ExampleSubsection",ExpressionUUID->
+   "61371fa0-dce2-4223-b891-aa2e933ca56e"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->315048495,ExpressionUUID->"87521992-7e1b-4fde-8487-af67de97f504"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ImageSize", "ExampleSubsection",ExpressionUUID->
+   "f2437c0a-be78-42f6-ba49-6942cdcb0b3d"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1472865610,ExpressionUUID->"caa4fc2a-ba25-4811-ad86-07669137c632"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "ImageSizeRaw", "ExampleSubsection",ExpressionUUID->
+   "d57a00ce-4b41-4110-ac6b-63361cc34d1f"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->408308301,ExpressionUUID->"a32d103e-e672-44a9-900c-88a051caf36d"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "LabelStyle", "ExampleSubsection",ExpressionUUID->
+   "3c2c6b40-b04c-4be6-80a0-b06883df28a1"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1227362742,ExpressionUUID->"702c8ea2-9754-4807-9578-cc29aae89c5f"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Method", "ExampleSubsection",ExpressionUUID->
+   "a608a065-e71c-40ca-90f9-18a241edc481"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1705175359,ExpressionUUID->"f527f053-d815-4b0c-99b9-71469bcd687e"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PlotLabel", "ExampleSubsection",ExpressionUUID->
+   "4526a7f7-1940-4b42-be07-ef66380ac4bf"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->712989498,ExpressionUUID->"24e98308-bbd7-477b-93b3-a32b3ba14c6c"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PlotRange", "ExampleSubsection",ExpressionUUID->
+   "a3a227d8-7e97-46d8-811c-8b1e42d16349"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->255742626,ExpressionUUID->"2cdc932f-a98e-4a42-8589-e5dcc063bf77"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PlotRangeClipping", "ExampleSubsection",ExpressionUUID->
+   "8c857096-1f4e-45f0-95ba-ee2f8b263b59"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1151537535,ExpressionUUID->"b307ae92-e1d2-4bfd-9582-37066b52566f"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PlotRangePadding", "ExampleSubsection",ExpressionUUID->
+   "306ab677-7f8c-456a-9148-31afc2f794d5"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->768723981,ExpressionUUID->"647949cc-f242-4548-86ab-0f0cc100d6f6"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PlotRegion", "ExampleSubsection",ExpressionUUID->
+   "fe60b61a-7c6c-411e-aa9c-f8d456a6cc18"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->682328315,ExpressionUUID->"8e1aaa79-9ab3-420a-b883-979636738c3d"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "PreserveImageOptions", "ExampleSubsection",ExpressionUUID->
+   "6ee35dad-239f-4c26-a16d-96dfb542a8b6"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->329315225,ExpressionUUID->"0cf8cd6d-ea2f-4532-aa5d-cd1b7090788b"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Prolog", "ExampleSubsection",ExpressionUUID->
+   "5fe95859-9d2e-4d8c-bb18-8d28bde5968e"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->735628256,ExpressionUUID->"5da6ef18-6ab2-4ce4-90a1-7491b7bc0f7e"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "RotateLabel", "ExampleSubsection",ExpressionUUID->
+   "504f3f8b-e33c-446d-a2d2-dce333687307"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->640742813,ExpressionUUID->"cc61b17b-4869-4bb2-840b-febbce2d11d1"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Ticks", "ExampleSubsection",ExpressionUUID->
+   "52780e5a-c8af-4582-83fd-fb012ba6d3aa"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1481452033,ExpressionUUID->"f8fbf1c4-3f70-4ad4-8f38-e9c28a29cada"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "TicksStyle", "ExampleSubsection",ExpressionUUID->
+   "6088b71b-b134-41fd-800b-dc8322161b87"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->838915313,ExpressionUUID->"e79d4a4c-3afe-40cc-be4c-d26965d52856"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"ThicknessScaling\"", "ExampleSubsection",ExpressionUUID->
+   "7921dc6c-1349-454c-b0ef-3675980d4f76"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1419523036,ExpressionUUID->"468bfb1c-3188-4678-8abb-5033a7d13d40"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"ArrowheadScaling\"", "ExampleSubsection",ExpressionUUID->
+   "be606698-b616-4ada-8a6b-77dcf0517b71"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1527831529,ExpressionUUID->"8a98f121-41e5-4570-85a7-3d20cc6f26af"]
+}, Open  ]],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Applications", "ExampleSection",ExpressionUUID->
+   "f8dd3a8a-0e1e-4855-bb08-30003db87a65"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->777631844,ExpressionUUID->"9478feb6-da40-4561-bde0-c43e0ba58498"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Properties & Relations", "ExampleSection",ExpressionUUID->
+   "7a328b26-3188-4685-bb7d-2a73bc03e478"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->72926466,ExpressionUUID->"1ad236c9-7982-45e5-b5c5-c91efdf29696"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Possible Issues", "ExampleSection",ExpressionUUID->
+   "41f6ff9f-4a20-455f-bfcd-3a2b16e86720"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->1609435272,ExpressionUUID->"7415f36d-e48c-4cfc-b7d4-3c7ee57db76c"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Interactive Examples", "ExampleSection",ExpressionUUID->
+   "e359c083-5b22-4b71-b2c0-2a18e12d2b29"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->74598892,ExpressionUUID->"03cebada-16e0-4eff-aba0-b3fab18dec15"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Neat Examples", "ExampleSection",ExpressionUUID->
+   "6d5115fb-f951-4cf0-bed3-f4814239d9ee"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->1800611643,ExpressionUUID->"a576301d-882c-4c34-9c14-d293ff176ae1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "MetadataSection",
+ CellID->540330377,ExpressionUUID->"e4cbbcb6-c4b7-4b9a-b1db-a4417a295ed3"],
+
+Cell[TextData[{
+ "New in: ",
+ Cell["1.0.0", "HistoryData",
+  CellTags->"New",ExpressionUUID->"cea22399-c485-4ce8-96af-3da5d14177d1"],
+ " | Modified in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Modified",ExpressionUUID->"66f7ab07-edc2-4e46-893e-9465739bc119"],
+ " | Obsolete in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Obsolete",ExpressionUUID->
+  "b1592908-1d04-4426-89fb-6eb29fcc2e77"]
+}], "History",
+ CellChangeTimes->{{3.864923683926749*^9, 3.864923685610183*^9}, {
+  3.891893768508774*^9, 3.891893769164744*^9}},
+ CellID->1771786723,ExpressionUUID->"8eb6391f-ec91-4a4a-9d5b-636b130f4caa"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Categorization",
+ Cell[BoxData[
+  TemplateBox[{"Metadata", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Metadata such as page URI, context, and type of documentation page.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "e9ed1af9-b56d-4cb1-a04d-4ddfdbbb3cff"]
+}], "CategorizationSection",
+ CellID->1411204159,ExpressionUUID->"7f1f5ca0-4de7-414a-9254-8638c5b6f3d6"],
+
+Cell["Symbol", "Categorization",
+ CellLabel->"Entity Type",
+ CellID->1298902845,ExpressionUUID->"ad19bae8-da0d-4dd3-a660-efbdd4e93221"],
+
+Cell["NoahH/CreateCoil", "Categorization",
+ CellLabel->"Paclet Name",
+ CellID->802540724,ExpressionUUID->"9210636c-841d-4c21-a53f-1b21f301144a"],
+
+Cell["NoahH`CreateCoil`", "Categorization",
+ CellLabel->"Context",
+ CellID->2104645108,ExpressionUUID->"23b6cf63-c639-47f1-9edf-def8a3a520c3"],
+
+Cell["NoahH/CreateCoil/ref/LoopCoilPlot", "Categorization",
+ CellLabel->"URI",
+ CellID->1567180419,ExpressionUUID->"6263d376-01cb-4eb9-8b11-c01a00306d01"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "KeywordsSection",
+ CellID->461695243,ExpressionUUID->"35faf910-915c-4588-8304-891fe40fde2a"],
+
+Cell["\<\
+Plot, Diagram, Schematic, Loop, Loops, Coil, Coils, Physics, Magnetism, \
+Electromagnetism, Field, Biot, Savart, Optimization, Optimisation, Optimize, \
+Optimise\
+\>", "Keywords",
+ CellChangeTimes->{{3.891896416678708*^9, 3.891896428093301*^9}},
+ CellID->853532490,ExpressionUUID->"85cc54f1-3679-4248-89f3-e0eb1daf3c47"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Syntax Templates", "TemplatesSection",
+ CellID->129797470,ExpressionUUID->"a7e3351a-bbfe-4d86-b7f5-6aba5d4a044a"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Additional Function Template",
+ CellID->1810176585,ExpressionUUID->"556ef523-9660-4f07-94b5-0be3ddd1dedf"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Arguments Pattern",
+ CellID->237037046,ExpressionUUID->"d30e82e9-2fc0-45e4-a5e6-159636284c38"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Local Variables",
+ CellID->299466937,ExpressionUUID->"bed746b7-b9c9-4a7c-8417-e3524f01c39e"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Color Equal Signs",
+ CellID->1586625238,ExpressionUUID->"d7ac6bad-31d9-4302-8c2a-ae181fb62a58"]
+}, Closed]]
+}, Open  ]]
+},
+WindowSize->{700, 770},
+WindowMargins->{{5, Automatic}, {Automatic, 0}},
+TaggingRules-><|"Paclet" -> "NoahH/CreateCoil"|>,
+CellContext->"Global`",
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (March 8, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "FunctionPageStylesExt.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"d3172edc-9b68-469a-a6e9-e31997439a22"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "ExtendedExamples"->{
+  Cell[69962, 1714, 487, 13, 61, "ExtendedExamplesSection",ExpressionUUID->"6576fa0f-634d-4e47-a667-664d9d44268d",
+   CellTags->"ExtendedExamples",
+   CellID->921923687]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"ExtendedExamples", 86371, 2175}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 110, 1, 78, "ObjectName",ExpressionUUID->"50b6b9fb-c40f-4220-b406-0bccb4305436",
+ CellID->1608776693],
+Cell[693, 25, 5835, 164, 158, "Usage",ExpressionUUID->"4f0cefcc-0bac-4479-afeb-5f7e1050f9ab",
+ CellID->7970],
+Cell[6531, 191, 210, 2, 30, "Notes",ExpressionUUID->"e18f1f69-e497-4f3a-921e-13435ea84692",
+ CellID->852838433],
+Cell[6744, 195, 409, 11, 30, "Notes",ExpressionUUID->"81fe79f6-2db0-4449-b267-851ac107d483",
+ CellID->2045382224],
+Cell[7156, 208, 722, 16, 30, "Notes",ExpressionUUID->"fd5e2ce8-dda8-4bea-903c-8eaf9fc45185",
+ CellID->1616593528],
+Cell[7881, 226, 691, 12, 91, "3ColumnTableMod",ExpressionUUID->"a7d8419b-c513-4f0e-ae35-388023722a8a",
+ CellID->809322769]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8609, 243, 459, 13, 42, "SeeAlsoSection",ExpressionUUID->"1009c2b9-9184-409c-a88d-9f4840066495",
+ CellID->1030406620],
+Cell[9071, 258, 2512, 62, 23, "SeeAlso",ExpressionUUID->"06256b20-5159-4eea-962d-c870b879ada3",
+ CellID->735932932]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11620, 325, 436, 12, 43, "TechNotesSection",ExpressionUUID->"2a70065e-991a-46f6-9121-ae6263941cef",
+ CellID->1466465051],
+Cell[12059, 339, 100, 1, 21, "Tutorials",ExpressionUUID->"3f5b80bb-88ad-45f7-9be1-41f277939728",
+ CellID->208295538]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12196, 345, 117, 1, 42, "MoreAboutSection",ExpressionUUID->"05ac0c0a-9f26-4ab0-b9ad-9e6a59aba3dd",
+ CellID->424762556],
+Cell[12316, 348, 100, 1, 21, "MoreAbout",ExpressionUUID->"80a506a8-0c20-4057-a127-8b043181a7f1",
+ CellID->748636064]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12453, 354, 472, 13, 42, "RelatedLinksSection",ExpressionUUID->"105a6c1d-75bf-4186-b48d-9e12b3e60e86",
+ CellID->219639875],
+Cell[12928, 369, 104, 1, 21, "RelatedLinks",ExpressionUUID->"40423f2a-c48d-4f1d-b176-0d67d28a57c1",
+ CellID->2110473579]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13069, 375, 530, 14, 73, "ExamplesInitializationSection",ExpressionUUID->"a66884b2-0f06-4ca9-a91d-5bb4fcab2769",
+ CellID->742044754],
+Cell[13602, 391, 177, 3, 47, "ExampleInitialization",ExpressionUUID->"ba666ae6-a16b-497a-9fd8-0b52ceeee339",
+ CellID->1108642349]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13816, 399, 443, 12, 75, "PrimaryExamplesSection",ExpressionUUID->"abbf236e-8bac-4104-b882-3617c7ba00aa",
+ CellID->1383838271],
+Cell[14262, 413, 619, 12, 26, "ExampleText",ExpressionUUID->"d9bc4e16-f25d-4ad4-9941-c575ece3fed0",
+ CellID->477287128],
+Cell[CellGroupData[{
+Cell[14906, 429, 630, 14, 27, "Input",ExpressionUUID->"fa55585f-e5b1-4890-85be-800ab2bbb339",
+ CellID->2028951105],
+Cell[15539, 445, 17984, 399, 182, "Output",ExpressionUUID->"914f5c8c-ceef-43f5-9b77-6aff7ad2d894",
+ CellID->1981731668]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33560, 849, 243, 5, 22, "ExampleDelimiter",ExpressionUUID->"e79eace6-b981-4604-be2e-cc23795123c7",
+ CellID->1080700999],
+Cell[33806, 856, 417, 10, 26, "ExampleText",ExpressionUUID->"13b945b1-a6c9-4f10-9ccc-46d176939eb5",
+ CellID->2072487514],
+Cell[CellGroupData[{
+Cell[34248, 870, 529, 14, 35, "Input",ExpressionUUID->"18a59c5d-7724-4eb1-befb-0692fce5e9a6",
+ CellID->610837034],
+Cell[34780, 886, 1495, 42, 84, "Output",ExpressionUUID->"8c584a9b-d8ee-4563-8a95-e35cef94df40",
+ CellID->1660944024]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36312, 933, 394, 10, 27, "Input",ExpressionUUID->"0074e952-c6fc-4729-9c5e-081590196f8e",
+ CellID->346284015],
+Cell[36709, 945, 18557, 411, 210, "Output",ExpressionUUID->"5fd0182e-a30b-4a54-bec8-ae811ac5776c",
+ CellID->822581864]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55315, 1362, 243, 5, 22, "ExampleDelimiter",ExpressionUUID->"dc37fc3c-6649-42b7-b2f4-97b5bdb89b5a",
+ CellID->2083946763],
+Cell[55561, 1369, 222, 2, 26, "ExampleText",ExpressionUUID->"e3d909fd-071c-446c-92b5-6fda65d4e53e",
+ CellID->1582446818],
+Cell[CellGroupData[{
+Cell[55808, 1375, 476, 12, 27, "Input",ExpressionUUID->"7a101e8e-278e-482e-ad57-71235d426574",
+ CellID->775889267],
+Cell[56287, 1389, 494, 13, 26, "Output",ExpressionUUID->"6d4b69e9-2118-4e2e-b5bd-61319ad323a1",
+ CellID->681488803]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56818, 1407, 598, 12, 47, "Input",ExpressionUUID->"9c90f640-3547-4b6f-967b-da110357a5d0",
+ CellID->54122057],
+Cell[57419, 1421, 12482, 286, 178, "Output",ExpressionUUID->"600ae78d-4c55-42d4-a2d5-79c273d796da",
+ CellID->275418690]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69962, 1714, 487, 13, 61, "ExtendedExamplesSection",ExpressionUUID->"6576fa0f-634d-4e47-a667-664d9d44268d",
+ CellTags->"ExtendedExamples",
+ CellID->921923687],
+Cell[70452, 1729, 241, 5, 38, "ExampleSection",ExpressionUUID->"501bd781-67c9-43e2-ab38-3b5bc384ff58",
+ CellID->676894304],
+Cell[70696, 1736, 265, 5, 26, "ExampleSection",ExpressionUUID->"38fdd193-f121-4b9b-b299-736fc9859884",
+ CellID->1341689169],
+Cell[CellGroupData[{
+Cell[70986, 1745, 243, 5, 26, "ExampleSection",ExpressionUUID->"640a63bb-0571-422f-bd86-f3812fe635d9",
+ CellID->899032684],
+Cell[71232, 1752, 256, 5, 28, "ExampleSubsection",ExpressionUUID->"9b24f575-bc5f-43b6-a579-c080ac8c5511",
+ CellID->347379696],
+Cell[71491, 1759, 254, 5, 24, "ExampleSubsection",ExpressionUUID->"33554b68-5ccc-4c58-9baa-b7347df80b40",
+ CellID->1549998126],
+Cell[71748, 1766, 247, 5, 24, "ExampleSubsection",ExpressionUUID->"7e30731a-62db-4d65-9377-f5bb7fcb427f",
+ CellID->1841865572],
+Cell[71998, 1773, 251, 5, 24, "ExampleSubsection",ExpressionUUID->"92adc66d-1762-4259-a32d-d1a0248c7cd6",
+ CellID->257897099],
+Cell[72252, 1780, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"5aab30cc-5a8d-4f46-bca3-7b55ef0df849",
+ CellID->854543247],
+Cell[72507, 1787, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"487cad5a-c7b6-46b3-b7c8-82c63415a6b9",
+ CellID->2085204840],
+Cell[72762, 1794, 253, 5, 24, "ExampleSubsection",ExpressionUUID->"a5fbee84-151f-45c3-bc78-a7bc61eb63bf",
+ CellID->1252110487],
+Cell[73018, 1801, 259, 5, 24, "ExampleSubsection",ExpressionUUID->"382baa2f-4fa6-4770-ba05-7718635915e1",
+ CellID->1028698056],
+Cell[73280, 1808, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"dcb554d3-d8d9-40ed-884b-1d3870e020e9",
+ CellID->2084868842],
+Cell[73535, 1815, 254, 5, 24, "ExampleSubsection",ExpressionUUID->"f9565109-2af1-478b-888c-8799c8519524",
+ CellID->2047443042],
+Cell[73792, 1822, 258, 5, 24, "ExampleSubsection",ExpressionUUID->"58e497da-2d41-4f3d-8e05-f0da1c68aa85",
+ CellID->97247366],
+Cell[74053, 1829, 264, 5, 24, "ExampleSubsection",ExpressionUUID->"2b33156f-efd8-4638-a438-fd5095bb3c76",
+ CellID->201424995],
+Cell[74320, 1836, 257, 5, 24, "ExampleSubsection",ExpressionUUID->"55a04a06-cce6-41e3-9884-40d06a8a0ca1",
+ CellID->915663293],
+Cell[74580, 1843, 248, 5, 24, "ExampleSubsection",ExpressionUUID->"accde683-6611-4522-99af-a18d88a6ba44",
+ CellID->685151049],
+Cell[74831, 1850, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"9d8d260d-8e14-4130-a42b-24fa3a96734c",
+ CellID->526365329],
+Cell[75086, 1857, 248, 5, 24, "ExampleSubsection",ExpressionUUID->"d7723cc3-b1e1-4b87-8962-c04ad20f8baa",
+ CellID->1136942510],
+Cell[75337, 1864, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"1286c824-4537-456b-90c2-b790d8ae6fe7",
+ CellID->283274564],
+Cell[75592, 1871, 251, 5, 24, "ExampleSubsection",ExpressionUUID->"f302c227-3447-447c-b29d-48b3b8d99d73",
+ CellID->24351749],
+Cell[75846, 1878, 253, 5, 24, "ExampleSubsection",ExpressionUUID->"fe71ffc4-1eb3-47d0-a012-a37642b98e78",
+ CellID->1257952513],
+Cell[76102, 1885, 257, 5, 24, "ExampleSubsection",ExpressionUUID->"eb0a7063-2f23-46ba-9467-49a41b81620c",
+ CellID->431381276],
+Cell[76362, 1892, 251, 5, 24, "ExampleSubsection",ExpressionUUID->"2ae94637-56be-4cb7-bcd6-8cb5c62f65ff",
+ CellID->320313460],
+Cell[76616, 1899, 257, 5, 24, "ExampleSubsection",ExpressionUUID->"46aea288-1277-44ec-96ec-f19da96dbe57",
+ CellID->1914302838],
+Cell[76876, 1906, 253, 5, 24, "ExampleSubsection",ExpressionUUID->"3fa6e943-1ff5-4b69-8694-84e71ebd181d",
+ CellID->87798912],
+Cell[77132, 1913, 254, 5, 24, "ExampleSubsection",ExpressionUUID->"87521992-7e1b-4fde-8487-af67de97f504",
+ CellID->315048495],
+Cell[77389, 1920, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"caa4fc2a-ba25-4811-ad86-07669137c632",
+ CellID->1472865610],
+Cell[77644, 1927, 254, 5, 24, "ExampleSubsection",ExpressionUUID->"a32d103e-e672-44a9-900c-88a051caf36d",
+ CellID->408308301],
+Cell[77901, 1934, 253, 5, 24, "ExampleSubsection",ExpressionUUID->"702c8ea2-9754-4807-9578-cc29aae89c5f",
+ CellID->1227362742],
+Cell[78157, 1941, 249, 5, 24, "ExampleSubsection",ExpressionUUID->"f527f053-d815-4b0c-99b9-71469bcd687e",
+ CellID->1705175359],
+Cell[78409, 1948, 251, 5, 24, "ExampleSubsection",ExpressionUUID->"24e98308-bbd7-477b-93b3-a32b3ba14c6c",
+ CellID->712989498],
+Cell[78663, 1955, 251, 5, 24, "ExampleSubsection",ExpressionUUID->"2cdc932f-a98e-4a42-8589-e5dcc063bf77",
+ CellID->255742626],
+Cell[78917, 1962, 260, 5, 24, "ExampleSubsection",ExpressionUUID->"b307ae92-e1d2-4bfd-9582-37066b52566f",
+ CellID->1151537535],
+Cell[79180, 1969, 258, 5, 24, "ExampleSubsection",ExpressionUUID->"647949cc-f242-4548-86ab-0f0cc100d6f6",
+ CellID->768723981],
+Cell[79441, 1976, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"8e1aaa79-9ab3-420a-b883-979636738c3d",
+ CellID->682328315],
+Cell[79696, 1983, 262, 5, 24, "ExampleSubsection",ExpressionUUID->"0cf8cd6d-ea2f-4532-aa5d-cd1b7090788b",
+ CellID->329315225],
+Cell[79961, 1990, 248, 5, 24, "ExampleSubsection",ExpressionUUID->"5da6ef18-6ab2-4ce4-90a1-7491b7bc0f7e",
+ CellID->735628256],
+Cell[80212, 1997, 253, 5, 24, "ExampleSubsection",ExpressionUUID->"cc61b17b-4869-4bb2-840b-febbce2d11d1",
+ CellID->640742813],
+Cell[80468, 2004, 248, 5, 24, "ExampleSubsection",ExpressionUUID->"f8fbf1c4-3f70-4ad4-8f38-e9c28a29cada",
+ CellID->1481452033],
+Cell[80719, 2011, 252, 5, 24, "ExampleSubsection",ExpressionUUID->"e79d4a4c-3afe-40cc-be4c-d26965d52856",
+ CellID->838915313],
+Cell[80974, 2018, 263, 5, 24, "ExampleSubsection",ExpressionUUID->"468bfb1c-3188-4678-8abb-5033a7d13d40",
+ CellID->1419523036],
+Cell[81240, 2025, 263, 5, 24, "ExampleSubsection",ExpressionUUID->"8a98f121-41e5-4570-85a7-3d20cc6f26af",
+ CellID->1527831529]
+}, Open  ]],
+Cell[81518, 2033, 248, 5, 38, "ExampleSection",ExpressionUUID->"9478feb6-da40-4561-bde0-c43e0ba58498",
+ CellID->777631844],
+Cell[81769, 2040, 257, 5, 26, "ExampleSection",ExpressionUUID->"1ad236c9-7982-45e5-b5c5-c91efdf29696",
+ CellID->72926466],
+Cell[82029, 2047, 252, 5, 26, "ExampleSection",ExpressionUUID->"7415f36d-e48c-4cfc-b7d4-3c7ee57db76c",
+ CellID->1609435272],
+Cell[82284, 2054, 255, 5, 26, "ExampleSection",ExpressionUUID->"03cebada-16e0-4eff-aba0-b3fab18dec15",
+ CellID->74598892],
+Cell[82542, 2061, 250, 5, 26, "ExampleSection",ExpressionUUID->"a576301d-882c-4c34-9c14-d293ff176ae1",
+ CellID->1800611643]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[82829, 2071, 110, 1, 76, "MetadataSection",ExpressionUUID->"e4cbbcb6-c4b7-4b9a-b1db-a4417a295ed3",
+ CellID->540330377],
+Cell[82942, 2074, 595, 14, 29, "History",ExpressionUUID->"8eb6391f-ec91-4a4a-9d5b-636b130f4caa",
+ CellID->1771786723],
+Cell[CellGroupData[{
+Cell[83562, 2092, 485, 13, 24, "CategorizationSection",ExpressionUUID->"7f1f5ca0-4de7-414a-9254-8638c5b6f3d6",
+ CellID->1411204159],
+Cell[84050, 2107, 135, 2, 38, "Categorization",ExpressionUUID->"ad19bae8-da0d-4dd3-a660-efbdd4e93221",
+ CellID->1298902845],
+Cell[84188, 2111, 144, 2, 38, "Categorization",ExpressionUUID->"9210636c-841d-4c21-a53f-1b21f301144a",
+ CellID->802540724],
+Cell[84335, 2115, 142, 2, 38, "Categorization",ExpressionUUID->"23b6cf63-c639-47f1-9edf-def8a3a520c3",
+ CellID->2104645108],
+Cell[84480, 2119, 154, 2, 38, "Categorization",ExpressionUUID->"6263d376-01cb-4eb9-8b11-c01a00306d01",
+ CellID->1567180419]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[84671, 2126, 110, 1, 24, "KeywordsSection",ExpressionUUID->"35faf910-915c-4588-8304-891fe40fde2a",
+ CellID->461695243],
+Cell[84784, 2129, 330, 6, 45, "Keywords",ExpressionUUID->"85cc54f1-3679-4248-89f3-e0eb1daf3c47",
+ CellID->853532490]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[85151, 2140, 119, 1, 34, "TemplatesSection",ExpressionUUID->"a7e3351a-bbfe-4d86-b7f5-6aba5d4a044a",
+ CellID->129797470],
+Cell[85273, 2143, 149, 2, 70, "Template",ExpressionUUID->"556ef523-9660-4f07-94b5-0be3ddd1dedf",
+ CellID->1810176585],
+Cell[85425, 2147, 137, 2, 70, "Template",ExpressionUUID->"d30e82e9-2fc0-45e4-a5e6-159636284c38",
+ CellID->237037046],
+Cell[85565, 2151, 135, 2, 70, "Template",ExpressionUUID->"bed746b7-b9c9-4a7c-8417-e3524f01c39e",
+ CellID->299466937],
+Cell[85703, 2155, 138, 2, 70, "Template",ExpressionUUID->"d7ac6bad-31d9-4302-8c2a-ae181fb62a58",
+ CellID->1586625238]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+

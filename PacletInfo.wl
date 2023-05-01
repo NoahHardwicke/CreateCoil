@@ -1,7 +1,7 @@
 PacletObject[
   <|
     "Name" -> "NoahH/CreateCoil",
-    "Description" -> "Create simple, discrete coils using current-carrying loops, arcs, or ellipses to generate magnetic fields",
+    "Description" -> "Create simple, discrete coils using current-carrying loops, arcs or ellipses to generate magnetic fields",
     "Creator" -> "Noah Hardwicke",
     "Version" -> "1.0.0",
     "WolframVersion" -> "13.0+",

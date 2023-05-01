@@ -1,0 +1,1282 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     48228,       1274]
+NotebookOptionsPosition[     38218,       1056]
+NotebookOutlinePosition[     38995,       1082]
+CellTagsIndexPosition[     38915,       1077]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["FindSaddleCoilAzimuthal", "ObjectName",
+ CellID->1144219885,ExpressionUUID->"69270da7-09ef-4e14-a8f8-dd2eaf73ba3c"],
+
+Cell[TextData[{
+ Cell["   ", "ModInfo",ExpressionUUID->"8435965e-443d-4985-b502-bc1cf9cfbdae"],
+ Cell[BoxData[
+  RowBox[{
+   ButtonBox["FindSaddleCoilAzimuthal",
+    BaseStyle->"Link",
+    ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAzimuthal"], "[", 
+   RowBox[{
+    StyleBox["m", "TI"], ",", 
+    SubscriptBox[
+     StyleBox["k", "TI"], 
+     StyleBox["\[Phi]", "TI"]]}], "]"}]], "InlineFormula",ExpressionUUID->
+  "8624e798-8968-42c9-a203-7e661a1c0fbc"],
+ "\[LineSeparator]returns azimuthal arc extents optimised to generate the \
+field harmonic of degree ",
+ Cell[BoxData[
+  StyleBox["m", "TI"]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "c0ad0654-3f95-4233-b3a4-e2b76394efdf"],
+ ", while nulling the first ",
+ Cell[BoxData[
+  SubscriptBox[
+   StyleBox["k", "TI"], 
+   StyleBox["\[Phi]", "TI"]]], "InlineFormula",
+  ShowStringCharacters->False,ExpressionUUID->
+  "592e8c19-bc10-4387-b690-ded306ce5b66"],
+ " leading\[Hyphen]order error harmonic degrees."
+}], "Usage",
+ CellChangeTimes->{
+  3.32361883463229*^9, 3.32766004026563*^9, 3.32766011595313*^9, 
+   3.3278782058635*^9, 3.32958951928125*^9, {3.387566565476775*^9, 
+   3.387566576423758*^9}, {3.891757474038258*^9, 3.89175748359041*^9}, {
+   3.891757534518593*^9, 3.891757576526331*^9}, {3.891757643260845*^9, 
+   3.891757684054553*^9}, {3.891761179365919*^9, 3.891761194836556*^9}, {
+   3.8917612276970453`*^9, 3.891761250003751*^9}, {3.891761332024857*^9, 
+   3.891761333037122*^9}, {3.8917613963119717`*^9, 3.8917614206105022`*^9}, {
+   3.891761453147622*^9, 3.8917614830730352`*^9}, {3.891762382726779*^9, 
+   3.891762390765471*^9}, 3.891762692713839*^9, 3.891762779310782*^9, 
+   3.8917628364114122`*^9, 3.8917686490570307`*^9, 3.891768693259838*^9, {
+   3.891768730544623*^9, 3.8917687354105997`*^9}, {3.891768789991062*^9, 
+   3.891768791442759*^9}, 3.89176888601503*^9, 3.891769295479238*^9, {
+   3.891769503050569*^9, 3.8917695159923477`*^9}, {3.891856709832343*^9, 
+   3.8918567597318153`*^9}, 3.891856794435021*^9, {3.8918750457155*^9, 
+   3.891875056875123*^9}, 3.8918751116948338`*^9},
+ CellID->7970,ExpressionUUID->"ed168081-bae5-45d8-9f9c-f70881af2f61"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoilAzimuthal",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAzimuthal"]], 
+  "InlineFormula",ExpressionUUID->"81ccffd2-1b0b-4753-8268-cf9f828647a9"],
+ " has the same options as ",
+ Cell[BoxData[
+  ButtonBox["FindRoot",
+   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
+  "fc018a86-7831-4ff8-b724-f63b86fdecdb"],
+ " prepended with ",
+ Cell[BoxData[
+ "\"\<Azimuthal\>\""], "InlineFormula",ExpressionUUID->
+  "18e1e820-65af-449c-a767-15f8e500d749"],
+ ", e.g. ",
+ Cell[BoxData[
+ "\"\<AzimuthalPrecisionGoal\>\""], "InlineFormula",ExpressionUUID->
+  "febe59b7-1339-47a5-9aa0-5e8886d324e7"],
+ " instead of ",
+ Cell[BoxData[
+  ButtonBox["PrecisionGoal",
+   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
+  "e9034ae7-6f10-4b5f-b724-853d359c16a7"],
+ ". ",
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoilAzimuthal",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAzimuthal"]], 
+  "InlineFormula",ExpressionUUID->"7c6b85b9-42bb-4be6-ba6e-821f824782d8"],
+ " also has the following custom options:"
+}], "Notes",
+ CellChangeTimes->{{3.891769900356114*^9, 3.891769960123384*^9}, {
+  3.8917705051101027`*^9, 3.891770506326747*^9}, {3.8918569764070263`*^9, 
+  3.891857067917725*^9}, {3.8918571016748247`*^9, 3.8918571701886187`*^9}, {
+  3.89185721466761*^9, 3.891857219842435*^9}, {3.891859321083807*^9, 
+  3.891859343693582*^9}, {3.891862665055071*^9, 3.8918626758520947`*^9}, {
+  3.891875164556637*^9, 3.891875210229821*^9}},
+ CellID->1616593528,ExpressionUUID->"f7eb998f-7b84-4671-a747-1c4e92dc3b3a"],
+
+Cell[BoxData[GridBox[{
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "ef4f4f45-5812-45fe-b706-7cafdf8fec64"], 
+    "\"\<AzimuthalCoilsReturned\>\"", "10", Cell["\<\
+the maximum number of azimuthal extent solutions to return, ranked by their \
+ease of manufacture (that is how close they are to a uniform distribution)\
+\>", "TableText",ExpressionUUID->"f331a4c6-cc14-4447-87ea-7c6d46b72327"]},
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "78597970-9093-4a35-90b2-48f741f14480"], "\"\<AzimuthalMeshPoints\>\"", 
+    "20", Cell["\<\
+the number of search seeds used to mesh the space of azimuthal separations\
+\>", "TableText",ExpressionUUID->"cf3e40bf-cde8-4566-a443-e4da4498cdee"]},
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "6e787c99-c75f-4c4e-9133-306c53818bc7"], "\"\<AzimuthalMinExtent\>\"", 
+    "0.1", Cell[
+    "minimum difference between adjacent arc extents", "TableText",
+     ExpressionUUID->"a1fe0334-868b-4297-b84a-df54285be803"]}
+  }]], "3ColumnTableMod",
+ TaggingRules->{"Alphabetized" -> True},
+ CellChangeTimes->{{3.89176104306421*^9, 3.891761046514359*^9}, {
+   3.891769592435495*^9, 3.891769592469005*^9}, {3.891770000159542*^9, 
+   3.891770010005446*^9}, {3.891770044782612*^9, 3.891770119846838*^9}, {
+   3.891770151075486*^9, 3.891770376145322*^9}, {3.891770424337426*^9, 
+   3.891770474385236*^9}, {3.891770555575137*^9, 3.8917705726274643`*^9}, {
+   3.891770627336179*^9, 3.8917706815967293`*^9}, {3.8917707674253407`*^9, 
+   3.891770959727211*^9}, {3.8917710176099854`*^9, 3.891771029536523*^9}, {
+   3.8917710716998672`*^9, 3.891771079645022*^9}, {3.891771113423892*^9, 
+   3.8917711439217854`*^9}, {3.891771276740201*^9, 3.891771290102726*^9}, {
+   3.891771335066663*^9, 3.891771356059567*^9}, {3.8917726633327703`*^9, 
+   3.891772781535718*^9}, {3.891772831502941*^9, 3.891772987396277*^9}, {
+   3.8917730481860247`*^9, 3.8917731205935802`*^9}, {3.891774253005505*^9, 
+   3.891774279544293*^9}, 3.891835297617649*^9, {3.8918572383951*^9, 
+   3.891857244340119*^9}, {3.891857432855836*^9, 3.891857508545862*^9}, {
+   3.891857552993503*^9, 3.89185758620811*^9}, {3.8918582268240147`*^9, 
+   3.891858226824027*^9}, {3.8918582659371862`*^9, 3.891858287641527*^9}, {
+   3.891860337542185*^9, 3.89186036837849*^9}, {3.8918752188868723`*^9, 
+   3.8918752242987003`*^9}},
+ CellID->124323252,ExpressionUUID->"98284606-922b-4ac1-b19f-5843cfd0c5ff"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "See Also",
+ Cell[BoxData[
+  TemplateBox[{"SeeAlso", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Insert links to any related reference (function) pages.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "85396eb3-214f-4dd1-9f3f-bc8a4a55f422"]
+}], "SeeAlsoSection",
+ CellID->439555483,ExpressionUUID->"555c123d-9232-47a9-b00e-27d095036b47"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["FindRoot",
+   BaseStyle->"Link"]], "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},ExpressionUUID->
+  "1e1015f1-97f2-4015-8ed7-7b6bb360dd38"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["SaddleFieldPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/SaddleFieldPlot"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"75f2e310-13b0-4bdf-a759-25a0556f4cb7",ExpressionUUID->
+  "fadf2654-a644-4493-a8ac-143c7abc06ea"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["SaddleFieldPlot2D",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/SaddleFieldPlot2D"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"be030a3e-f7e0-4c86-a775-812e5768bfea",ExpressionUUID->
+  "8672d0ce-cb5c-4087-8c8e-f99aa83dbd96"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["SaddleCoilPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/SaddleCoilPlot"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"83b30f34-42f8-443e-b0b2-480482a26d13",ExpressionUUID->
+  "b6a75a3c-cc65-43af-bfac-40f81502a38b"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["HarmonicFieldPlot",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/HarmonicFieldPlot"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"b92b0bb1-7fb9-4fc7-ae1f-aab059662f5d",ExpressionUUID->
+  "14a2c2dc-73e7-4acd-af6c-b42cff63ca71"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoilAxial",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAxial"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"1f3e7ad0-8615-4cc0-b6d9-ccc2e30d9ece",ExpressionUUID->
+  "0a355aa9-59a6-40c7-94ed-b04e8aa62b11"],
+ StyleBox[" \[FilledVerySmallSquare] ", "InlineSeparator"],
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoil",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoil"]], 
+  "InlineSeeAlsoFunction",
+  TaggingRules->{"PageType" -> "Function"},
+  CellTags->"eeef2e18-9f77-4288-99f1-64c08eb05cda",ExpressionUUID->
+  "daa3c9f9-3827-4971-b98d-ed8c109787ad"],
+ Cell[BoxData[
+  RowBox[{
+  Cell[TextData[StyleBox[
+   " \[FilledVerySmallSquare] ", "InlineSeparator"]],ExpressionUUID->
+    "c3e617f0-91e0-4345-9a8e-4ea7dd73ce65"], 
+   DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
+    "098d57d8-9571-4b76-bff4-2d5f75e25447", 
+     "91e8ef64-76d5-4ace-8889-d0b73614524c"], $CellContext`cellobj$$ = 
+    CellObject[
+    "bfec6a6a-0d90-42ab-b995-d58540f476c7", 
+     "076287cc-9efc-45d7-8b08-bb8e0045ea8c"]}, 
+    TemplateBox[{
+      GraphicsBox[{{
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         CircleBox[{0, 0}]}, {
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         LineBox[{{0, 0.62}, {0, -0.62}}]}, {
+         Thickness[0.06], 
+         StrokeForm[
+          Hue[0.4167, 0.406, 0.502]], 
+         LineBox[{{-0.62, 0}, {0.62, 0}}]}}, 
+       ImagePadding -> {{1., 1.}, {2.4, 1.}}, ImageSize -> 16, 
+       PlotRange -> {{-1.06, 1.06}, {-1.06, 1.06}}, 
+       BaselinePosition -> (Center -> 
+        Center)], $CellContext`nbobj$$, $CellContext`cellobj$$},
+     "InlineListingAddButton"],
+    Initialization:>($CellContext`nbobj$$ = 
+      EvaluationNotebook[]; $CellContext`cellobj$$ = EvaluationCell[])]}]], 
+  "InlineListingAddButton",ExpressionUUID->
+  "bfec6a6a-0d90-42ab-b995-d58540f476c7"]
+}], "SeeAlso",
+ CellChangeTimes->{{3.891891199358214*^9, 3.8918912217280293`*^9}, {
+  3.8918918665369663`*^9, 3.891891950400247*^9}, {3.8918920151755333`*^9, 
+  3.89189206555267*^9}, {3.891892206819811*^9, 3.891892219499464*^9}},
+ CellID->29611249,ExpressionUUID->"f6f4749d-0210-456b-8be7-d525b3afa96e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Tech Notes",
+ Cell[BoxData[
+  TemplateBox[{"TechNotes", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell["Insert links to related tech notes.", "MoreInfoText"], BaseStyle -> 
+       "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "3f5df055-088c-4138-b0fa-81397d4763fd"]
+}], "TechNotesSection",
+ CellID->45335,ExpressionUUID->"b40334ba-f91c-4f99-a6ed-a23dd809216a"],
+
+Cell["XXXX", "Tutorials",
+ CellID->761945345,ExpressionUUID->"3147d5c3-fd0e-4302-bca0-58a9ddc860fc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related Guides", "MoreAboutSection",
+ CellID->570426354,ExpressionUUID->"240e2032-d91e-4559-82e6-59688fd8b2a8"],
+
+Cell["XXXX", "MoreAbout",
+ CellID->788731470,ExpressionUUID->"04916f97-caf7-4cd2-aec2-8d5e395a8fec"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Related Links",
+ Cell[BoxData[
+  TemplateBox[{"RelatedLinks", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Insert links to any related page, including web pages.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "147bdf0c-50c1-425a-8e27-247d9983896b"]
+}], "RelatedLinksSection",
+ CellID->1940747006,ExpressionUUID->"a1c66466-ad95-48ac-9b0f-eb3bea93249d"],
+
+Cell["XXXX", "RelatedLinks",
+ CellID->5815559,ExpressionUUID->"275a523f-bcef-45de-9e4b-5d6b8bdd3863"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Examples Initialization",
+ Cell[BoxData[
+  TemplateBox[{"ExamplesInitialization", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Input that is to be evaluated before any examples are run, e.g. \
+Needs[\[Ellipsis]].", "MoreInfoText"], BaseStyle -> "IFrameBox"]], 
+     "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "fd42555f-0f3e-4481-b43c-dc37b2e7b474"]
+}], "ExamplesInitializationSection",
+ CellID->1105335998,ExpressionUUID->"36c1e845-43fa-4951-a351-b44acab44713"],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<NoahH`CreateCoil`\>\"", 
+  "]"}]], "ExampleInitialization",
+ CellID->1648571836,ExpressionUUID->"a254b302-a6db-42f9-87d9-84f9d39122fc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {
+     StyleBox[
+      RowBox[{"Basic", " ", "Examples"}], "PrimaryExamplesSection"], 
+     ButtonBox[
+      RowBox[{
+       RowBox[{"More", " ", "Examples"}], " ", "\[RightTriangle]"}],
+      BaseStyle->"ExtendedExamplesLink",
+      ButtonData:>"ExtendedExamples"]}
+   }],
+  $Line = 0; Null]], "PrimaryExamplesSection",
+ CellID->712834058,ExpressionUUID->"6d258b2f-2caf-4e97-8054-da1bd76dfa38"],
+
+Cell[TextData[{
+ "Optimise two azimuthal extents per saddle to generate the field harmonic of \
+degree ",
+ Cell[BoxData[
+  RowBox[{
+   StyleBox["m", "TI"], "=", "1"}]], "InlineFormula",ExpressionUUID->
+  "4b0ba04d-e44c-4376-a0cb-dd4152036cde"],
+ ":"
+}], "ExampleText",
+ CellChangeTimes->{{3.8917757083240232`*^9, 3.8917757171024218`*^9}, {
+   3.8917760421432133`*^9, 3.8917760585256863`*^9}, {3.891776113334537*^9, 
+   3.891776121756888*^9}, {3.8917767073728447`*^9, 3.8917767560008574`*^9}, {
+   3.891776961251277*^9, 3.891776996007162*^9}, {3.8917771833879642`*^9, 
+   3.891777183746827*^9}, {3.891858422145479*^9, 3.891858500906694*^9}, 
+   3.891858563389881*^9, {3.891858623957017*^9, 3.891858653906185*^9}, {
+   3.891859461383275*^9, 3.891859463571631*^9}, {3.891875291338175*^9, 
+   3.891875298249776*^9}, {3.8918753319712963`*^9, 3.8918753863935213`*^9}},
+ CellID->1072767369,ExpressionUUID->"f5e5b32d-ea9f-460f-a64c-82ca490e7685"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", " ", "2"}], "]"}]], "Input",
+ CellChangeTimes->{{3.891858566540141*^9, 3.891858642971278*^9}, {
+  3.8918753898470163`*^9, 3.891875400793254*^9}},
+ CellLabel->"In[96]:=",
+ CellID->748176698,ExpressionUUID->"32c7d468-ef1e-4897-b323-2be489e1b8bb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.361356816555577`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.10471975511966022`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.1519173063162575`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.7802358370342162`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.891858585713902*^9, 3.8918586641096992`*^9}, 
+   3.891875401360374*^9},
+ CellLabel->"Out[96]=",
+ CellID->1496455645,ExpressionUUID->"4d51b888-6492-4ac5-962b-b787b47ba4e6"]
+}, Open  ]],
+
+Cell[TextData[{
+ "See ",
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoil",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoil"]], 
+  "InlineFormula",ExpressionUUID->"e4a87bba-0e60-4a9f-863e-d2f58b297290"],
+ " for an example on how to generate saddle coils with optimised axial \
+separations and azimuthal extents."
+}], "ExampleText",
+ CellChangeTimes->{{3.8918743483347473`*^9, 3.891874433279861*^9}},
+ CellID->1183651296,ExpressionUUID->"c0edcb9b-2e9f-4c4f-b786-853b3207287e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "More Examples",
+ Cell[BoxData[
+  TemplateBox[{"MoreExamples", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell["Extended examples in standardized sections.", "MoreInfoText"], 
+       BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "e26eb30f-5662-4af0-9cae-74d769da449d"]
+}], "ExtendedExamplesSection",
+ CellTags->"ExtendedExamples",
+ CellID->1938229840,ExpressionUUID->"77886f72-5e54-4067-9ade-b38bbaaa384b"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Scope", "ExampleSection",ExpressionUUID->
+   "7f245c97-6b20-4973-b9d8-da29c5e5f32a"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->649479537,ExpressionUUID->"8cb8bdca-207b-49eb-9e2a-ea8e1530b15c"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Generalizations & Extensions", "ExampleSection",ExpressionUUID->
+   "3bf24a94-c0e0-453d-8dfb-3ac602e634b4"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->143200658,ExpressionUUID->"bf9543bb-617f-4000-9ecb-95d457436630"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Options", "ExampleSection",ExpressionUUID->
+   "b54b37b5-9c96-44be-9d87-a81b14714b28"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->584625960,ExpressionUUID->"6d93d371-0096-42a2-83fb-6874e04e307d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"AzimuthalCoilsReturned\"", "ExampleSubsection",ExpressionUUID->
+   "f390a9d4-1dd6-45a2-833e-14c3581da2e1"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->390195629,ExpressionUUID->"e074d924-daef-4183-b073-3edd5bb5bdbc"],
+
+Cell["\<\
+Return only the best set of azimuthal extents (as ranked by their ease of \
+manufacture, that is how close they are to a uniform distribution):\
+\>", "ExampleText",
+ CellChangeTimes->{{3.891840165083503*^9, 3.891840212571075*^9}, {
+  3.89186196349538*^9, 3.891861970158759*^9}, {3.8918708857566547`*^9, 
+  3.8918709496757803`*^9}},
+ CellID->1004557038,ExpressionUUID->"042d851d-965b-4e1e-bc1c-936c8b14fe9b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "2", ",", 
+   RowBox[{"\"\<AzimuthalCoilsReturned\>\"", "->", "1"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8918401797549543`*^9, 3.891840179914999*^9}, {
+  3.891861990093079*^9, 3.891862042788363*^9}, {3.891870815338272*^9, 
+  3.891870843158783*^9}, {3.891870964985187*^9, 3.8918709780325317`*^9}, {
+  3.891875508867406*^9, 3.891875531603874*^9}},
+ CellLabel->"In[97]:=",
+ CellID->73704952,ExpressionUUID->"0d5e0b3a-f262-4a82-8464-ebce80ab65f6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+     "0.7330382858376184`"}], ",", 
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+     "1.361356816555577`"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.891840180580961*^9, {3.891862022114747*^9, 3.8918620440375032`*^9}, {
+   3.891870826304628*^9, 3.891870844261717*^9}, 3.8918709794756823`*^9, 
+   3.8918755321265087`*^9},
+ CellLabel->"Out[97]=",
+ CellID->2047649242,ExpressionUUID->"89762f57-649a-4769-9db8-7581ae8064fe"]
+}, Open  ]],
+
+Cell["Return all sets of azimuthal extents found:", "ExampleText",
+ CellChangeTimes->{{3.891834179903742*^9, 3.891834185028859*^9}, {
+  3.89187099412752*^9, 3.8918710019157143`*^9}},
+ CellID->775839106,ExpressionUUID->"924ad641-0d56-41a6-9c2d-e7075509c19e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "2", ",", 
+   RowBox[{"\"\<AzimuthalCoilsReturned\>\"", "->", "All"}]}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.891862059683845*^9, 3.891862064408081*^9}, {
+  3.891870991666006*^9, 3.8918710068189783`*^9}, {3.891875543963675*^9, 
+  3.891875545916451*^9}},
+ CellLabel->"In[98]:=",
+ CellID->7149958,ExpressionUUID->"12a4bf72-9ee5-4e54-a53f-c12554bb6b66"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.361356816555577`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.10471975511966022`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.1519173063162575`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.7802358370342162`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.891862066388029*^9, 3.891871009228043*^9, 
+  3.891875546372198*^9},
+ CellLabel->"Out[98]=",
+ CellID->1881239825,ExpressionUUID->"9e6ce49f-6fb2-4aec-bc45-d4144be0ef1e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"AzimuthalMeshPoints\"", "ExampleSubsection",ExpressionUUID->
+   "b55bfa09-6c03-4af8-b9c0-6a5fd5f159ac"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->1750362312,ExpressionUUID->"1add0baf-4e41-4179-9012-e15a6d99e799"],
+
+Cell["\<\
+By default, the azimuthal extent range is meshed with 20 search seeds:\
+\>", "ExampleText",
+ CellChangeTimes->{{3.891871078788937*^9, 3.891871119789489*^9}, {
+  3.891871340251402*^9, 3.891871369153825*^9}},
+ CellID->108638912,ExpressionUUID->"52e6b2dd-1c01-4257-9aa2-501e6294593e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "3"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8918712643871727`*^9, 3.8918712886932373`*^9}, {
+  3.8918755658594437`*^9, 3.891875570302411*^9}},
+ CellLabel->"In[99]:=",
+ CellID->802846793,ExpressionUUID->"282ed4df-c471-435a-a46c-0c8e33df089e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+     "1.1006647897044681`"}], ",", 
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+     "0.5924303795762464`"}], ",", 
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "3", "]"}], "\[Rule]", 
+     "1.3671099505805584`"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.891871273942697*^9, 3.891871289701981*^9}, 
+   3.891875570867176*^9},
+ CellLabel->"Out[99]=",
+ CellID->343663723,ExpressionUUID->"722ca074-1e88-4a60-8a20-451609786ed2"]
+}, Open  ]],
+
+Cell["Increasing the number of seeds may yield more solutions:", "ExampleText",
+ CellChangeTimes->{{3.8918713793984222`*^9, 3.8918714109939547`*^9}},
+ CellID->2097758727,ExpressionUUID->"76780eda-afc3-4fdb-8770-3fe70065e99e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "3", ",", 
+   RowBox[{"\"\<AzimuthalMeshPoints\>\"", "->", "40"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.891875582670785*^9, 3.891875583047834*^9}},
+ CellLabel->"In[100]:=",
+ CellID->1372665678,ExpressionUUID->"04869ff8-6643-42c1-835d-df3de3aaecb1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "1.1006647897044681`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "0.5924303795762464`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "3", "]"}], "\[Rule]", 
+      "1.3671099505805584`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "1.1006647897044686`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "0.5924303795762464`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "3", "]"}], "\[Rule]", 
+      "1.7744827030092356`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.891875587249976*^9},
+ CellLabel->"Out[100]=",
+ CellID->1032244727,ExpressionUUID->"585de515-86da-45f3-a198-83fe7ffd3c48"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"AzimuthalMinExtent\"", "ExampleSubsection",ExpressionUUID->
+   "8d12eb67-3787-45a0-932a-2dcc34bee333"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->671375761,ExpressionUUID->"cf555b5d-79b4-4e36-8245-fdc0b083d664"],
+
+Cell["\<\
+By default, adjacent azimuthal extents are allowed no closer than 0.1:\
+\>", "ExampleText",
+ CellChangeTimes->{{3.891871078788937*^9, 3.891871119789489*^9}},
+ CellID->465303443,ExpressionUUID->"eb0f1747-11f5-4cbb-8b5c-15209aa0f582"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "2"}], "]"}]], "Input",
+ CellChangeTimes->{{3.891862059683845*^9, 3.891862064408081*^9}, {
+  3.891870991666006*^9, 3.8918710068189783`*^9}, {3.891871041829175*^9, 
+  3.891871058289649*^9}, {3.891871128988551*^9, 3.891871129438582*^9}, {
+  3.8918755991482286`*^9, 3.891875600957657*^9}},
+ CellLabel->"In[101]:=",
+ CellID->1027967941,ExpressionUUID->"dbf7d364-f986-4597-b5f8-91ac14fe4b89"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.361356816555577`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.10471975511966022`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.1519173063162575`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.7802358370342162`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.891862066388029*^9, 3.891871009228043*^9, 3.891871069560327*^9, {
+   3.8918711257342777`*^9, 3.891871130307685*^9}, 3.891875601603978*^9},
+ CellLabel->"Out[101]=",
+ CellID->463501906,ExpressionUUID->"79d36e69-ef3a-43dd-8a09-ae82ddaa05f3"]
+}, Open  ]],
+
+Cell["\<\
+Return solutions with adjacent azimuthal extents no closer than 0.2:\
+\>", "ExampleText",
+ CellChangeTimes->{{3.891871136664208*^9, 3.891871192657192*^9}},
+ CellID->74725696,ExpressionUUID->"89a65097-0f62-477f-b55b-cc7b94eacfff"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "2", ",", 
+   RowBox[{"\"\<AzimuthalMinExtent\>\"", "->", ".2"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.891862059683845*^9, 3.891862064408081*^9}, {
+  3.891870991666006*^9, 3.8918710068189783`*^9}, {3.891871041829175*^9, 
+  3.891871058289649*^9}, {3.891871128988551*^9, 3.891871129438582*^9}, {
+  3.8918755991482286`*^9, 3.891875613996016*^9}},
+ CellLabel->"In[102]:=",
+ CellID->1153346473,ExpressionUUID->"432632e9-88f7-4363-b3b9-f23d23c5e5f2"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.361356816555577`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.7330382858376184`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.7802358370342162`"}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.891875615231106*^9},
+ CellLabel->"Out[102]=",
+ CellID->427948432,ExpressionUUID->"196f6bd9-e9f8-4a44-9039-c6a6e3e87621"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Applications", "ExampleSection",ExpressionUUID->
+   "92bcb4e9-c3fc-4b41-96d7-eb916f2671e0"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->1467213964,ExpressionUUID->"5b8bc5f2-d0a1-4d99-84db-cb3ac9330d8b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Properties & Relations", "ExampleSection",ExpressionUUID->
+   "641352b1-7a42-4521-8977-9cf3514bb2da"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->2057858094,ExpressionUUID->"d0c8555b-a844-47bb-8872-5c5c43940128"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoil",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoil"]], 
+  "InlineFormula",ExpressionUUID->"731c3a62-17dc-481c-8b4d-bd5efb741818"],
+ " optimises axial separations and azimuthal extents. These optimisations are \
+orthogonal and can be performed separately with ",
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoilAxial",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAxial"]], 
+  "InlineFormula",ExpressionUUID->"f74d11c9-a626-4b76-b47b-75d83e41dc88"],
+ " and ",
+ Cell[BoxData[
+  ButtonBox["FindSaddleCoilAzimuthal",
+   BaseStyle->"Link",
+   ButtonData->"paclet:NoahH/CreateCoil/ref/FindSaddleCoilAzimuthal"]], 
+  "InlineFormula",ExpressionUUID->"22413a19-40df-490a-8273-87f36bd63e62"],
+ ":"
+}], "ExampleText",
+ CellChangeTimes->{{3.8918731454418983`*^9, 3.891873243340137*^9}, 
+   3.8918735194691963`*^9},
+ CellID->211261062,ExpressionUUID->"864cd12b-59a0-43c1-9cc6-328d7f908c26"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoil", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "1"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", "1", ",", 
+   RowBox[{"{", 
+    RowBox[{".01", ",", "3"}], "}"}], ",", 
+   RowBox[{"\"\<CoilsReturned\>\"", "->", "2"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8918732553667707`*^9, 3.8918732735093937`*^9}},
+ CellLabel->"In[58]:=",
+ CellID->348076164,ExpressionUUID->"7c3ffbc6-3b77-4e37-b1b0-8f9b961b7bae"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"AxialSeparations\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", "0.01`"}], ",", 
+        RowBox[{
+         RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+         "1.5168940341642498`"}], ",", 
+        RowBox[{"DesToErr", "\[Rule]", "42.609699882685796`"}]}], "}"}], ",", 
+      
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+         "0.010946631420699935`"}], ",", 
+        RowBox[{
+         RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+         "1.4926532191169317`"}], ",", 
+        RowBox[{"DesToErr", "\[Rule]", "39.09213513194937`"}]}], "}"}]}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"AzimuthalExtents\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+        "1.0471975511965976`"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+        "2.0943951023931957`"}], "}"}]}], "}"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{3.8918732588627996`*^9, 3.891873273975975*^9}},
+ CellLabel->"Out[58]=",
+ CellID->173020987,ExpressionUUID->"943e87d3-d23f-4bbf-b957-06db157b530e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAxial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", 
+     RowBox[{"-", "1"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", "1", ",", 
+   RowBox[{"{", 
+    RowBox[{".01", ",", "3"}], "}"}], ",", 
+   RowBox[{"\"\<CoilsReturned\>\"", "->", "2"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.89187329200559*^9, 3.891873302810026*^9}, {
+  3.8918733467054377`*^9, 3.891873347307665*^9}},
+ CellLabel->"In[61]:=",
+ CellID->270870471,ExpressionUUID->"a4d29fdd-84c3-47de-a5fa-089fce6b2763"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", "0.01`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.5168940341642498`"}], ",", 
+     RowBox[{"DesToErr", "\[Rule]", "42.609699882685796`"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+      "0.010946631420699935`"}], ",", 
+     RowBox[{
+      RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+      "1.4926532191169317`"}], ",", 
+     RowBox[{"DesToErr", "\[Rule]", "39.09213513194937`"}]}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.891873304136088*^9, 3.891873347925002*^9},
+ CellLabel->"Out[61]=",
+ CellID->19700550,ExpressionUUID->"c601d376-230a-47df-9b2b-8ea2a635504b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindSaddleCoilAzimuthal", "[", 
+  RowBox[{"1", ",", "1"}], "]"}]], "Input",
+ CellChangeTimes->{{3.891873337806827*^9, 3.8918733616941338`*^9}},
+ CellLabel->"In[62]:=",
+ CellID->568955711,ExpressionUUID->"b7a6062b-ec30-4b2f-a9f9-edbce19babb2"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+     "1.0471975511965976`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+     "2.0943951023931957`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.891873339774584*^9, 3.891873363174288*^9}},
+ CellLabel->"Out[62]=",
+ CellID->1735176386,ExpressionUUID->"92f8f76d-47d6-4c07-9fcc-698b6d7aae7b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Possible Issues", "ExampleSection",ExpressionUUID->
+   "1459b78d-e061-447a-b861-90f8aea307a0"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->1196850923,ExpressionUUID->"22bb8b5f-f826-4d76-9461-9ed32aeb8686"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Interactive Examples", "ExampleSection",ExpressionUUID->
+   "99f6a944-e7e1-4b81-b50f-f81c87d87888"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->2141625059,ExpressionUUID->"b43870ca-2cc4-48e5-a25a-48b89f939411"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "Neat Examples", "ExampleSection",ExpressionUUID->
+   "c614fec6-ec6f-4b5d-98f5-6e4a8f9d751a"],
+  $Line = 0; Null]], "ExampleSection",
+ CellID->318959246,ExpressionUUID->"bc7bae9c-5c82-436c-a5b8-95945038afd7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Metadata", "MetadataSection",
+ CellID->628864610,ExpressionUUID->"581f1bf2-27be-4f2a-aa1b-145e32ee6492"],
+
+Cell[TextData[{
+ "New in: ",
+ Cell["1.0.0", "HistoryData",
+  CellTags->"New",ExpressionUUID->"cd79e246-6dd1-4579-85e1-f23edd13db72"],
+ " | Modified in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Modified",ExpressionUUID->"6f7459df-279a-4c05-9b1e-36ce5b6d40f4"],
+ " | Obsolete in: ",
+ Cell[" ", "HistoryData",
+  CellTags->"Obsolete",ExpressionUUID->
+  "102eb16d-fb09-4da3-88f9-dc4338b6b9b3"]
+}], "History",
+ CellChangeTimes->{{3.864923683926749*^9, 3.864923685610183*^9}, {
+  3.891875674168604*^9, 3.891875678330174*^9}},
+ CellID->1560473383,ExpressionUUID->"c75378e1-1401-40bf-b16a-4805fbb65fe0"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Categorization",
+ Cell[BoxData[
+  TemplateBox[{"Metadata", 
+    Cell[
+     BoxData[
+      FrameBox[
+       Cell[
+       "Metadata such as page URI, context, and type of documentation page.", 
+        "MoreInfoText"], BaseStyle -> "IFrameBox"]], "MoreInfoTextOuter"]},
+   "MoreInfoOpenerButtonTemplate"]],ExpressionUUID->
+  "4c6e87f3-eebe-4d80-b01f-002f5d6a34c4"]
+}], "CategorizationSection",
+ CellID->1805850917,ExpressionUUID->"42c5ab50-a76d-41ae-b13f-ffb52a7997e1"],
+
+Cell["Symbol", "Categorization",
+ CellLabel->"Entity Type",
+ CellID->549978968,ExpressionUUID->"6d1d74b2-05d3-4b38-a13c-461f89eda685"],
+
+Cell["NoahH/CreateCoil", "Categorization",
+ CellLabel->"Paclet Name",
+ CellID->1936182326,ExpressionUUID->"9b7f43ef-b827-4cbe-8059-702f04e15b9e"],
+
+Cell["NoahH`CreateCoil`", "Categorization",
+ CellLabel->"Context",
+ CellID->596650091,ExpressionUUID->"ab31ea8b-5ed9-48c2-810c-bd96e23e1fbe"],
+
+Cell["NoahH/CreateCoil/ref/FindSaddleCoilAzimuthal", "Categorization",
+ CellLabel->"URI",
+ CellID->1296931594,ExpressionUUID->"0587c18d-78f3-4daa-85a6-acec50c9646e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Keywords", "KeywordsSection",
+ CellID->490318822,ExpressionUUID->"e0ef3a29-754f-480c-9533-b1f3215cc87e"],
+
+Cell["\<\
+Azimuthal, Saddle, Saddles, Arc, Arcs, Coil, Coils, Physics, Magnetism, \
+Electromagnetism, Field, Biot, Savart, Optimization, Optimisation, Optimize, \
+Optimise\
+\>", "Keywords",
+ CellChangeTimes->{{3.891875686889923*^9, 3.891875691868388*^9}},
+ CellID->893687815,ExpressionUUID->"eaeb3c3d-5610-4e32-8d0b-09fe74e75b7c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Syntax Templates", "TemplatesSection",
+ CellID->710479587,ExpressionUUID->"9684a51d-6a12-4eff-aea2-0212d1398497"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Additional Function Template",
+ CellID->1021341389,ExpressionUUID->"7e9a7170-f026-4ad3-89b7-74e126da1302"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Arguments Pattern",
+ CellID->847934452,ExpressionUUID->"6b3bdd20-abd0-4ad6-ab8a-8b39003f6a04"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Local Variables",
+ CellID->532853272,ExpressionUUID->"f6de382b-66d2-4e72-8269-cfc7c8f136bd"],
+
+Cell[BoxData[""], "Template",
+ CellLabel->"Color Equal Signs",
+ CellID->658134514,ExpressionUUID->"b221280b-e821-4e61-8699-104d0a97fad8"]
+}, Closed]]
+}, Open  ]]
+},
+WindowSize->{700, 770},
+WindowMargins->{{5, Automatic}, {Automatic, 0}},
+TaggingRules-><|"Paclet" -> "NoahH/CreateCoil"|>,
+CellContext->"Global`",
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (March 8, 2023)",
+StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "FunctionPageStylesExt.nb", 
+  CharacterEncoding -> "UTF-8"],
+ExpressionUUID->"098d57d8-9571-4b76-bff4-2d5f75e25447"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "ExtendedExamples"->{
+  Cell[17015, 437, 488, 13, 61, "ExtendedExamplesSection",ExpressionUUID->"77886f72-5e54-4067-9ade-b38bbaaa384b",
+   CellTags->"ExtendedExamples",
+   CellID->1938229840]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"ExtendedExamples", 38720, 1070}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 121, 1, 78, "ObjectName",ExpressionUUID->"69270da7-09ef-4e14-a8f8-dd2eaf73ba3c",
+ CellID->1144219885],
+Cell[704, 25, 2163, 44, 106, "Usage",ExpressionUUID->"ed168081-bae5-45d8-9f9c-f70881af2f61",
+ CellID->7970],
+Cell[2870, 71, 1618, 38, 72, "Notes",ExpressionUUID->"f7eb998f-7b84-4671-a747-1c4e92dc3b3a",
+ CellID->1616593528],
+Cell[4491, 111, 2386, 37, 133, "3ColumnTableMod",ExpressionUUID->"98284606-922b-4ac1-b19f-5843cfd0c5ff",
+ CellID->124323252]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6914, 153, 458, 13, 42, "SeeAlsoSection",ExpressionUUID->"555c123d-9232-47a9-b00e-27d095036b47",
+ CellID->439555483],
+Cell[7375, 168, 4110, 98, 42, "SeeAlso",ExpressionUUID->"f6f4749d-0210-456b-8be7-d525b3afa96e",
+ CellID->29611249]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11522, 271, 431, 12, 43, "TechNotesSection",ExpressionUUID->"b40334ba-f91c-4f99-a6ed-a23dd809216a",
+ CellID->45335],
+Cell[11956, 285, 100, 1, 21, "Tutorials",ExpressionUUID->"3147d5c3-fd0e-4302-bca0-58a9ddc860fc",
+ CellID->761945345]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12093, 291, 117, 1, 42, "MoreAboutSection",ExpressionUUID->"240e2032-d91e-4559-82e6-59688fd8b2a8",
+ CellID->570426354],
+Cell[12213, 294, 100, 1, 21, "MoreAbout",ExpressionUUID->"04916f97-caf7-4cd2-aec2-8d5e395a8fec",
+ CellID->788731470]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12350, 300, 473, 13, 42, "RelatedLinksSection",ExpressionUUID->"a1c66466-ad95-48ac-9b0f-eb3bea93249d",
+ CellID->1940747006],
+Cell[12826, 315, 101, 1, 21, "RelatedLinks",ExpressionUUID->"275a523f-bcef-45de-9e4b-5d6b8bdd3863",
+ CellID->5815559]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12964, 321, 531, 14, 73, "ExamplesInitializationSection",ExpressionUUID->"36c1e845-43fa-4951-a351-b44acab44713",
+ CellID->1105335998],
+Cell[13498, 337, 177, 3, 47, "ExampleInitialization",ExpressionUUID->"a254b302-a6db-42f9-87d9-84f9d39122fc",
+ CellID->1648571836]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13712, 345, 442, 12, 75, "PrimaryExamplesSection",ExpressionUUID->"6d258b2f-2caf-4e97-8054-da1bd76dfa38",
+ CellID->712834058],
+Cell[14157, 359, 938, 17, 26, "ExampleText",ExpressionUUID->"f5e5b32d-ea9f-460f-a64c-82ca490e7685",
+ CellID->1072767369],
+Cell[CellGroupData[{
+Cell[15120, 380, 320, 6, 27, "Input",ExpressionUUID->"32c7d468-ef1e-4897-b323-2be489e1b8bb",
+ CellID->748176698],
+Cell[15443, 388, 1018, 30, 65, "Output",ExpressionUUID->"4d51b888-6492-4ac5-962b-b787b47ba4e6",
+ CellID->1496455645]
+}, Open  ]],
+Cell[16476, 421, 502, 11, 45, "ExampleText",ExpressionUUID->"c0edcb9b-2e9f-4c4f-b786-853b3207287e",
+ CellID->1183651296]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17015, 437, 488, 13, 61, "ExtendedExamplesSection",ExpressionUUID->"77886f72-5e54-4067-9ade-b38bbaaa384b",
+ CellTags->"ExtendedExamples",
+ CellID->1938229840],
+Cell[17506, 452, 241, 5, 38, "ExampleSection",ExpressionUUID->"8cb8bdca-207b-49eb-9e2a-ea8e1530b15c",
+ CellID->649479537],
+Cell[17750, 459, 264, 5, 26, "ExampleSection",ExpressionUUID->"bf9543bb-617f-4000-9ecb-95d457436630",
+ CellID->143200658],
+Cell[CellGroupData[{
+Cell[18039, 468, 243, 5, 26, "ExampleSection",ExpressionUUID->"6d93d371-0096-42a2-83fb-6874e04e307d",
+ CellID->584625960],
+Cell[CellGroupData[{
+Cell[18307, 477, 268, 5, 28, "ExampleSubsection",ExpressionUUID->"e074d924-daef-4183-b073-3edd5bb5bdbc",
+ CellID->390195629],
+Cell[18578, 484, 417, 7, 45, "ExampleText",ExpressionUUID->"042d851d-965b-4e1e-bc1c-936c8b14fe9b",
+ CellID->1004557038],
+Cell[CellGroupData[{
+Cell[19020, 495, 524, 9, 27, "Input",ExpressionUUID->"0d5e0b3a-f262-4a82-8464-ebce80ab65f6",
+ CellID->73704952],
+Cell[19547, 506, 583, 15, 26, "Output",ExpressionUUID->"89762f57-649a-4769-9db8-7581ae8064fe",
+ CellID->2047649242]
+}, Open  ]],
+Cell[20145, 524, 257, 3, 26, "ExampleText",ExpressionUUID->"924ad641-0d56-41a6-9c2d-e7075509c19e",
+ CellID->775839106],
+Cell[CellGroupData[{
+Cell[20427, 531, 430, 9, 27, "Input",ExpressionUUID->"12a4bf72-9ee5-4e54-a53f-c12554bb6b66",
+ CellID->7149958],
+Cell[20860, 542, 1013, 30, 65, "Output",ExpressionUUID->"9e6ce49f-6fb2-4aec-bc45-d4144be0ef1e",
+ CellID->1881239825]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21922, 578, 266, 5, 28, "ExampleSubsection",ExpressionUUID->"1add0baf-4e41-4179-9012-e15a6d99e799",
+ CellID->1750362312],
+Cell[22191, 585, 291, 5, 26, "ExampleText",ExpressionUUID->"52e6b2dd-1c01-4257-9aa2-501e6294593e",
+ CellID->108638912],
+Cell[CellGroupData[{
+Cell[22507, 594, 319, 6, 27, "Input",ExpressionUUID->"282ed4df-c471-435a-a46c-0c8e33df089e",
+ CellID->802846793],
+Cell[22829, 602, 586, 16, 26, "Output",ExpressionUUID->"722ca074-1e88-4a60-8a20-451609786ed2",
+ CellID->343663723]
+}, Open  ]],
+Cell[23430, 621, 225, 2, 26, "ExampleText",ExpressionUUID->"76780eda-afc3-4fdb-8770-3fe70065e99e",
+ CellID->2097758727],
+Cell[CellGroupData[{
+Cell[23680, 627, 328, 6, 27, "Input",ExpressionUUID->"04869ff8-6643-42c1-835d-df3de3aaecb1",
+ CellID->1372665678],
+Cell[24011, 635, 928, 27, 46, "Output",ExpressionUUID->"585de515-86da-45f3-a198-83fe7ffd3c48",
+ CellID->1032244727]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24988, 668, 264, 5, 28, "ExampleSubsection",ExpressionUUID->"cf555b5d-79b4-4e36-8245-fdc0b083d664",
+ CellID->671375761],
+Cell[25255, 675, 242, 4, 26, "ExampleText",ExpressionUUID->"eb0f1747-11f5-4cbb-8b5c-15209aa0f582",
+ CellID->465303443],
+Cell[CellGroupData[{
+Cell[25522, 683, 463, 8, 27, "Input",ExpressionUUID->"dbf7d364-f986-4597-b5f8-91ac14fe4b89",
+ CellID->1027967941],
+Cell[25988, 693, 1087, 31, 65, "Output",ExpressionUUID->"79d36e69-ef3a-43dd-8a09-ae82ddaa05f3",
+ CellID->463501906]
+}, Open  ]],
+Cell[27090, 727, 239, 4, 26, "ExampleText",ExpressionUUID->"89a65097-0f62-477f-b55b-cc7b94eacfff",
+ CellID->74725696],
+Cell[CellGroupData[{
+Cell[27354, 735, 524, 9, 27, "Input",ExpressionUUID->"432632e9-88f7-4363-b3b9-f23d23c5e5f2",
+ CellID->1153346473],
+Cell[27881, 746, 708, 21, 46, "Output",ExpressionUUID->"196f6bd9-e9f8-4a44-9039-c6a6e3e87621",
+ CellID->427948432]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[28628, 772, 249, 5, 38, "ExampleSection",ExpressionUUID->"5b8bc5f2-d0a1-4d99-84db-cb3ac9330d8b",
+ CellID->1467213964],
+Cell[CellGroupData[{
+Cell[28902, 781, 259, 5, 26, "ExampleSection",ExpressionUUID->"d0c8555b-a844-47bb-8872-5c5c43940128",
+ CellID->2057858094],
+Cell[29164, 788, 997, 23, 64, "ExampleText",ExpressionUUID->"864cd12b-59a0-43c1-9cc6-328d7f908c26",
+ CellID->211261062],
+Cell[CellGroupData[{
+Cell[30186, 815, 504, 13, 27, "Input",ExpressionUUID->"7c3ffbc6-3b77-4e37-b1b0-8f9b961b7bae",
+ CellID->348076164],
+Cell[30693, 830, 1422, 39, 88, "Output",ExpressionUUID->"943e87d3-d23f-4bbf-b957-06db157b530e",
+ CellID->173020987]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32152, 874, 555, 14, 27, "Input",ExpressionUUID->"a4d29fdd-84c3-47de-a5fa-089fce6b2763",
+ CellID->270870471],
+Cell[32710, 890, 846, 23, 46, "Output",ExpressionUUID->"c601d376-230a-47df-9b2b-8ea2a635504b",
+ CellID->19700550]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33593, 918, 266, 5, 27, "Input",ExpressionUUID->"b7a6062b-ec30-4b2f-a9f9-edbce19babb2",
+ CellID->568955711],
+Cell[33862, 925, 479, 13, 26, "Output",ExpressionUUID->"92f8f76d-47d6-4c07-9fcc-698b6d7aae7b",
+ CellID->1735176386]
+}, Open  ]]
+}, Open  ]],
+Cell[34368, 942, 252, 5, 38, "ExampleSection",ExpressionUUID->"22bb8b5f-f826-4d76-9461-9ed32aeb8686",
+ CellID->1196850923],
+Cell[34623, 949, 257, 5, 26, "ExampleSection",ExpressionUUID->"b43870ca-2cc4-48e5-a25a-48b89f939411",
+ CellID->2141625059],
+Cell[34883, 956, 249, 5, 26, "ExampleSection",ExpressionUUID->"bc7bae9c-5c82-436c-a5b8-95945038afd7",
+ CellID->318959246]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35169, 966, 110, 1, 76, "MetadataSection",ExpressionUUID->"581f1bf2-27be-4f2a-aa1b-145e32ee6492",
+ CellID->628864610],
+Cell[35282, 969, 595, 14, 29, "History",ExpressionUUID->"c75378e1-1401-40bf-b16a-4805fbb65fe0",
+ CellID->1560473383],
+Cell[CellGroupData[{
+Cell[35902, 987, 485, 13, 24, "CategorizationSection",ExpressionUUID->"42c5ab50-a76d-41ae-b13f-ffb52a7997e1",
+ CellID->1805850917],
+Cell[36390, 1002, 134, 2, 38, "Categorization",ExpressionUUID->"6d1d74b2-05d3-4b38-a13c-461f89eda685",
+ CellID->549978968],
+Cell[36527, 1006, 145, 2, 38, "Categorization",ExpressionUUID->"9b7f43ef-b827-4cbe-8059-702f04e15b9e",
+ CellID->1936182326],
+Cell[36675, 1010, 141, 2, 38, "Categorization",ExpressionUUID->"ab31ea8b-5ed9-48c2-810c-bd96e23e1fbe",
+ CellID->596650091],
+Cell[36819, 1014, 165, 2, 38, "Categorization",ExpressionUUID->"0587c18d-78f3-4daa-85a6-acec50c9646e",
+ CellID->1296931594]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[37021, 1021, 110, 1, 24, "KeywordsSection",ExpressionUUID->"e0ef3a29-754f-480c-9533-b1f3215cc87e",
+ CellID->490318822],
+Cell[37134, 1024, 330, 6, 45, "Keywords",ExpressionUUID->"eaeb3c3d-5610-4e32-8d0b-09fe74e75b7c",
+ CellID->893687815]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37501, 1035, 119, 1, 34, "TemplatesSection",ExpressionUUID->"9684a51d-6a12-4eff-aea2-0212d1398497",
+ CellID->710479587],
+Cell[37623, 1038, 149, 2, 70, "Template",ExpressionUUID->"7e9a7170-f026-4ad3-89b7-74e126da1302",
+ CellID->1021341389],
+Cell[37775, 1042, 137, 2, 70, "Template",ExpressionUUID->"6b3bdd20-abd0-4ad6-ab8a-8b39003f6a04",
+ CellID->847934452],
+Cell[37915, 1046, 135, 2, 70, "Template",ExpressionUUID->"f6de382b-66d2-4e72-8269-cfc7c8f136bd",
+ CellID->532853272],
+Cell[38053, 1050, 137, 2, 70, "Template",ExpressionUUID->"b221280b-e821-4e61-8699-104d0a97fad8",
+ CellID->658134514]
+}, Closed]]
+}, Open  ]]
+}
+]
+*)
+

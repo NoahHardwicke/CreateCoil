@@ -7,11 +7,12 @@ Cell["NoahH/CreateCoil", "Title",
  CellID->1750194546,ExpressionUUID->"c844c271-ea1f-42c9-9156-436577cda126"],
 
 Cell["\<\
-Create simple, discrete coils using current-carrying loops, arcs, or ellipses \
+Create simple, discrete coils using current-carrying loops, arcs or ellipses \
 to generate magnetic fields\
 \>", "Text",
  Deletable->False,
- CellChangeTimes->{3.891710005158334*^9},
+ CellChangeTimes->{
+  3.891710005158334*^9, {3.8917515907344103`*^9, 3.891751591451185*^9}},
  CellTags->{"Description", "TemplateCell"},
  CellID->1436221663,ExpressionUUID->"48fa630c-1455-4f8e-ac18-6be66ab5f70f"],
 
