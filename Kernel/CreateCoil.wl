@@ -1184,6 +1184,10 @@ addHoverTube[tubeRadius_, hoverRadius_, path_, drawnTubeRadius_:#] := {
 }
 
 
+coilCylinder[\[Rho]c_, z_] := Cylinder[
+	{{0, 0, -#}, {0, 0, #}}&[\[Rho]c z],
+	.98 \[Rho]c]
+
 
 (* Arrow heads get too large if they scale linearly with current. *)
 scaleHead[s_] := .075 s^.5
@@ -1244,7 +1248,7 @@ coilGraphic3DOpts = Normal @ Merge[
 		{
 			ImageSize -> Large,
 			PlotRange -> All,
-			Boxed -> True,
+			Boxed -> False,
 			Axes -> True,
 			AxesOrigin -> Automatic,
 			AxesLabel -> coilPlot3DAxesLabel,
@@ -1252,7 +1256,10 @@ coilGraphic3DOpts = Normal @ Merge[
 			"ThicknessScaling" -> .002,
 			"ArrowheadScaling" -> .03,
 			"HoverThickness" -> .007,
-			PlotStyle -> Black
+			PlotStyle -> Black,
+			"ShowCylinder" -> True,
+			"CylinderStyle" -> Directive[EdgeForm[{GrayLevel[.8], Thickness[.001]}], FaceForm[GrayLevel[.96, .4]]],
+			Show -> None
 		}
 	},
 	Last];
@@ -1302,11 +1309,12 @@ dynSaddleText[\[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, \[Phi]c\[Rho]c_] := {
 		Row[{i\[Chi], " (A)"}]}}
 
 
-dynSaddle2D[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_], style_] := dynPrimByEpilog[
+dynSaddle2D[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_], Dynamic[epilogOpt_], style_] := dynPrimByEpilog[
 	prim,
 	dynSaddleText[\[Chi]c\[Rho]c, i\[Chi], \[Phi]c\[Rho]c],
 	transform,
 	Dynamic[epilog],
+	Dynamic[epilogOpt],
 	style]
 
 
@@ -1347,12 +1355,12 @@ dynPrimByKey[prim_, label:{{_, _}..}, transform_, key_, Dynamic[tracker_], style
 		FrameMargins -> {5{1, 1}, 2{1, 1}}]]
 
 
-dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_], style_] := With[
+dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_], Dynamic[epilogOpt_], style_] := With[
 	{primPair = {transform[prim], prim}},
 	Tooltip[
 		EventHandler[Prepend[primPair, style], {
-			"MouseEntered" :> (epilog = {style, Red, primPair}),
-			"MouseExited" :> (epilog = {})}],
+			"MouseEntered" :> (epilog = {{epilogOpt}, style, Red, primPair}),
+			"MouseExited" :> (epilog = {epilogOpt})}],
 		Pane[
 			TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
 			FrameMargins -> {5{1, 1}, 2{1, 1}}]]]
@@ -1562,7 +1570,12 @@ loopGraphic3D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 			}];
 		
 		Graphics3D[
-			{gPrims},
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{<|opts|>["CylinderStyle"], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
 			Lighting -> AmbientLight[White],
 			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
@@ -1675,7 +1688,9 @@ SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opti
 
 
 saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{styles, gPrims, symQ, arcCentres, arcExtents, wrappingTransforms, \[Chi]cPairs, i = 1},
+	{epilogResolved, styles, gPrims, symQ, arcCentres, arcExtents, wrappingTransforms, \[Chi]cPairs, i = 1},
+	
+	epilogResolved = Replace[<|opts|>[Epilog], None | False -> {}];
 	
 	(* Is the coil axially symmetric? *)
 	symQ = OddQ[nDes + mDes];
@@ -1698,7 +1713,7 @@ saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 		Table[Translate[#, {{0, 0}, {2 Pi \[Rho]c, 0}}]&, Length[\[Phi]c]],
 		Table[Identity, (Length[arcCentres] - 1) * Length[\[Phi]c]]];
 
-	DynamicModule[{epilog = {}},
+	DynamicModule[{epilog = {epilogResolved}, epilogOpt = epilogResolved},
 		If[symQ,
 
 			(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
@@ -1722,7 +1737,7 @@ saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 									}]
 								},
 								(* Arguments for dynSaddle2D *)
-								{zPair, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], reflectY[0], Dynamic[epilog]}
+								{zPair, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], reflectY[0], Dynamic[epilog], Dynamic[epilogOpt]}
 							}],
 							{arcExtents, wrappingTransforms}]],
 				{
@@ -1755,7 +1770,7 @@ saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 									}]
 								},
 								(* Arguments for dynSaddle2D *)
-								{z, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], {}&, Dynamic[epilog]}}],
+								{z, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], {}&, Dynamic[epilog], Dynamic[epilogOpt]}}],
 						{arcExtents, wrappingTransforms}]],
 				{
 					\[Rho]c \[Chi]c,
@@ -1774,7 +1789,7 @@ saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
 			Epilog -> Dynamic[epilog],
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
+			Sequence @@ FilterRules[{opts}, DeleteCases[Options[Graphics], _[Epilog, _]]]]]]
 
 
 (* ::Subsubsection::Closed:: *)
@@ -1943,7 +1958,12 @@ saddleGraphic3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 		];
 
 		Graphics3D[
-			{gPrims},
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{<|opts|>["CylinderStyle"], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
 			Lighting -> AmbientLight[White],
 			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
@@ -2197,7 +2217,12 @@ ellipseGraphic3D[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 		gPrims = Flatten[gPrims, 1];
 
 		Graphics3D[
-			{gPrims},
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{<|opts|>["CylinderStyle"], coilCylinder[\[Rho]c, Max[\[Chi]c + \[Psi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
 			Lighting -> AmbientLight[White],
 			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
