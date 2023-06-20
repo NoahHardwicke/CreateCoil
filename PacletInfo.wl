@@ -3,8 +3,8 @@
 PacletObject[
   <|
     "Name" -> "NoahH/CreateCoil",
-    "Description" -> "Create simple, discrete coils using current-carrying loops, arcs or ellipses to generate magnetic fields",
-    "Creator" -> "Noah Hardwicke, Peter James Hobson, Michael Packer",
+    "Description" -> "Create simple, discrete coils using current-carrying loops, saddles or ellipses to generate magnetic fields",
+    "Creator" -> "Noah Hardwicke, Peter J. Hobson, Michael Packer",
     "License" -> "Creative Commons Attribution Non Commercial 3.0 Unported",
     "PublisherID" -> "NoahH",
     "Version" -> "1.0.0",
@@ -21,6 +21,7 @@ PacletObject[
           "NoahH`CreateCoil`Coil\[Psi]c",
           "NoahH`CreateCoil`DesToErr",
           "NoahH`CreateCoil`EllipseCoilPlot",
+          "NoahH`CreateCoil`EllipseCoilPlot3D",
           "NoahH`CreateCoil`EllipseFieldPlot",
           "NoahH`CreateCoil`EllipseFieldPlot2D",
           "NoahH`CreateCoil`FindEllipseCoil",
@@ -30,9 +31,11 @@ PacletObject[
           "NoahH`CreateCoil`FindSaddleCoilAzimuthal",
           "NoahH`CreateCoil`HarmonicFieldPlot",
           "NoahH`CreateCoil`LoopCoilPlot",
+          "NoahH`CreateCoil`LoopCoilPlot3D",
           "NoahH`CreateCoil`LoopFieldPlot",
           "NoahH`CreateCoil`LoopFieldPlot2D",
           "NoahH`CreateCoil`SaddleCoilPlot",
+          "NoahH`CreateCoil`SaddleCoilPlot3D",
           "NoahH`CreateCoil`SaddleFieldPlot",
           "NoahH`CreateCoil`SaddleFieldPlot2D"
         }

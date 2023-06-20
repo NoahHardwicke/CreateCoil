@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    568952,      11967]
-NotebookOptionsPosition[    549305,      11677]
-NotebookOutlinePosition[    549704,      11693]
-CellTagsIndexPosition[    549661,      11690]
+NotebookDataLength[    686152,      14512]
+NotebookOptionsPosition[    662336,      14165]
+NotebookOutlinePosition[    662728,      14181]
+CellTagsIndexPosition[    662685,      14178]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -365,8 +365,7 @@ Cell[BoxData[{
    3.891769154772169*^9}, {3.891769235819294*^9, 3.891769239854198*^9}, 
    3.891769374889695*^9, {3.8917694497157793`*^9, 3.89176945491794*^9}, {
    3.8917697260226383`*^9, 3.891769757209581*^9}},
- CellLabel->
-  "In[195]:=",ExpressionUUID->"8477f2d9-b507-4299-8990-dc9019c3ad3d"],
+ CellLabel->"In[19]:=",ExpressionUUID->"8477f2d9-b507-4299-8990-dc9019c3ad3d"],
 
 Cell[CellGroupData[{
 
@@ -3249,6 +3248,654 @@ StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
 
 Cell[CellGroupData[{
 
+Cell["LoopCoilPlot3D", "Subsection",
+ CellChangeTimes->{{3.89593752440522*^9, 
+  3.895937528658197*^9}},ExpressionUUID->"6ed3ee1b-a7b6-4b5e-858f-\
+2cbf4052b1fc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"makeUsageMessage", "[", 
+  RowBox[{"LoopCoilPlot3D", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"LoopCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Chi]", ",", 
+           RowBox[{"c", " ", "1"}]}], "]"}], ",", 
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Chi]", ",", 
+           RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<...\>\""}], "}"}], ",",
+        " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", " ", 
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", " ", "\"\<...\>\""}], 
+        "}"}], ",", 
+       RowBox[{"sub", "[", 
+        RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", " ", 
+       RowBox[{"var", "[", "n", "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+     "\"\< returns a 3D plot of the loop\[Hyphen]based coil with axial \
+separations \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<, turn ratios \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", " ", 
+     "\"\<...\>\"", ",", "\"\<, radius \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", 
+     "\"\< and target field harmonic of order \>\"", ",", " ", 
+     RowBox[{"var", "[", "n", "]"}], ",", "\"\<.\>\""}], 
+    "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"LoopCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "1"}]}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "2"}]}], "]"}]}], ",", "\"\<...\>\""}], "}"}], 
+       ",", "\"\<...\>\""}], "]"}], ",", "\[IndentingNewLine]", 
+     "\"\< is an alternative way of specifying the axial separations \>\"", 
+     ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<.\>\""}], "\[IndentingNewLine]", "}"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.895937537120223*^9, 3.895937609592795*^9}, {
+  3.896153296703506*^9, 3.896153298883123*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"b041e267-e0d8-41a5-a306-01a836321ce4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox["\<\"Formatted:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.8961533440913153`*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"dd303fa6-358d-4889-88a9-47878ada5f1c"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"LoopCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\
+\\\"], StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \
+\\\",\\\", SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \
+\\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\
+\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", StyleBox[\\\"n\\\", \
+\\\"TI\\\"]}], \\\"]\\\"}]\\) returns a 3D plot of the loop\[Hyphen]based \
+coil with axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\
+\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\).\"\>"], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.8961533440921507`*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"ef41c16a-df76-4ed5-9288-179c17c5c798"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"LoopCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\
+\\\", \\\"1\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\
+\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\\\", \\\
+\"2\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\
+\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) is an alternative way of specifying the \
+axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\"\>"], \
+"Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.896153344093666*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"e009fa3e-0a0b-4c5c-9ea4-0d6a5c14932d"],
+
+Cell[BoxData[
+ StyleBox["\<\"Linear Syntax:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.896153344094531*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"25817743-8769-4f79-9eb6-256fc7a90c20"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"LoopCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \\\
+\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\
+\"], StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \
+\\\",\\\", SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\
+\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \
+\\\"}\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", StyleBox[\\\"n\\\", \
+\\\"TI\\\"]}], \\\"]\\\"}]\\) returns a 3D plot of the loop\\[Hyphen]based \
+coil with axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+radius \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], StyleBox[\
+\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \
+\\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.8961533440951157`*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"ccbced1b-13c0-4d35-a99b-d2abcc3ca132"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"LoopCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"1\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"1\\\"}], \\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"2\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"2\\\"}], \\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\
+\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) \
+is an alternative way of specifying the axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.896153344096249*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"ec7e90f7-cb18-42cd-b24c-e98e445c9cd4"],
+
+Cell[BoxData[
+ StyleBox["\<\"Docs Usage:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.896153344097348*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"29bbcc10-0026-4ed9-811f-b79e8479fc2a"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" returns a 3D plot of the loop\[Hyphen]based coil with axial \
+separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", turn ratios \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"1\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"2\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", radius \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Rho]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"c\"", ",", "\"TI\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and target field harmonic of order \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"n\"", ",", "\"TI\""}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.896153344100885*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"280c7950-52d9-4a0a-9dec-9b216d0d7378"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" is an alternative way of specifying the axial separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.896153344110023*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"d3de6561-87e4-4ac2-9161-2fd9eea38b51"],
+
+Cell[BoxData[
+ StyleBox["\<\"CacheTemplateAndUsage Code:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895937628981801*^9, 3.8961533441441603`*^9},
+ CellLabel->
+  "During evaluation of \
+In[27]:=",ExpressionUUID->"371a198a-1dce-4730-9aff-cb735b45ee0c"],
+
+Cell[BoxData[
+ RowBox[{"MathLink`CallFrontEnd", "[", 
+  RowBox[{"FrontEnd`CacheTemplateAndUsagePacket", "[", 
+   RowBox[{
+    RowBox[{"FrontEnd`InputNotebook", "[", "]"}], ",", 
+    "\"\<LoopCoilPlot3D\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<LoopCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Rho]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\<TI\>\""}], "]"}]}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<n\>\"", ",", "\"\<TI\>\""}], "]"}]}], "}"}], 
+                  "]"}], ",", "\"\<]\>\""}], "}"}], "]"}], "}"}], "}"}], 
+            "]"}], "]"}], ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<LoopCoilPlot3D_templates\>\""}]}], 
+         "]"}], ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<LoopCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<1\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<2\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<]\>\""}], "}"}], "]"}], 
+              "}"}], "}"}], "]"}], "]"}], ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<LoopCoilPlot3D_templates\>\""}]}], 
+         "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< returns a 3D plot of the loop\[Hyphen]based coil with \
+axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\).\>\"", "}"}], "]"}], "]"}], ",", 
+          "\"\<Output\>\"", ",", 
+          RowBox[{"CellTags", "\[Rule]", "\"\<LoopCoilPlot3D_usages\>\""}]}], 
+         "]"}], ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< is an alternative way of specifying the axial \
+separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"", 
+             "}"}], "]"}], "]"}], ",", "\"\<Output\>\"", ",", 
+          RowBox[{"CellTags", "\[Rule]", "\"\<LoopCoilPlot3D_usages\>\""}]}], 
+         "]"}]}], "}"}]}], "}"}]}], "]"}], "]"}]], "Print",
+ CellChangeTimes->{3.8961533441472683`*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"ff7d6931-8814-4066-bfc0-7c95a31d5434"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["SaddleCoilPlot", "Subsection",
  CellChangeTimes->{{3.891523020292595*^9, 3.891523022800496*^9}, {
   3.891527047503326*^9, 
@@ -4272,6 +4919,928 @@ StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
 
 Cell[CellGroupData[{
 
+Cell["SaddleCoilPlot3D", "Subsection",
+ CellChangeTimes->{{3.8959385464574738`*^9, 
+  3.895938548042329*^9}},ExpressionUUID->"ff8e9661-072f-486d-8afc-\
+ea34c0c32bc8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"makeUsageMessage", "[", 
+  RowBox[{"SaddleCoilPlot3D", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"SaddleCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Chi]", ",", 
+           RowBox[{"c", " ", "1"}]}], "]"}], ",", 
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Chi]", ",", 
+           RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<...\>\""}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Phi]", ",", 
+           RowBox[{"c", " ", "1"}]}], "]"}], ",", 
+         RowBox[{"sub", "[", 
+          RowBox[{"\[Phi]", ",", 
+           RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<...\>\""}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", " ", 
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", " ", "\"\<...\>\""}], 
+        "}"}], ",", 
+       RowBox[{"sub", "[", 
+        RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"var", "[", "n", "]"}], ",", 
+         RowBox[{"var", "[", "m", "]"}]}], "}"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     "\"\< returns a 3D plot of the saddle\[Hyphen]based coil with axial \
+separations \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<, azimuthal extents \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Phi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Phi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<, turn ratios \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", " ", 
+     "\"\<...\>\"", ",", "\"\<, radius \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", 
+     "\"\< and target field harmonic of order \>\"", ",", " ", 
+     RowBox[{"var", "[", "n", "]"}], ",", "\"\< and degree \>\"", ",", 
+     RowBox[{"var", "[", "m", "]"}], ",", "\"\<.\>\""}], 
+    "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"SaddleCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "1"}]}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "2"}]}], "]"}]}], ",", "\"\<...\>\""}], "}"}], 
+       ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Coil\[Phi]c", "[", "1", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Phi]", ",", 
+            RowBox[{"c", " ", "1"}]}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Coil\[Phi]c", "[", "2", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Phi]", ",", 
+            RowBox[{"c", " ", "2"}]}], "]"}]}], ",", "\"\<...\>\""}], "}"}], 
+       ",", "\"\<...\>\""}], "]"}], ",", "\[IndentingNewLine]", 
+     "\"\< is an alternative way of specifying the axial separations \>\"", 
+     ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]c", ",", "1"}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]c", ",", "2"}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\< and azimuthal extents \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Phi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Phi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<.\>\""}], "\[IndentingNewLine]", "}"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8959385618822517`*^9, 3.8959385778096037`*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"3c19fac0-4bc1-4353-a01a-d2b0767e1dc1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox["\<\"Formatted:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895938598556274*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"753f1fa1-d691-41ab-9cb8-cdf235e5a0cf"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"SaddleCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\
+\\\"], StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \
+\\\",\\\", SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \
+\\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\
+\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"m\\\", \
+\\\"TI\\\"]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns a 3D plot of the saddle\
+\[Hyphen]based coil with axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+azimuthal extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\"\>"], "Print",
+ CellChangeTimes->{3.895938598557356*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"be8a58bb-ec4a-4c9d-b909-bc9a565f60f4"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"SaddleCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\
+\\\", \\\"1\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\
+\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\\\", \\\
+\"2\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{RowBox[{\\\"Coil\[Phi]c\\\", \\\"[\\\", \\\"1\\\", \
+\\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Phi]c\\\", \\\"[\\\", \\\
+\"2\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\
+\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) is an alternative way of specifying the \
+axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \
+\\\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"2\\\
+\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]\\) and azimuthal extents \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\"\>"], \
+"Print",
+ CellChangeTimes->{3.895938598559766*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"14999ac4-f010-4d00-915f-ba59e706efab"],
+
+Cell[BoxData[
+ StyleBox["\<\"Linear Syntax:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895938598561055*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"c9fd3a43-5a41-41c4-96d4-8227a148e7dc"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"SaddleCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \\\
+\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \\\
+\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \
+\\\",\\\", SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \\\
+\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\
+\"], StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \
+\\\",\\\", SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\
+\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \
+\\\"}\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"m\\\", \
+\\\"TI\\\"]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns a 3D plot of the \
+saddle\\[Hyphen]based coil with axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+azimuthal extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+radius \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], StyleBox[\
+\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \
+\\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \
+\\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895938598561779*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"f95dd801-a954-4708-ac8e-4da717aa1e9e"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"SaddleCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"1\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"1\\\"}], \\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"2\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"2\\\"}], \\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\
+\\\"\\\", \\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{RowBox[{\\\"Coil\\[Phi]c\\\", \\\"[\\\", \\\"1\\\", \
+\\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Phi]c\\\", \\\"[\\\", \
+\\\"2\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\"\\[Phi]\\\
+\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\
+\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) \
+is an alternative way of specifying the axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\) and \
+azimuthal extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895938598563299*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"947d128a-1207-40ea-a3ef-f85886a708db"],
+
+Cell[BoxData[
+ StyleBox["\<\"Docs Usage:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.8959385985644703`*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"a2e2bf69-962e-48d2-9dd7-1e4aa038b5f4"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" returns a 3D plot of the saddle\[Hyphen]based coil with axial \
+separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", azimuthal extents \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Phi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Phi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", turn ratios \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"1\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"2\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", radius \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Rho]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"c\"", ",", "\"TI\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and target field harmonic of order \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"n\"", ",", "\"TI\""}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and degree \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"m\"", ",", "\"TI\""}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.8959385985669603`*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"ddc7bc94-6c0b-4fd3-ade3-74a9801c0946"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" is an alternative way of specifying the axial separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]c\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"1\"", ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]c\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"2\"", ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and azimuthal extents \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Phi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Phi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.895938598577545*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"7081e750-faaf-456b-a79e-8a3caaaae784"],
+
+Cell[BoxData[
+ StyleBox["\<\"CacheTemplateAndUsage Code:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.8959385986132936`*^9},
+ CellLabel->
+  "During evaluation of \
+In[19]:=",ExpressionUUID->"0f6ecd5a-4134-4d0f-a80f-95aa2400ec3a"],
+
+Cell[BoxData[
+ RowBox[{"MathLink`CallFrontEnd", "[", 
+  RowBox[{"FrontEnd`CacheTemplateAndUsagePacket", "[", 
+   RowBox[{
+    RowBox[{"FrontEnd`InputNotebook", "[", "]"}], ",", 
+    "\"\<SaddleCoilPlot3D\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<SaddleCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Phi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Phi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Rho]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\<TI\>\""}], "]"}]}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<n\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<m\>\"", ",", "\"\<TI\>\""}], "]"}]}], "}"}], 
+                    "]"}], ",", "\"\<}\>\""}], "}"}], "]"}]}], "}"}], "]"}], 
+                 ",", "\"\<]\>\""}], "}"}], "]"}], "}"}], "}"}], "]"}], "]"}],
+           ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<SaddleCoilPlot3D_templates\>\""}]}], 
+         "]"}], ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<SaddleCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<1\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<2\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Phi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<1\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Phi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Phi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<2\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Phi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<]\>\""}], "}"}], "]"}], 
+              "}"}], "}"}], "]"}], "]"}], ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<SaddleCoilPlot3D_templates\>\""}]}], 
+         "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< returns a 3D plot of the saddle\[Hyphen]based coil \
+with axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+azimuthal extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\>\"", "}"}], "]"}], "]"}], ",", "\"\<Output\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<SaddleCoilPlot3D_usages\>\""}]}], "]"}],
+         ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< is an alternative way of specifying the axial \
+separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"2\\\
+\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]\\) and azimuthal extents \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Phi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"", 
+             "}"}], "]"}], "]"}], ",", "\"\<Output\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<SaddleCoilPlot3D_usages\>\""}]}], 
+         "]"}]}], "}"}]}], "}"}]}], "]"}], "]"}]], "Print",
+ CellChangeTimes->{3.895938598617003*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"52d4f357-6ade-49d3-818c-a5fb29d681ef"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["EllipseCoilPlot", "Subsection",
  CellChangeTimes->{{3.891523020292595*^9, 3.891523022800496*^9}, {
   3.891527047503326*^9, 3.891527048321392*^9}, {3.891528884361681*^9, 
@@ -5288,6 +6857,925 @@ StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
  CellChangeTimes->{3.8919148906910563`*^9},
  ShowStringCharacters->
   True,ExpressionUUID->"3fe82088-c3b4-4835-9ba7-20b445e51c6f"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["EllipseCoilPlot3D", "Subsection",
+ CellChangeTimes->{{3.895938653720725*^9, 
+  3.895938655006853*^9}},ExpressionUUID->"918d81da-bd18-4000-9cf8-\
+e663e164368c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"makeUsageMessage", "[", 
+  RowBox[{"EllipseCoilPlot3D", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"EllipseCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"sub", "[", 
+            RowBox[{"\[Chi]", ",", 
+             RowBox[{"c", " ", "1"}]}], "]"}], ",", 
+           RowBox[{"sub", "[", 
+            RowBox[{"\[Psi]", ",", 
+             RowBox[{"c", " ", "1"}]}], "]"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"sub", "[", 
+            RowBox[{"\[Chi]", ",", 
+             RowBox[{"c", " ", "2"}]}], "]"}], ",", 
+           RowBox[{"sub", "[", 
+            RowBox[{"\[Psi]", ",", 
+             RowBox[{"c", " ", "2"}]}], "]"}]}], "}"}], ",", "\"\<...\>\""}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", " ", 
+         RowBox[{"sub", "[", 
+          RowBox[{"i", ",", 
+           RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", " ", "\"\<...\>\""}], 
+        "}"}], ",", 
+       RowBox[{"sub", "[", 
+        RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"var", "[", "n", "]"}], ",", 
+         RowBox[{"var", "[", "m", "]"}]}], "}"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     "\"\< returns a 3D plot of the ellipse\[Hyphen]based coil with axial \
+separations \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<, ellipse extents \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Psi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Psi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<, turn ratios \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"\[Chi]", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", " ", 
+     "\"\<...\>\"", ",", "\"\<, radius \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Rho]", ",", "c"}], "]"}], ",", 
+     "\"\< and target field harmonic of order \>\"", ",", " ", 
+     RowBox[{"var", "[", "n", "]"}], ",", "\"\< and degree \>\"", ",", 
+     RowBox[{"var", "[", "m", "]"}], ",", "\"\<.\>\""}], 
+    "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"EllipseCoilPlot3D", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "1", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "1"}]}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Coil\[Chi]c", "[", "2", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Chi]", ",", 
+            RowBox[{"c", " ", "2"}]}], "]"}]}], ",", "\"\<...\>\"", ",", " ", 
+         
+         RowBox[{
+          RowBox[{"Coil\[Psi]c", "[", "1", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Psi]", ",", 
+            RowBox[{"c", " ", "1"}]}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"Coil\[Psi]c", "[", "2", "]"}], "\[Rule]", 
+          RowBox[{"sub", "[", 
+           RowBox[{"\[Psi]", ",", 
+            RowBox[{"c", " ", "2"}]}], "]"}]}], ",", "\"\<...\>\""}], "}"}], 
+       ",", "\"\<...\>\""}], "]"}], ",", "\[IndentingNewLine]", 
+     "\"\< is an alternative way of specifying the axial separations \>\"", 
+     ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]c", ",", "1"}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Chi]c", ",", "2"}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\< and ellipse extents \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Psi]", ",", 
+       RowBox[{"c", " ", "1"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     RowBox[{"sub", "[", 
+      RowBox[{"\[Psi]", ",", 
+       RowBox[{"c", " ", "2"}]}], "]"}], ",", "\"\<, \>\"", ",", 
+     "\"\<...\>\"", ",", "\"\<.\>\""}], "\[IndentingNewLine]", "}"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.895938665014925*^9, 3.895938682167919*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"836dacfc-f5b5-46c9-a2d7-84da0d85e8d6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ StyleBox["\<\"Formatted:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.895938697188048*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"c95baf77-5423-4128-af5b-ab22d9e69242"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"EllipseCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \\\",\\\", \
+SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]}], \
+\\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\
+\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]}], \
+\\\"}\\\"}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \\\",\\\", \
+SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \
+\\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"}\
+\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"m\\\", \
+\\\"TI\\\"]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns a 3D plot of the ellipse\
+\[Hyphen]based coil with axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+ellipse extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\"\>"], "Print",
+ CellChangeTimes->{3.895938697189495*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"560136c4-013d-4dc6-86f2-0f09911bad57"],
+
+Cell[BoxData["\<\"\\!\\(\\*RowBox[{\\\"EllipseCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\
+\\\", \\\"1\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\
+\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Chi]c\\\", \\\"[\\\", \\\
+\"2\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Psi]c\\\", \\\"[\\\", \\\"1\
+\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Psi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\[Psi]c\\\", \\\"[\\\", \\\
+\"2\\\", \\\"]\\\"}], \\\"\[Rule]\\\", SubscriptBox[StyleBox[\\\"\[Psi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\
+\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) is an alternative way of specifying the \
+axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \
+\\\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"2\\\
+\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]\\) and ellipse extents \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\"\>"], \
+"Print",
+ CellChangeTimes->{3.895938697192874*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"549b0860-bf7c-4c1c-a4c9-9b0c8288cf54"],
+
+Cell[BoxData[
+ StyleBox["\<\"Linear Syntax:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.8959386971945267`*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"c5a9f79e-5b74-4360-9eb2-c306e4c063f8"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"EllipseCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \\\",\\\", \
+SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]}], \
+\\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{SubscriptBox[StyleBox[\\\"\
+\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]}], \
+\\\"}\\\"}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\
+\\\"]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]], \\\",\
+\\\", SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]], \\\",\
+\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \
+\\\"}\\\"}], \\\",\\\", SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"m\\\", \
+\\\"TI\\\"]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) returns a 3D plot of the ellipse\
+\\[Hyphen]based coil with axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"1\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+ellipse extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+radius \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Rho]\\\", \\\"TI\\\"], StyleBox[\
+\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \
+\\!\\(\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \
+\\!\\(\\*StyleBox[\\\"m\\\", \\\"TI\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895938697195359*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"289be03d-29b6-4050-a92b-2f8787ffb046"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   "\"\<\\!\\(\\*RowBox[{\\\"EllipseCoilPlot3D\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"1\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"1\\\"}], \\\"TR\\\"]]}], \\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Chi]c\\\", \
+\\\"[\\\", \\\"2\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\
+\"\\[Chi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \
+\\\"2\\\"}], \\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\
+\\\"\\\", \\\"TR\\\"], \\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Psi]c\\\", \\\"[\
+\\\", \\\"1\\\", \\\"]\\\"}], \\\"\\[Rule]\\\", \
+SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]}], \
+\\\",\\\", RowBox[{RowBox[{\\\"Coil\\[Psi]c\\\", \\\"[\\\", \\\"2\\\", \
+\\\"]\\\"}], \\\"\\[Rule]\\\", SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \
+\\\"TR\\\"]]}], \\\",\\\", StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]}], \\\"}\\\"}], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]}], \\\"]\\\"}]\\) \
+is an alternative way of specifying the axial separations \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\) and \
+ellipse extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"",
+   ShowSpecialCharacters->False,
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  FullForm]], "Print",
+ CellChangeTimes->{3.895938697197246*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"28ab74c0-0e1d-4c6e-9ffd-5d92f6a0adc8"],
+
+Cell[BoxData[
+ StyleBox["\<\"Docs Usage:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.8959386971986923`*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"59f5e118-cc8c-4a03-be6d-55f2971efb8c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" returns a 3D plot of the ellipse\[Hyphen]based coil with axial \
+separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", ellipse extents \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Psi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Psi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", turn ratios \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"1\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"i\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\[Chi]\"", ",", "\" \"", ",", "\"2\""}], "}"}],
+                    "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", radius \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Rho]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"c\"", ",", "\"TI\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and target field harmonic of order \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"n\"", ",", "\"TI\""}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and degree \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"m\"", ",", "\"TI\""}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.895938697204111*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"7864d76f-cd8b-434c-a163-f3ff7cc31eb1"],
+
+Cell[BoxData[
+ TemplateBox[{
+  ",", "\",\"", 
+   "\" is an alternative way of specifying the axial separations \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]c\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"1\"", ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Chi]c\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"2\"", ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\" and ellipse extents \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Psi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"1\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"SubscriptBox", "[", 
+           RowBox[{
+             RowBox[{"StyleBox", "[", 
+               RowBox[{"\"\[Psi]\"", ",", "\"TI\""}], "]"}], ",", 
+             RowBox[{"StyleBox", "[", 
+               RowBox[{
+                 RowBox[{"RowBox", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"c\"", ",", "\" \"", ",", "\"2\""}], "}"}], 
+                   "]"}], ",", "\"TR\""}], "]"}]}], "]"}], "]"}], ",", 
+       "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], 
+   "\", \"", 
+   RowBox[{"Cell", "[", 
+     RowBox[{
+       RowBox[{"BoxData", "[", 
+         RowBox[{"StyleBox", "[", 
+           RowBox[{"\"\\\"\[Ellipsis]\\\"\"", ",", "\"TR\""}], "]"}], "]"}], 
+       ",", "\"InlineFormula\"", ",", 
+       RowBox[{"ShowStringCharacters", "\[Rule]", "False"}]}], "]"}], "\".\""},
+  "RowWithSeparators"]], "Print",
+ CellChangeTimes->{3.8959386972454987`*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"ae399052-1606-4a3b-9f67-956ec645b546"],
+
+Cell[BoxData[
+ StyleBox["\<\"CacheTemplateAndUsage Code:\"\>",
+  StripOnInput->False,
+  LineColor->RGBColor[0.9, 0.45, 0.],
+  FrontFaceColor->RGBColor[0.9, 0.45, 0.],
+  BackFaceColor->RGBColor[0.9, 0.45, 0.],
+  GraphicsColor->RGBColor[0.9, 0.45, 0.],
+  FontSize->12,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.9, 0.45, 0.]]], "Print",
+ CellChangeTimes->{3.8959386972577887`*^9},
+ CellLabel->
+  "During evaluation of \
+In[20]:=",ExpressionUUID->"049c5541-c6bb-4715-b081-632df948bbd5"],
+
+Cell[BoxData[
+ RowBox[{"MathLink`CallFrontEnd", "[", 
+  RowBox[{"FrontEnd`CacheTemplateAndUsagePacket", "[", 
+   RowBox[{
+    RowBox[{"FrontEnd`InputNotebook", "[", "]"}], ",", 
+    "\"\<EllipseCoilPlot3D\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<EllipseCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Psi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Psi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<i\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<\[Chi]\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}], 
+                    "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Rho]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\<TI\>\""}], "]"}]}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<n\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<m\>\"", ",", "\"\<TI\>\""}], "]"}]}], "}"}], 
+                    "]"}], ",", "\"\<}\>\""}], "}"}], "]"}]}], "}"}], "]"}], 
+                 ",", "\"\<]\>\""}], "}"}], "]"}], "}"}], "}"}], "]"}], "]"}],
+           ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<EllipseCoilPlot3D_templates\>\""}]}], 
+         "]"}], ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"GridBox", "[", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{"RowBox", "[", 
+               RowBox[{"{", 
+                RowBox[{"\"\<EllipseCoilPlot3D\>\"", ",", "\"\<[\>\"", ",", 
+                 RowBox[{"RowBox", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<{\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<1\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Chi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<2\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Chi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], "]"}],
+                     ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Psi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<1\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Psi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<1\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    "\"\<Coil\[Psi]c\>\"", ",", "\"\<[\>\"", ",", "\"\<2\>\"",
+                     ",", "\"\<]\>\""}], "}"}], "]"}], ",", "\"\<\[Rule]\>\"",
+                     ",", 
+                    RowBox[{"SubscriptBox", "[", 
+                    RowBox[{
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{"\"\<\[Psi]\>\"", ",", "\"\<TI\>\""}], "]"}], ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    RowBox[{"RowBox", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<c\>\"", ",", "\"\< \>\"", ",", "\"\<2\>\""}],
+                     "}"}], "]"}], ",", "\"\<TR\>\""}], "]"}]}], "]"}]}], 
+                    "}"}], "]"}], ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<}\>\""}], "}"}], "]"}], 
+                    ",", "\"\<,\>\"", ",", 
+                    RowBox[{"StyleBox", "[", 
+                    RowBox[{
+                    "\"\<\\\"\[Ellipsis]\\\"\>\"", ",", "\"\<TR\>\""}], 
+                    "]"}]}], "}"}], "]"}], ",", "\"\<]\>\""}], "}"}], "]"}], 
+              "}"}], "}"}], "]"}], "]"}], ",", "\"\<InlineFormula\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<EllipseCoilPlot3D_templates\>\""}]}], 
+         "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< returns a 3D plot of the ellipse\[Hyphen]based coil \
+with axial separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \
+\\\"TI\\\"], StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\
+\\), \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), \
+ellipse extents \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), turn \
+ratios \\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], \
+StyleBox[RowBox[{\\\"\[Chi]\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \\!\
+\\(\\*SubscriptBox[StyleBox[\\\"i\\\", \\\"TI\\\"], StyleBox[RowBox[{\\\"\
+\[Chi]\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\
+\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\), radius \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Rho]\\\", \\\"TI\\\"], \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]\\) and target field harmonic of order \\!\\(\
+\\*StyleBox[\\\"n\\\", \\\"TI\\\"]\\) and degree \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\>\"", "}"}], "]"}], "]"}], ",", "\"\<Output\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<EllipseCoilPlot3D_usages\>\""}]}], 
+         "]"}], ",", 
+        RowBox[{"Cell", "[", 
+         RowBox[{
+          RowBox[{"BoxData", "[", 
+           RowBox[{"RowBox", "[", 
+            RowBox[{
+            "{", "\"\< is an alternative way of specifying the axial \
+separations \\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Chi]c\\\", \\\"TI\\\"], StyleBox[\\\"2\\\
+\", \\\"TR\\\"]]\\), \\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \
+\\\"TR\\\"]\\) and ellipse extents \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"1\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*SubscriptBox[StyleBox[\\\"\[Psi]\\\", \\\"TI\\\"], StyleBox[RowBox[{\
+\\\"c\\\", \\\" \\\", \\\"2\\\"}], \\\"TR\\\"]]\\), \
+\\!\\(\\*StyleBox[\\\"\\\\\\\"\[Ellipsis]\\\\\\\"\\\", \\\"TR\\\"]\\).\>\"", 
+             "}"}], "]"}], "]"}], ",", "\"\<Output\>\"", ",", 
+          RowBox[{
+          "CellTags", "\[Rule]", "\"\<EllipseCoilPlot3D_usages\>\""}]}], 
+         "]"}]}], "}"}]}], "}"}]}], "]"}], "]"}]], "Print",
+ CellChangeTimes->{3.895938697261476*^9},
+ ShowStringCharacters->
+  True,ExpressionUUID->"ad495951-57e9-4090-a78a-e214eb226e93"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -11676,8 +14164,8 @@ and \\!\\(\\*StyleBox[\\\"z\\\", \\\"TI\\\"]\\)\[Hyphen]coordinate axes.\>\"",
 }, Open  ]]
 },
 WindowSize->{1728, 1051},
-WindowMargins->{{312, Automatic}, {Automatic, -1453}},
-FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (March 8, 2023)",
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (May 31, 2023)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"1dcc237f-06a4-4219-a9d0-da7758974117"
 ]
@@ -11693,278 +14181,335 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 184, 3, 106, "Title",ExpressionUUID->"dc19a258-a2d7-48a2-9f22-9cc58f905408"],
-Cell[767, 27, 16449, 341, 1138, "Code",ExpressionUUID->"8477f2d9-b507-4299-8990-dc9019c3ad3d"],
+Cell[580, 22, 184, 3, 98, "Title",ExpressionUUID->"dc19a258-a2d7-48a2-9f22-9cc58f905408"],
+Cell[767, 27, 16445, 340, 1138, "Code",ExpressionUUID->"8477f2d9-b507-4299-8990-dc9019c3ad3d"],
 Cell[CellGroupData[{
-Cell[17241, 372, 263, 4, 72, "Section",ExpressionUUID->"5cbfff5d-8ac2-4d9f-9ca9-62517e38a824"],
+Cell[17237, 371, 263, 4, 67, "Section",ExpressionUUID->"5cbfff5d-8ac2-4d9f-9ca9-62517e38a824"],
 Cell[CellGroupData[{
-Cell[17529, 380, 160, 3, 58, "Subsection",ExpressionUUID->"0a9795bf-a099-4a63-affc-dc62b9421547"],
+Cell[17525, 379, 160, 3, 54, "Subsection",ExpressionUUID->"0a9795bf-a099-4a63-affc-dc62b9421547"],
 Cell[CellGroupData[{
-Cell[17714, 387, 3108, 62, 115, "Input",ExpressionUUID->"aaf9a9f5-d638-4d5e-b84f-c1580832b836"],
+Cell[17710, 386, 3108, 62, 115, "Input",ExpressionUUID->"aaf9a9f5-d638-4d5e-b84f-c1580832b836"],
 Cell[CellGroupData[{
-Cell[20847, 453, 1518, 28, 24, "Print",ExpressionUUID->"df4539bb-cc75-498e-bc4d-7dbe390fb7bc"],
-Cell[22368, 483, 2748, 40, 27, "Print",ExpressionUUID->"c13fc480-b893-4f80-bafc-1df8ea3cb255"],
-Cell[25119, 525, 1520, 28, 24, "Print",ExpressionUUID->"267d36d4-f039-40f3-af34-803d951c0c25"],
-Cell[26642, 555, 2887, 47, 120, "Print",ExpressionUUID->"d0f876d9-db3c-441f-9f1a-259df33234f2"],
-Cell[29532, 604, 1517, 28, 24, "Print",ExpressionUUID->"12fdb9f6-77c8-410a-a1f0-203478fed80c"],
-Cell[31052, 634, 3174, 76, 120, "Print",ExpressionUUID->"4b98706e-45fa-4449-b314-d4ed6ba94841"],
-Cell[34229, 712, 1533, 28, 24, "Print",ExpressionUUID->"c54fffb1-c395-4e9a-a4b7-63522404d488"],
-Cell[35765, 742, 5007, 105, 158, "Print",ExpressionUUID->"caebf2f1-3aae-4187-8de5-60fb8af31af7"]
+Cell[20843, 452, 1518, 28, 24, "Print",ExpressionUUID->"df4539bb-cc75-498e-bc4d-7dbe390fb7bc"],
+Cell[22364, 482, 2748, 40, 26, "Print",ExpressionUUID->"c13fc480-b893-4f80-bafc-1df8ea3cb255"],
+Cell[25115, 524, 1520, 28, 24, "Print",ExpressionUUID->"267d36d4-f039-40f3-af34-803d951c0c25"],
+Cell[26638, 554, 2887, 47, 120, "Print",ExpressionUUID->"d0f876d9-db3c-441f-9f1a-259df33234f2"],
+Cell[29528, 603, 1517, 28, 24, "Print",ExpressionUUID->"12fdb9f6-77c8-410a-a1f0-203478fed80c"],
+Cell[31048, 633, 3174, 76, 120, "Print",ExpressionUUID->"4b98706e-45fa-4449-b314-d4ed6ba94841"],
+Cell[34225, 711, 1533, 28, 24, "Print",ExpressionUUID->"c54fffb1-c395-4e9a-a4b7-63522404d488"],
+Cell[35761, 741, 5007, 105, 158, "Print",ExpressionUUID->"caebf2f1-3aae-4187-8de5-60fb8af31af7"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[40833, 854, 162, 3, 58, "Subsection",ExpressionUUID->"9966c487-312b-4bd9-8685-f4e081731b6b"],
+Cell[40829, 853, 162, 3, 54, "Subsection",ExpressionUUID->"9966c487-312b-4bd9-8685-f4e081731b6b"],
 Cell[CellGroupData[{
-Cell[41020, 861, 2489, 57, 115, "Input",ExpressionUUID->"4a5b9a43-7101-4ff2-a369-874967e82e2d"],
+Cell[41016, 860, 2489, 57, 115, "Input",ExpressionUUID->"4a5b9a43-7101-4ff2-a369-874967e82e2d"],
 Cell[CellGroupData[{
-Cell[43534, 922, 759, 18, 24, "Print",ExpressionUUID->"c3ccc76b-b726-4ce8-83f9-7e67fbb7a098"],
-Cell[44296, 942, 2429, 36, 47, "Print",ExpressionUUID->"39370ed4-3aca-4d9b-ab75-ab40e14da77b"],
-Cell[46728, 980, 763, 18, 24, "Print",ExpressionUUID->"8dad8a8e-6932-45f0-bab7-693bed05f7d4"],
-Cell[47494, 1000, 2570, 43, 158, "Print",ExpressionUUID->"6b9d9764-5f9a-486d-8ae9-a618624bbcf1"],
-Cell[50067, 1045, 760, 18, 24, "Print",ExpressionUUID->"80e41f27-1fb1-4061-8cb9-b3b290c41048"],
-Cell[50830, 1065, 4043, 98, 139, "Print",ExpressionUUID->"4b3292a9-8d8d-497b-a77b-359dd5279955"],
-Cell[54876, 1165, 776, 18, 24, "Print",ExpressionUUID->"4f967da7-62c8-404f-9abd-1e624c948f6b"],
-Cell[55655, 1185, 6101, 126, 177, "Print",ExpressionUUID->"710a9a78-ebc2-4638-8e25-bebbec31964b"]
+Cell[43530, 921, 759, 18, 24, "Print",ExpressionUUID->"c3ccc76b-b726-4ce8-83f9-7e67fbb7a098"],
+Cell[44292, 941, 2429, 36, 46, "Print",ExpressionUUID->"39370ed4-3aca-4d9b-ab75-ab40e14da77b"],
+Cell[46724, 979, 763, 18, 24, "Print",ExpressionUUID->"8dad8a8e-6932-45f0-bab7-693bed05f7d4"],
+Cell[47490, 999, 2570, 43, 158, "Print",ExpressionUUID->"6b9d9764-5f9a-486d-8ae9-a618624bbcf1"],
+Cell[50063, 1044, 760, 18, 24, "Print",ExpressionUUID->"80e41f27-1fb1-4061-8cb9-b3b290c41048"],
+Cell[50826, 1064, 4043, 98, 139, "Print",ExpressionUUID->"4b3292a9-8d8d-497b-a77b-359dd5279955"],
+Cell[54872, 1164, 776, 18, 24, "Print",ExpressionUUID->"4f967da7-62c8-404f-9abd-1e624c948f6b"],
+Cell[55651, 1184, 6101, 126, 177, "Print",ExpressionUUID->"710a9a78-ebc2-4638-8e25-bebbec31964b"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[61805, 1317, 2420, 56, 115, "Input",ExpressionUUID->"139b4161-8811-4eac-80a6-8ab8727e2525"],
+Cell[61801, 1316, 2420, 56, 115, "Input",ExpressionUUID->"139b4161-8811-4eac-80a6-8ab8727e2525"],
 Cell[CellGroupData[{
-Cell[64250, 1377, 731, 17, 24, "Print",ExpressionUUID->"989c0626-42ff-4e58-9a35-c3ad2a300f04"],
-Cell[64984, 1396, 2351, 34, 47, "Print",ExpressionUUID->"57180814-0137-4458-95cc-5a010c40a8dc"],
-Cell[67338, 1432, 735, 17, 24, "Print",ExpressionUUID->"021c73d1-b7e2-46d1-a5d6-e8519a50fc68"],
-Cell[68076, 1451, 2490, 41, 139, "Print",ExpressionUUID->"95ada9c0-0574-423a-8524-b2fdab91f020"],
-Cell[70569, 1494, 732, 17, 24, "Print",ExpressionUUID->"c261006d-84c6-46e3-a8be-834f3978ee98"],
-Cell[71304, 1513, 3983, 96, 120, "Print",ExpressionUUID->"6a693403-bc4f-4d80-ae73-e6d0afcd533f"],
-Cell[75290, 1611, 750, 17, 24, "Print",ExpressionUUID->"23b37c96-53b1-454e-a0ba-ba73e396d7c2"],
-Cell[76043, 1630, 6083, 127, 177, "Print",ExpressionUUID->"4a524336-0ead-4039-ac38-1452c003afa9"]
+Cell[64246, 1376, 731, 17, 24, "Print",ExpressionUUID->"989c0626-42ff-4e58-9a35-c3ad2a300f04"],
+Cell[64980, 1395, 2351, 34, 46, "Print",ExpressionUUID->"57180814-0137-4458-95cc-5a010c40a8dc"],
+Cell[67334, 1431, 735, 17, 24, "Print",ExpressionUUID->"021c73d1-b7e2-46d1-a5d6-e8519a50fc68"],
+Cell[68072, 1450, 2490, 41, 139, "Print",ExpressionUUID->"95ada9c0-0574-423a-8524-b2fdab91f020"],
+Cell[70565, 1493, 732, 17, 24, "Print",ExpressionUUID->"c261006d-84c6-46e3-a8be-834f3978ee98"],
+Cell[71300, 1512, 3983, 96, 120, "Print",ExpressionUUID->"6a693403-bc4f-4d80-ae73-e6d0afcd533f"],
+Cell[75286, 1610, 750, 17, 24, "Print",ExpressionUUID->"23b37c96-53b1-454e-a0ba-ba73e396d7c2"],
+Cell[76039, 1629, 6083, 127, 177, "Print",ExpressionUUID->"4a524336-0ead-4039-ac38-1452c003afa9"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[82175, 1763, 1086, 23, 94, "Input",ExpressionUUID->"36e854b8-4e17-430b-909e-cb285c58ca0c"],
+Cell[82171, 1762, 1086, 23, 94, "Input",ExpressionUUID->"36e854b8-4e17-430b-909e-cb285c58ca0c"],
 Cell[CellGroupData[{
-Cell[83286, 1790, 654, 16, 24, "Print",ExpressionUUID->"6a4b727f-001b-4666-a1b1-5e703107eb27"],
-Cell[83943, 1808, 892, 14, 26, "Print",ExpressionUUID->"c0466280-15d5-4adb-b21d-e2647590333f"],
-Cell[84838, 1824, 660, 16, 24, "Print",ExpressionUUID->"893ffc94-1319-4f48-a9bb-5ad6e783f880"],
-Cell[85501, 1842, 1018, 21, 44, "Print",ExpressionUUID->"d9c0325d-478c-4b0d-b971-8858397fc9a0"],
-Cell[86522, 1865, 655, 16, 24, "Print",ExpressionUUID->"d114fb0e-e5ce-4a1a-87d1-24df14a60470"],
-Cell[87180, 1883, 1134, 28, 44, "Print",ExpressionUUID->"8bb4460b-5bb7-4a73-9c61-423a30951a82"],
-Cell[88317, 1913, 671, 16, 24, "Print",ExpressionUUID->"a35b8e1e-624a-4660-9478-ca3ef2e2e815"],
-Cell[88991, 1931, 2290, 53, 101, "Print",ExpressionUUID->"be326d21-eccc-4c5e-91bc-5da675512868"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[91342, 1991, 163, 3, 58, "Subsection",ExpressionUUID->"7e55b714-69a0-44f3-b0a9-8a1a3d5027e1"],
-Cell[CellGroupData[{
-Cell[91530, 1998, 3640, 77, 115, "Input",ExpressionUUID->"d678c561-3448-4359-b943-70d585c364f7"],
-Cell[CellGroupData[{
-Cell[95195, 2079, 680, 16, 24, "Print",ExpressionUUID->"6ad50466-2c94-435d-971b-70af1a99ddef"],
-Cell[95878, 2097, 2618, 37, 49, "Print",ExpressionUUID->"db142ff6-3238-44c0-8ae5-14847d962b2c"],
-Cell[98499, 2136, 684, 16, 24, "Print",ExpressionUUID->"de003ac9-5df1-43b9-85dd-0215437c564a"],
-Cell[99186, 2154, 2755, 44, 158, "Print",ExpressionUUID->"25166884-95d4-4dd8-a18f-5373c7a20e6a"],
-Cell[101944, 2200, 681, 16, 24, "Print",ExpressionUUID->"f7578b9a-dafa-4eb3-944b-662f4196e69b"],
-Cell[102628, 2218, 4483, 109, 158, "Print",ExpressionUUID->"a9b41ae5-799c-4edd-be20-6ff49913574b"],
-Cell[107114, 2329, 697, 16, 24, "Print",ExpressionUUID->"0cd1b110-d449-4920-b81f-557fa467365c"],
-Cell[107814, 2347, 6897, 142, 196, "Print",ExpressionUUID->"13ef95b0-1331-4afb-a4a7-8ecc6f6aac7a"]
-}, Open  ]]
+Cell[83282, 1789, 654, 16, 24, "Print",ExpressionUUID->"6a4b727f-001b-4666-a1b1-5e703107eb27"],
+Cell[83939, 1807, 892, 14, 26, "Print",ExpressionUUID->"c0466280-15d5-4adb-b21d-e2647590333f"],
+Cell[84834, 1823, 660, 16, 24, "Print",ExpressionUUID->"893ffc94-1319-4f48-a9bb-5ad6e783f880"],
+Cell[85497, 1841, 1018, 21, 44, "Print",ExpressionUUID->"d9c0325d-478c-4b0d-b971-8858397fc9a0"],
+Cell[86518, 1864, 655, 16, 24, "Print",ExpressionUUID->"d114fb0e-e5ce-4a1a-87d1-24df14a60470"],
+Cell[87176, 1882, 1134, 28, 44, "Print",ExpressionUUID->"8bb4460b-5bb7-4a73-9c61-423a30951a82"],
+Cell[88313, 1912, 671, 16, 24, "Print",ExpressionUUID->"a35b8e1e-624a-4660-9478-ca3ef2e2e815"],
+Cell[88987, 1930, 2290, 53, 101, "Print",ExpressionUUID->"be326d21-eccc-4c5e-91bc-5da675512868"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[114784, 2497, 164, 3, 72, "Section",ExpressionUUID->"c4b6f583-373a-4adc-8777-4d42ba100074"],
+Cell[91338, 1990, 163, 3, 54, "Subsection",ExpressionUUID->"7e55b714-69a0-44f3-b0a9-8a1a3d5027e1"],
 Cell[CellGroupData[{
-Cell[114973, 2504, 160, 3, 58, "Subsection",ExpressionUUID->"3a4a04fd-e8fd-43cd-8c29-10524c408fa2"],
+Cell[91526, 1997, 3640, 77, 115, "Input",ExpressionUUID->"d678c561-3448-4359-b943-70d585c364f7"],
 Cell[CellGroupData[{
-Cell[115158, 2511, 4503, 96, 241, "Input",ExpressionUUID->"b0f58ffe-9c94-40e9-9aad-cec032ea6491"],
-Cell[CellGroupData[{
-Cell[119686, 2611, 987, 21, 24, "Print",ExpressionUUID->"b0366484-2b28-46c0-aae6-49343c73fcdf"],
-Cell[120676, 2634, 2739, 40, 27, "Print",ExpressionUUID->"109aa289-8577-4868-ac0c-cd7a1a4a0bf1"],
-Cell[123418, 2676, 1804, 27, 24, "Print",ExpressionUUID->"d919decf-3208-413f-a797-2a2bd6eab769"],
-Cell[125225, 2705, 992, 21, 24, "Print",ExpressionUUID->"f3ec6e1d-77b4-4fdd-80ff-152b787770a0"],
-Cell[126220, 2728, 2879, 47, 158, "Print",ExpressionUUID->"c2dcfd25-02ad-4315-96f9-4e070e90cfe9"],
-Cell[129102, 2777, 1942, 34, 82, "Print",ExpressionUUID->"59d4a658-6c9f-4464-822c-160685bcf7b9"],
-Cell[131047, 2813, 989, 21, 24, "Print",ExpressionUUID->"67d3350c-9879-4a73-8e2b-ef8b0277d3ab"],
-Cell[132039, 2836, 4863, 120, 158, "Print",ExpressionUUID->"c724fe17-599d-477a-ae61-545cfeea430f"],
-Cell[136905, 2958, 1860, 46, 63, "Print",ExpressionUUID->"e9dbde59-4f52-45f4-94d0-5fd52cf1f6eb"],
-Cell[138768, 3006, 1005, 21, 24, "Print",ExpressionUUID->"a359b359-17e1-48a8-90cb-263720454cb5"],
-Cell[139776, 3029, 10284, 215, 272, "Print",ExpressionUUID->"7b0ebc07-97e6-408e-bec3-c29e0c8ca846"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[150121, 3251, 211, 4, 58, "Subsection",ExpressionUUID->"a02c9361-a6e1-4e44-8389-eaa12ecf209b"],
-Cell[CellGroupData[{
-Cell[150357, 3259, 6099, 135, 220, "Input",ExpressionUUID->"231c47fa-cc4f-42ee-a8c4-f9b0325ea4cf"],
-Cell[CellGroupData[{
-Cell[156481, 3398, 972, 21, 24, "Print",ExpressionUUID->"a9f508df-c922-48ed-8d8d-1b9a9d148acb"],
-Cell[157456, 3421, 3603, 52, 49, "Print",ExpressionUUID->"22e8feed-4984-4fb1-adb0-c5318fb9461f"],
-Cell[161062, 3475, 2652, 40, 26, "Print",ExpressionUUID->"6c8d4a00-5746-45c4-9d4a-a6748aca890d"],
-Cell[163717, 3517, 974, 21, 24, "Print",ExpressionUUID->"bdf5f69f-51e9-4537-8862-fad6d0db7a5a"],
-Cell[164694, 3540, 3751, 59, 215, "Print",ExpressionUUID->"c3dc818b-70f5-47a7-9063-2926497631f0"],
-Cell[168448, 3601, 2798, 47, 158, "Print",ExpressionUUID->"52816745-19a9-4e42-b107-12f7dd205982"],
-Cell[171249, 3650, 971, 21, 24, "Print",ExpressionUUID->"1baf47d3-5c74-461d-ba7a-a0d13a5c449c"],
-Cell[172223, 3673, 6767, 168, 215, "Print",ExpressionUUID->"a0cec7f8-b253-4701-bce8-8781572a5c2c"],
-Cell[178993, 3843, 3135, 78, 101, "Print",ExpressionUUID->"4aa63eba-2803-447e-93f6-4813815fc767"],
-Cell[182131, 3923, 989, 21, 24, "Print",ExpressionUUID->"b260434a-4b1b-4f43-868d-91b62be5a868"],
-Cell[183123, 3946, 15532, 321, 367, "Print",ExpressionUUID->"77a47d75-5237-4068-bece-244b59decde1"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[198716, 4274, 258, 4, 58, "Subsection",ExpressionUUID->"cec0f646-2a5d-4fda-a06d-d14d94281378"],
-Cell[CellGroupData[{
-Cell[198999, 4282, 6277, 138, 220, "Input",ExpressionUUID->"d866e972-b69e-42c0-ad86-6a5c3f3a1344"],
-Cell[CellGroupData[{
-Cell[205301, 4424, 986, 21, 24, "Print",ExpressionUUID->"3ba8b379-7a0b-4385-aeab-aa9042bd882e"],
-Cell[206290, 4447, 3594, 53, 49, "Print",ExpressionUUID->"cb478978-05e3-4892-b6ce-f60bbf17dd92"],
-Cell[209887, 4502, 2624, 39, 26, "Print",ExpressionUUID->"69e76ce1-4777-49a9-8216-9562b5dda2f5"],
-Cell[212514, 4543, 993, 21, 24, "Print",ExpressionUUID->"7afc6378-f662-4107-8fbf-7e7ced5463fc"],
-Cell[213510, 4566, 3741, 60, 215, "Print",ExpressionUUID->"1eabe9f5-1b75-493a-8fea-485a85595fc5"],
-Cell[217254, 4628, 2770, 46, 139, "Print",ExpressionUUID->"4f31afd1-fdf9-44f9-83e4-556b8da23a61"],
-Cell[220027, 4676, 986, 21, 24, "Print",ExpressionUUID->"49cd9e4b-764f-442e-bedd-5303ea2a23ec"],
-Cell[221016, 4699, 6766, 168, 215, "Print",ExpressionUUID->"3591b306-bb1e-420b-893a-1a9a52c7195c"],
-Cell[227785, 4869, 3133, 78, 101, "Print",ExpressionUUID->"a7209d79-b4e2-47ce-a6f4-890a204b58f7"],
-Cell[230921, 4949, 1004, 21, 24, "Print",ExpressionUUID->"99ff8eb3-e934-4c84-9add-16cb1625e49e"],
-Cell[231928, 4972, 15340, 317, 367, "Print",ExpressionUUID->"3fe82088-c3b4-4835-9ba7-20b445e51c6f"]
+Cell[95191, 2078, 680, 16, 24, "Print",ExpressionUUID->"6ad50466-2c94-435d-971b-70af1a99ddef"],
+Cell[95874, 2096, 2618, 37, 46, "Print",ExpressionUUID->"db142ff6-3238-44c0-8ae5-14847d962b2c"],
+Cell[98495, 2135, 684, 16, 24, "Print",ExpressionUUID->"de003ac9-5df1-43b9-85dd-0215437c564a"],
+Cell[99182, 2153, 2755, 44, 158, "Print",ExpressionUUID->"25166884-95d4-4dd8-a18f-5373c7a20e6a"],
+Cell[101940, 2199, 681, 16, 24, "Print",ExpressionUUID->"f7578b9a-dafa-4eb3-944b-662f4196e69b"],
+Cell[102624, 2217, 4483, 109, 158, "Print",ExpressionUUID->"a9b41ae5-799c-4edd-be20-6ff49913574b"],
+Cell[107110, 2328, 697, 16, 24, "Print",ExpressionUUID->"0cd1b110-d449-4920-b81f-557fa467365c"],
+Cell[107810, 2346, 6897, 142, 196, "Print",ExpressionUUID->"13ef95b0-1331-4afb-a4a7-8ecc6f6aac7a"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[247341, 5297, 156, 3, 72, "Section",ExpressionUUID->"ad5bfde2-dee5-40b3-8b76-0877a068b7f9"],
+Cell[114780, 2496, 164, 3, 67, "Section",ExpressionUUID->"c4b6f583-373a-4adc-8777-4d42ba100074"],
 Cell[CellGroupData[{
-Cell[247522, 5304, 161, 3, 58, "Subsection",ExpressionUUID->"5bfdac08-e1a9-4fd2-8c39-a582826076ca"],
+Cell[114969, 2503, 160, 3, 54, "Subsection",ExpressionUUID->"3a4a04fd-e8fd-43cd-8c29-10524c408fa2"],
 Cell[CellGroupData[{
-Cell[247708, 5311, 5265, 110, 241, "Input",ExpressionUUID->"24bf1396-69e7-4926-812d-6aecefdeaf3b"],
+Cell[115154, 2510, 4503, 96, 241, "Input",ExpressionUUID->"b0f58ffe-9c94-40e9-9aad-cec032ea6491"],
 Cell[CellGroupData[{
-Cell[252998, 5425, 1135, 23, 24, "Print",ExpressionUUID->"4279b6b9-5de2-426a-a780-20271aa48b4f"],
-Cell[254136, 5450, 3271, 48, 49, "Print",ExpressionUUID->"f00385d1-b7bc-4ddb-859a-6d596a832950"],
-Cell[257410, 5500, 1950, 29, 24, "Print",ExpressionUUID->"1e4a0498-1b2c-48e6-b1f1-0e9541448ecb"],
-Cell[259363, 5531, 1137, 23, 24, "Print",ExpressionUUID->"c75baeef-6e87-4178-9ddf-f209d9636358"],
-Cell[260503, 5556, 3414, 55, 177, "Print",ExpressionUUID->"e7bb33b4-f046-40ba-9edf-e5ef99590f50"],
-Cell[263920, 5613, 2086, 36, 82, "Print",ExpressionUUID->"0c0afd88-b91d-4bd5-9c05-c7f5f2edb138"],
-Cell[266009, 5651, 1134, 23, 24, "Print",ExpressionUUID->"a62bb878-f10f-4078-8a91-a0c87d90d20e"],
-Cell[267146, 5676, 6619, 165, 234, "Print",ExpressionUUID->"69c3b0a8-cf8b-4bbd-b54b-57f8541c58ae"],
-Cell[273768, 5843, 1862, 46, 63, "Print",ExpressionUUID->"bfe63db5-180f-4a0d-9d7f-41200b5cd579"],
-Cell[275633, 5891, 1150, 23, 24, "Print",ExpressionUUID->"01cf9220-4e1f-4809-a835-7cb93a56e636"],
-Cell[276786, 5916, 10698, 222, 291, "Print",ExpressionUUID->"c750c4f9-ad46-40ce-b096-72926fb5a350"]
+Cell[119682, 2610, 987, 21, 24, "Print",ExpressionUUID->"b0366484-2b28-46c0-aae6-49343c73fcdf"],
+Cell[120672, 2633, 2739, 40, 26, "Print",ExpressionUUID->"109aa289-8577-4868-ac0c-cd7a1a4a0bf1"],
+Cell[123414, 2675, 1804, 27, 24, "Print",ExpressionUUID->"d919decf-3208-413f-a797-2a2bd6eab769"],
+Cell[125221, 2704, 992, 21, 24, "Print",ExpressionUUID->"f3ec6e1d-77b4-4fdd-80ff-152b787770a0"],
+Cell[126216, 2727, 2879, 47, 158, "Print",ExpressionUUID->"c2dcfd25-02ad-4315-96f9-4e070e90cfe9"],
+Cell[129098, 2776, 1942, 34, 82, "Print",ExpressionUUID->"59d4a658-6c9f-4464-822c-160685bcf7b9"],
+Cell[131043, 2812, 989, 21, 24, "Print",ExpressionUUID->"67d3350c-9879-4a73-8e2b-ef8b0277d3ab"],
+Cell[132035, 2835, 4863, 120, 158, "Print",ExpressionUUID->"c724fe17-599d-477a-ae61-545cfeea430f"],
+Cell[136901, 2957, 1860, 46, 63, "Print",ExpressionUUID->"e9dbde59-4f52-45f4-94d0-5fd52cf1f6eb"],
+Cell[138764, 3005, 1005, 21, 24, "Print",ExpressionUUID->"a359b359-17e1-48a8-90cb-263720454cb5"],
+Cell[139772, 3028, 10284, 215, 272, "Print",ExpressionUUID->"7b0ebc07-97e6-408e-bec3-c29e0c8ca846"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[287545, 6145, 262, 4, 58, "Subsection",ExpressionUUID->"bcb3c822-df99-4af1-8969-b932d5db908b"],
+Cell[150117, 3250, 161, 3, 54, "Subsection",ExpressionUUID->"6ed3ee1b-a7b6-4b5e-858f-2cbf4052b1fc"],
 Cell[CellGroupData[{
-Cell[287832, 6153, 6655, 145, 241, "Input",ExpressionUUID->"4e9ea9d9-bb03-4ea6-9a37-df9b505e51e7"],
+Cell[150303, 3257, 3230, 78, 241, "Input",ExpressionUUID->"b041e267-e0d8-41a5-a306-01a836321ce4"],
 Cell[CellGroupData[{
-Cell[294512, 6302, 1066, 22, 24, "Print",ExpressionUUID->"c223e04a-e22a-4b5b-9ccc-e5f2572f639d"],
-Cell[295581, 6326, 4086, 59, 49, "Print",ExpressionUUID->"94426726-17a8-418a-a4fd-8abdba11c246"],
-Cell[299670, 6387, 2747, 41, 26, "Print",ExpressionUUID->"35f08ac8-0c44-49a6-8684-c4b3b39a8c4e"],
-Cell[302420, 6430, 1068, 22, 24, "Print",ExpressionUUID->"b8bd22a6-6165-4d65-8766-27254ede890f"],
-Cell[303491, 6454, 4237, 66, 253, "Print",ExpressionUUID->"344afb1c-c83a-400b-a935-e804cd4f982b"],
-Cell[307731, 6522, 2895, 48, 158, "Print",ExpressionUUID->"f3e24b81-d85b-4e99-b7d1-94cab6a36491"],
-Cell[310629, 6572, 1067, 22, 24, "Print",ExpressionUUID->"fdf58ca5-ab88-4ab3-9c1c-6d4cb45b5965"],
-Cell[311699, 6596, 8527, 213, 291, "Print",ExpressionUUID->"92d53d83-5d1b-40be-bf64-442113bf994e"],
-Cell[320229, 6811, 3135, 78, 101, "Print",ExpressionUUID->"2d6777e7-d352-406a-82ed-a1485264434c"],
-Cell[323367, 6891, 1083, 22, 24, "Print",ExpressionUUID->"eb4a4790-70e6-4e4d-a6c6-92e9f0be7d3a"],
-Cell[324453, 6915, 15925, 326, 405, "Print",ExpressionUUID->"3153dfe1-e92a-43a4-9388-13e872892ecd"]
+Cell[153558, 3339, 489, 13, 24, "Print",ExpressionUUID->"dd303fa6-358d-4889-88a9-47878ada5f1c"],
+Cell[154050, 3354, 2123, 30, 26, "Print",ExpressionUUID->"ef41c16a-df76-4ed5-9288-179c17c5c798"],
+Cell[156176, 3386, 1305, 19, 24, "Print",ExpressionUUID->"e009fa3e-0a0b-4c5c-9ea4-0d6a5c14932d"],
+Cell[157484, 3407, 491, 13, 24, "Print",ExpressionUUID->"25817743-8769-4f79-9eb6-256fc7a90c20"],
+Cell[157978, 3422, 2263, 37, 139, "Print",ExpressionUUID->"ccbced1b-13c0-4d35-a99b-d2abcc3ca132"],
+Cell[160244, 3461, 1441, 26, 82, "Print",ExpressionUUID->"ec7e90f7-cb18-42cd-b24c-e98e445c9cd4"],
+Cell[161688, 3489, 488, 13, 24, "Print",ExpressionUUID->"29bbcc10-0026-4ed9-811f-b79e8479fc2a"],
+Cell[162179, 3504, 4277, 107, 139, "Print",ExpressionUUID->"280c7950-52d9-4a0a-9dec-9b216d0d7378"],
+Cell[166459, 3613, 1860, 46, 63, "Print",ExpressionUUID->"d3de6561-87e4-4ac2-9161-2fd9eea38b51"],
+Cell[168322, 3661, 506, 13, 24, "Print",ExpressionUUID->"371a198a-1dce-4730-9aff-cb735b45ee0c"],
+Cell[168831, 3676, 10205, 215, 253, "Print",ExpressionUUID->"ff7d6931-8814-4066-bfc0-7c95a31d5434"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[340439, 7248, 308, 5, 58, "Subsection",ExpressionUUID->"63ce5b4e-6916-4a01-9367-177b2afa43b1"],
+Cell[179097, 3898, 211, 4, 54, "Subsection",ExpressionUUID->"a02c9361-a6e1-4e44-8389-eaa12ecf209b"],
 Cell[CellGroupData[{
-Cell[340772, 7257, 6860, 148, 241, "Input",ExpressionUUID->"a1661338-090c-488a-a121-c8d151d51ec9"],
+Cell[179333, 3906, 6099, 135, 220, "Input",ExpressionUUID->"231c47fa-cc4f-42ee-a8c4-f9b0325ea4cf"],
 Cell[CellGroupData[{
-Cell[347657, 7409, 1078, 22, 24, "Print",ExpressionUUID->"4b1eb156-d351-465a-914b-93b5bbd9e07e"],
-Cell[348738, 7433, 4074, 60, 49, "Print",ExpressionUUID->"28be14b5-78c7-4dcc-a0ea-e5808277b348"],
-Cell[352815, 7495, 2716, 40, 26, "Print",ExpressionUUID->"c32cc3e2-f334-4210-b0a1-427a2e2ca890"],
-Cell[355534, 7537, 1082, 22, 24, "Print",ExpressionUUID->"d9440991-bf6d-4733-8135-91f720a72f00"],
-Cell[356619, 7561, 4224, 67, 253, "Print",ExpressionUUID->"875a0502-3b60-4072-badd-334c0eb73f89"],
-Cell[360846, 7630, 2866, 48, 139, "Print",ExpressionUUID->"c163bbfa-45e2-44d8-93dd-1a0c5671b342"],
-Cell[363715, 7680, 1079, 22, 24, "Print",ExpressionUUID->"dfc9872b-3e0e-4415-871a-d4acfbb9a4e1"],
-Cell[364797, 7704, 8524, 213, 291, "Print",ExpressionUUID->"9c06f06f-45b0-440d-be6a-bb64c0f59674"],
-Cell[373324, 7919, 3135, 78, 101, "Print",ExpressionUUID->"4e8ce295-8a3e-438b-8315-0d2df567505d"],
-Cell[376462, 7999, 1095, 22, 24, "Print",ExpressionUUID->"1c4a6d4c-9001-4861-b56d-9aae9c14504d"],
-Cell[377560, 8023, 15752, 324, 405, "Print",ExpressionUUID->"85031fdc-0f50-451a-ac78-64515b349f25"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[393385, 8355, 207, 4, 72, "Section",ExpressionUUID->"e956af96-50a2-4008-b888-42de9f444505"],
-Cell[CellGroupData[{
-Cell[393617, 8363, 212, 4, 58, "Subsection",ExpressionUUID->"3788283d-b4f5-46f6-bf41-4456bbcf0c63"],
-Cell[CellGroupData[{
-Cell[393854, 8371, 5106, 109, 220, "Input",ExpressionUUID->"ab3165c1-7577-4457-af15-e0e62d7ff074"],
-Cell[CellGroupData[{
-Cell[398985, 8484, 1106, 23, 24, "Print",ExpressionUUID->"53811891-eb4e-4bb5-a785-94ddc00e7671"],
-Cell[400094, 8509, 3172, 47, 49, "Print",ExpressionUUID->"bd552591-2646-48c4-8767-5de04c965995"],
-Cell[403269, 8558, 1926, 29, 24, "Print",ExpressionUUID->"1e983b88-006d-4194-9c70-53f9e2b2b4b4"],
-Cell[405198, 8589, 1113, 23, 24, "Print",ExpressionUUID->"f95cb57b-aa46-4b4b-97a3-d8e5cf1937f1"],
-Cell[406314, 8614, 3313, 54, 177, "Print",ExpressionUUID->"6dea57f6-47bf-4d43-9b9a-2487bc52ecff"],
-Cell[409630, 8670, 2062, 36, 82, "Print",ExpressionUUID->"511271d5-b1d8-4341-b5ae-c103dd118a89"],
-Cell[411695, 8708, 1108, 23, 24, "Print",ExpressionUUID->"f277127d-7401-4b30-b547-5db090882c47"],
-Cell[412806, 8733, 6289, 156, 215, "Print",ExpressionUUID->"5717bb53-3e5c-4bc4-bd00-8a9d157b7a3d"],
-Cell[419098, 8891, 1860, 46, 63, "Print",ExpressionUUID->"dc2ffffd-0917-4cab-90b6-49a1a0bc9f29"],
-Cell[420961, 8939, 1123, 23, 24, "Print",ExpressionUUID->"86cda179-f37a-4acc-8297-7c59dfd27a57"],
-Cell[422087, 8964, 10638, 221, 291, "Print",ExpressionUUID->"89894133-798c-4689-8b7c-5a5aff14fd5d"]
+Cell[185457, 4045, 972, 21, 24, "Print",ExpressionUUID->"a9f508df-c922-48ed-8d8d-1b9a9d148acb"],
+Cell[186432, 4068, 3603, 52, 46, "Print",ExpressionUUID->"22e8feed-4984-4fb1-adb0-c5318fb9461f"],
+Cell[190038, 4122, 2652, 40, 24, "Print",ExpressionUUID->"6c8d4a00-5746-45c4-9d4a-a6748aca890d"],
+Cell[192693, 4164, 974, 21, 24, "Print",ExpressionUUID->"bdf5f69f-51e9-4537-8862-fad6d0db7a5a"],
+Cell[193670, 4187, 3751, 59, 215, "Print",ExpressionUUID->"c3dc818b-70f5-47a7-9063-2926497631f0"],
+Cell[197424, 4248, 2798, 47, 158, "Print",ExpressionUUID->"52816745-19a9-4e42-b107-12f7dd205982"],
+Cell[200225, 4297, 971, 21, 24, "Print",ExpressionUUID->"1baf47d3-5c74-461d-ba7a-a0d13a5c449c"],
+Cell[201199, 4320, 6767, 168, 215, "Print",ExpressionUUID->"a0cec7f8-b253-4701-bce8-8781572a5c2c"],
+Cell[207969, 4490, 3135, 78, 101, "Print",ExpressionUUID->"4aa63eba-2803-447e-93f6-4813815fc767"],
+Cell[211107, 4570, 989, 21, 24, "Print",ExpressionUUID->"b260434a-4b1b-4f43-868d-91b62be5a868"],
+Cell[212099, 4593, 15532, 321, 367, "Print",ExpressionUUID->"77a47d75-5237-4068-bece-244b59decde1"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[432786, 9192, 313, 5, 58, "Subsection",ExpressionUUID->"bf6441cc-d95e-437b-b316-7db1d2f168e0"],
+Cell[227692, 4921, 166, 3, 54, "Subsection",ExpressionUUID->"ff8e9661-072f-486d-8afc-ea34c0c32bc8"],
 Cell[CellGroupData[{
-Cell[433124, 9201, 6523, 144, 241, "Input",ExpressionUUID->"a433a1a0-19da-4c89-877e-d63a84dda7ce"],
+Cell[227883, 4928, 4661, 114, 220, "Input",ExpressionUUID->"3c19fac0-4bc1-4353-a01a-d2b0767e1dc1"],
 Cell[CellGroupData[{
-Cell[439672, 9349, 1011, 21, 24, "Print",ExpressionUUID->"c48d3485-4a39-4fba-a730-acf6e3114098"],
-Cell[440686, 9372, 3960, 57, 49, "Print",ExpressionUUID->"095316c4-f28e-4f85-bede-862f53c0e5fd"],
-Cell[444649, 9431, 2694, 40, 26, "Print",ExpressionUUID->"efda2f4e-d934-41c2-86c7-cbca1fb8b465"],
-Cell[447346, 9473, 1013, 21, 24, "Print",ExpressionUUID->"57adb63e-96b0-4a5a-9ab4-7c7dac69ae20"],
-Cell[448362, 9496, 4105, 64, 234, "Print",ExpressionUUID->"a067645e-2cc3-48ae-bb44-6ed57a58d8bb"],
-Cell[452470, 9562, 2840, 47, 158, "Print",ExpressionUUID->"9b627b0d-2c36-47fb-b735-91aed7ecb75a"],
-Cell[455313, 9611, 1010, 21, 24, "Print",ExpressionUUID->"9c2d6e7f-ec3f-468c-840f-c46079b037d7"],
-Cell[456326, 9634, 8195, 204, 272, "Print",ExpressionUUID->"b1519413-d193-4ce7-957f-49b255a2a3dd"],
-Cell[464524, 9840, 3137, 78, 101, "Print",ExpressionUUID->"cb3c45ee-221d-454e-99b2-89652476b5a1"],
-Cell[467664, 9920, 1026, 21, 24, "Print",ExpressionUUID->"a7053745-f9ca-47ac-abf4-d86306c5d4e1"],
-Cell[468693, 9943, 15887, 327, 386, "Print",ExpressionUUID->"ce723d4e-b5dd-4c68-9e61-a4e5affd5e9c"]
+Cell[232569, 5046, 465, 13, 24, "Print",ExpressionUUID->"753f1fa1-d691-41ab-9cb8-cdf235e5a0cf"],
+Cell[233037, 5061, 2985, 43, 46, "Print",ExpressionUUID->"be8a58bb-ec4a-4c9d-b909-bc9a565f60f4"],
+Cell[236025, 5106, 2149, 32, 24, "Print",ExpressionUUID->"14999ac4-f010-4d00-915f-ba59e706efab"],
+Cell[238177, 5140, 469, 13, 24, "Print",ExpressionUUID->"c9fd3a43-5a41-41c4-96d4-8227a148e7dc"],
+Cell[238649, 5155, 3131, 50, 215, "Print",ExpressionUUID->"f95dd801-a954-4708-ac8e-4da717aa1e9e"],
+Cell[241783, 5207, 2295, 39, 158, "Print",ExpressionUUID->"947d128a-1207-40ea-a3ef-f85886a708db"],
+Cell[244081, 5248, 468, 13, 24, "Print",ExpressionUUID->"a2e2bf69-962e-48d2-9dd7-1e4aa038b5f4"],
+Cell[244552, 5263, 6185, 155, 196, "Print",ExpressionUUID->"ddc7bc94-6c0b-4fd3-ade3-74a9801c0946"],
+Cell[250740, 5420, 3135, 78, 101, "Print",ExpressionUUID->"7081e750-faaf-456b-a79e-8a3caaaae784"],
+Cell[253878, 5500, 484, 13, 24, "Print",ExpressionUUID->"0f6ecd5a-4134-4d0f-a80f-95aa2400ec3a"],
+Cell[254365, 5515, 15451, 321, 367, "Print",ExpressionUUID->"52d4f357-6ade-49d3-818c-a5fb29d681ef"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[484641, 10277, 361, 6, 58, "Subsection",ExpressionUUID->"4d493080-5cef-46b6-afd9-0c61f5eee913"],
+Cell[269877, 5843, 258, 4, 54, "Subsection",ExpressionUUID->"cec0f646-2a5d-4fda-a06d-d14d94281378"],
 Cell[CellGroupData[{
-Cell[485027, 10287, 6705, 147, 241, "Input",ExpressionUUID->"e7c7443c-733c-4061-a0c8-e1e8593e817b"],
+Cell[270160, 5851, 6277, 138, 220, "Input",ExpressionUUID->"d866e972-b69e-42c0-ad86-6a5c3f3a1344"],
 Cell[CellGroupData[{
-Cell[491757, 10438, 1032, 22, 24, "Print",ExpressionUUID->"6c7b83d8-9c32-4581-a5a0-79794d0d8816"],
-Cell[492792, 10462, 3955, 59, 49, "Print",ExpressionUUID->"2f46054f-15c9-44d6-9a8c-60602a82eea6"],
-Cell[496750, 10523, 2674, 40, 26, "Print",ExpressionUUID->"15346cb3-abf2-4576-b46c-b63b71cd5ffc"],
-Cell[499427, 10565, 1036, 22, 24, "Print",ExpressionUUID->"d43ce154-fe29-43cb-9cb4-789144ede187"],
-Cell[500466, 10589, 4103, 66, 234, "Print",ExpressionUUID->"97c4a310-d09b-4f7f-b124-161185097195"],
-Cell[504572, 10657, 2820, 48, 139, "Print",ExpressionUUID->"9f29201e-0cac-4ac9-a77a-471faa6c62e3"],
-Cell[507395, 10707, 1033, 22, 24, "Print",ExpressionUUID->"dc7afb41-1608-4318-93e2-3fa52513fdcf"],
-Cell[508431, 10731, 8194, 204, 272, "Print",ExpressionUUID->"76fc9d7b-229a-4d9f-a9f0-97f2ac986dbd"],
-Cell[516628, 10937, 3133, 78, 101, "Print",ExpressionUUID->"d597fd0f-461f-43aa-bcbe-e8d126c5b034"],
-Cell[519764, 11017, 1051, 22, 24, "Print",ExpressionUUID->"eb137c8d-a6da-43f8-8790-9cc48e5d9482"],
-Cell[520818, 11041, 15692, 323, 386, "Print",ExpressionUUID->"83dc03e6-17ca-4108-8b1a-ce2600fdf5a4"]
+Cell[276462, 5993, 986, 21, 24, "Print",ExpressionUUID->"3ba8b379-7a0b-4385-aeab-aa9042bd882e"],
+Cell[277451, 6016, 3594, 53, 46, "Print",ExpressionUUID->"cb478978-05e3-4892-b6ce-f60bbf17dd92"],
+Cell[281048, 6071, 2624, 39, 24, "Print",ExpressionUUID->"69e76ce1-4777-49a9-8216-9562b5dda2f5"],
+Cell[283675, 6112, 993, 21, 24, "Print",ExpressionUUID->"7afc6378-f662-4107-8fbf-7e7ced5463fc"],
+Cell[284671, 6135, 3741, 60, 215, "Print",ExpressionUUID->"1eabe9f5-1b75-493a-8fea-485a85595fc5"],
+Cell[288415, 6197, 2770, 46, 139, "Print",ExpressionUUID->"4f31afd1-fdf9-44f9-83e4-556b8da23a61"],
+Cell[291188, 6245, 986, 21, 24, "Print",ExpressionUUID->"49cd9e4b-764f-442e-bedd-5303ea2a23ec"],
+Cell[292177, 6268, 6766, 168, 215, "Print",ExpressionUUID->"3591b306-bb1e-420b-893a-1a9a52c7195c"],
+Cell[298946, 6438, 3133, 78, 101, "Print",ExpressionUUID->"a7209d79-b4e2-47ce-a6f4-890a204b58f7"],
+Cell[302082, 6518, 1004, 21, 24, "Print",ExpressionUUID->"99ff8eb3-e934-4c84-9add-16cb1625e49e"],
+Cell[303089, 6541, 15340, 317, 367, "Print",ExpressionUUID->"3fe82088-c3b4-4835-9ba7-20b445e51c6f"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[318490, 6865, 165, 3, 54, "Subsection",ExpressionUUID->"918d81da-bd18-4000-9cf8-e663e164368c"],
+Cell[CellGroupData[{
+Cell[318680, 6872, 4685, 115, 220, "Input",ExpressionUUID->"836dacfc-f5b5-46c9-a2d7-84da0d85e8d6"],
+Cell[CellGroupData[{
+Cell[323390, 6991, 465, 13, 24, "Print",ExpressionUUID->"c95baf77-5423-4128-af5b-ab22d9e69242"],
+Cell[323858, 7006, 2959, 44, 46, "Print",ExpressionUUID->"560136c4-013d-4dc6-86f2-0f09911bad57"],
+Cell[326820, 7052, 2104, 31, 24, "Print",ExpressionUUID->"549b0860-bf7c-4c1c-a4c9-9b0c8288cf54"],
+Cell[328927, 7085, 471, 13, 24, "Print",ExpressionUUID->"c5a9f79e-5b74-4360-9eb2-c306e4c063f8"],
+Cell[329401, 7100, 3102, 50, 215, "Print",ExpressionUUID->"289be03d-29b6-4050-a92b-2f8787ffb046"],
+Cell[332506, 7152, 2252, 39, 139, "Print",ExpressionUUID->"28ab74c0-0e1d-4c6e-9ffd-5d92f6a0adc8"],
+Cell[334761, 7193, 468, 13, 24, "Print",ExpressionUUID->"59f5e118-cc8c-4a03-be6d-55f2971efb8c"],
+Cell[335232, 7208, 6182, 155, 196, "Print",ExpressionUUID->"7864d76f-cd8b-434c-a163-f3ff7cc31eb1"],
+Cell[341417, 7365, 3135, 78, 101, "Print",ExpressionUUID->"ae399052-1606-4a3b-9f67-956ec645b546"],
+Cell[344555, 7445, 484, 13, 24, "Print",ExpressionUUID->"049c5541-c6bb-4715-b081-632df948bbd5"],
+Cell[345042, 7460, 15257, 317, 367, "Print",ExpressionUUID->"ad495951-57e9-4090-a78a-e214eb226e93"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[536583, 11372, 166, 3, 72, "Section",ExpressionUUID->"c76bc580-5bf3-4284-b0b4-3c4b3dc3786f"],
+Cell[360372, 7785, 156, 3, 67, "Section",ExpressionUUID->"ad5bfde2-dee5-40b3-8b76-0877a068b7f9"],
 Cell[CellGroupData[{
-Cell[536774, 11379, 1627, 33, 115, "Input",ExpressionUUID->"e2a1d931-0f3e-47d2-acac-28108867908d"],
+Cell[360553, 7792, 161, 3, 54, "Subsection",ExpressionUUID->"5bfdac08-e1a9-4fd2-8c39-a582826076ca"],
 Cell[CellGroupData[{
-Cell[538426, 11416, 629, 15, 24, "Print",ExpressionUUID->"d4795bc3-9101-4b6b-b723-f51cd69d69ac"],
-Cell[539058, 11433, 1192, 18, 26, "Print",ExpressionUUID->"77df7c80-1b61-492a-9e5a-b38256a4489e"],
-Cell[540253, 11453, 633, 15, 24, "Print",ExpressionUUID->"7b0f1917-966a-4ea4-90b8-c84e14ed471f"],
-Cell[540889, 11470, 1318, 25, 82, "Print",ExpressionUUID->"ab9aa07a-2146-4cc3-9d8b-8363b5844690"],
-Cell[542210, 11497, 630, 15, 24, "Print",ExpressionUUID->"97002867-b4ff-4cc8-a375-35b39e7da448"],
-Cell[542843, 11514, 3196, 81, 120, "Print",ExpressionUUID->"c5f80159-7eba-4e27-aac2-c3df77146420"],
-Cell[546042, 11597, 646, 15, 24, "Print",ExpressionUUID->"9a2c2ead-5167-47db-a079-d63e3378d168"],
-Cell[546691, 11614, 2562, 57, 101, "Print",ExpressionUUID->"3f940899-79c6-4adf-9817-7ab2d42fa004"]
+Cell[360739, 7799, 5265, 110, 241, "Input",ExpressionUUID->"24bf1396-69e7-4926-812d-6aecefdeaf3b"],
+Cell[CellGroupData[{
+Cell[366029, 7913, 1135, 23, 24, "Print",ExpressionUUID->"4279b6b9-5de2-426a-a780-20271aa48b4f"],
+Cell[367167, 7938, 3271, 48, 46, "Print",ExpressionUUID->"f00385d1-b7bc-4ddb-859a-6d596a832950"],
+Cell[370441, 7988, 1950, 29, 24, "Print",ExpressionUUID->"1e4a0498-1b2c-48e6-b1f1-0e9541448ecb"],
+Cell[372394, 8019, 1137, 23, 24, "Print",ExpressionUUID->"c75baeef-6e87-4178-9ddf-f209d9636358"],
+Cell[373534, 8044, 3414, 55, 177, "Print",ExpressionUUID->"e7bb33b4-f046-40ba-9edf-e5ef99590f50"],
+Cell[376951, 8101, 2086, 36, 82, "Print",ExpressionUUID->"0c0afd88-b91d-4bd5-9c05-c7f5f2edb138"],
+Cell[379040, 8139, 1134, 23, 24, "Print",ExpressionUUID->"a62bb878-f10f-4078-8a91-a0c87d90d20e"],
+Cell[380177, 8164, 6619, 165, 234, "Print",ExpressionUUID->"69c3b0a8-cf8b-4bbd-b54b-57f8541c58ae"],
+Cell[386799, 8331, 1862, 46, 63, "Print",ExpressionUUID->"bfe63db5-180f-4a0d-9d7f-41200b5cd579"],
+Cell[388664, 8379, 1150, 23, 24, "Print",ExpressionUUID->"01cf9220-4e1f-4809-a835-7cb93a56e636"],
+Cell[389817, 8404, 10698, 222, 291, "Print",ExpressionUUID->"c750c4f9-ad46-40ce-b096-72926fb5a350"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[400576, 8633, 262, 4, 54, "Subsection",ExpressionUUID->"bcb3c822-df99-4af1-8969-b932d5db908b"],
+Cell[CellGroupData[{
+Cell[400863, 8641, 6655, 145, 241, "Input",ExpressionUUID->"4e9ea9d9-bb03-4ea6-9a37-df9b505e51e7"],
+Cell[CellGroupData[{
+Cell[407543, 8790, 1066, 22, 24, "Print",ExpressionUUID->"c223e04a-e22a-4b5b-9ccc-e5f2572f639d"],
+Cell[408612, 8814, 4086, 59, 46, "Print",ExpressionUUID->"94426726-17a8-418a-a4fd-8abdba11c246"],
+Cell[412701, 8875, 2747, 41, 24, "Print",ExpressionUUID->"35f08ac8-0c44-49a6-8684-c4b3b39a8c4e"],
+Cell[415451, 8918, 1068, 22, 24, "Print",ExpressionUUID->"b8bd22a6-6165-4d65-8766-27254ede890f"],
+Cell[416522, 8942, 4237, 66, 253, "Print",ExpressionUUID->"344afb1c-c83a-400b-a935-e804cd4f982b"],
+Cell[420762, 9010, 2895, 48, 158, "Print",ExpressionUUID->"f3e24b81-d85b-4e99-b7d1-94cab6a36491"],
+Cell[423660, 9060, 1067, 22, 24, "Print",ExpressionUUID->"fdf58ca5-ab88-4ab3-9c1c-6d4cb45b5965"],
+Cell[424730, 9084, 8527, 213, 291, "Print",ExpressionUUID->"92d53d83-5d1b-40be-bf64-442113bf994e"],
+Cell[433260, 9299, 3135, 78, 101, "Print",ExpressionUUID->"2d6777e7-d352-406a-82ed-a1485264434c"],
+Cell[436398, 9379, 1083, 22, 24, "Print",ExpressionUUID->"eb4a4790-70e6-4e4d-a6c6-92e9f0be7d3a"],
+Cell[437484, 9403, 15925, 326, 405, "Print",ExpressionUUID->"3153dfe1-e92a-43a4-9388-13e872892ecd"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[453470, 9736, 308, 5, 54, "Subsection",ExpressionUUID->"63ce5b4e-6916-4a01-9367-177b2afa43b1"],
+Cell[CellGroupData[{
+Cell[453803, 9745, 6860, 148, 241, "Input",ExpressionUUID->"a1661338-090c-488a-a121-c8d151d51ec9"],
+Cell[CellGroupData[{
+Cell[460688, 9897, 1078, 22, 24, "Print",ExpressionUUID->"4b1eb156-d351-465a-914b-93b5bbd9e07e"],
+Cell[461769, 9921, 4074, 60, 46, "Print",ExpressionUUID->"28be14b5-78c7-4dcc-a0ea-e5808277b348"],
+Cell[465846, 9983, 2716, 40, 24, "Print",ExpressionUUID->"c32cc3e2-f334-4210-b0a1-427a2e2ca890"],
+Cell[468565, 10025, 1082, 22, 24, "Print",ExpressionUUID->"d9440991-bf6d-4733-8135-91f720a72f00"],
+Cell[469650, 10049, 4224, 67, 253, "Print",ExpressionUUID->"875a0502-3b60-4072-badd-334c0eb73f89"],
+Cell[473877, 10118, 2866, 48, 139, "Print",ExpressionUUID->"c163bbfa-45e2-44d8-93dd-1a0c5671b342"],
+Cell[476746, 10168, 1079, 22, 24, "Print",ExpressionUUID->"dfc9872b-3e0e-4415-871a-d4acfbb9a4e1"],
+Cell[477828, 10192, 8524, 213, 291, "Print",ExpressionUUID->"9c06f06f-45b0-440d-be6a-bb64c0f59674"],
+Cell[486355, 10407, 3135, 78, 101, "Print",ExpressionUUID->"4e8ce295-8a3e-438b-8315-0d2df567505d"],
+Cell[489493, 10487, 1095, 22, 24, "Print",ExpressionUUID->"1c4a6d4c-9001-4861-b56d-9aae9c14504d"],
+Cell[490591, 10511, 15752, 324, 405, "Print",ExpressionUUID->"85031fdc-0f50-451a-ac78-64515b349f25"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[506416, 10843, 207, 4, 67, "Section",ExpressionUUID->"e956af96-50a2-4008-b888-42de9f444505"],
+Cell[CellGroupData[{
+Cell[506648, 10851, 212, 4, 54, "Subsection",ExpressionUUID->"3788283d-b4f5-46f6-bf41-4456bbcf0c63"],
+Cell[CellGroupData[{
+Cell[506885, 10859, 5106, 109, 220, "Input",ExpressionUUID->"ab3165c1-7577-4457-af15-e0e62d7ff074"],
+Cell[CellGroupData[{
+Cell[512016, 10972, 1106, 23, 24, "Print",ExpressionUUID->"53811891-eb4e-4bb5-a785-94ddc00e7671"],
+Cell[513125, 10997, 3172, 47, 46, "Print",ExpressionUUID->"bd552591-2646-48c4-8767-5de04c965995"],
+Cell[516300, 11046, 1926, 29, 24, "Print",ExpressionUUID->"1e983b88-006d-4194-9c70-53f9e2b2b4b4"],
+Cell[518229, 11077, 1113, 23, 24, "Print",ExpressionUUID->"f95cb57b-aa46-4b4b-97a3-d8e5cf1937f1"],
+Cell[519345, 11102, 3313, 54, 177, "Print",ExpressionUUID->"6dea57f6-47bf-4d43-9b9a-2487bc52ecff"],
+Cell[522661, 11158, 2062, 36, 82, "Print",ExpressionUUID->"511271d5-b1d8-4341-b5ae-c103dd118a89"],
+Cell[524726, 11196, 1108, 23, 24, "Print",ExpressionUUID->"f277127d-7401-4b30-b547-5db090882c47"],
+Cell[525837, 11221, 6289, 156, 215, "Print",ExpressionUUID->"5717bb53-3e5c-4bc4-bd00-8a9d157b7a3d"],
+Cell[532129, 11379, 1860, 46, 63, "Print",ExpressionUUID->"dc2ffffd-0917-4cab-90b6-49a1a0bc9f29"],
+Cell[533992, 11427, 1123, 23, 24, "Print",ExpressionUUID->"86cda179-f37a-4acc-8297-7c59dfd27a57"],
+Cell[535118, 11452, 10638, 221, 291, "Print",ExpressionUUID->"89894133-798c-4689-8b7c-5a5aff14fd5d"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[545817, 11680, 313, 5, 54, "Subsection",ExpressionUUID->"bf6441cc-d95e-437b-b316-7db1d2f168e0"],
+Cell[CellGroupData[{
+Cell[546155, 11689, 6523, 144, 241, "Input",ExpressionUUID->"a433a1a0-19da-4c89-877e-d63a84dda7ce"],
+Cell[CellGroupData[{
+Cell[552703, 11837, 1011, 21, 24, "Print",ExpressionUUID->"c48d3485-4a39-4fba-a730-acf6e3114098"],
+Cell[553717, 11860, 3960, 57, 46, "Print",ExpressionUUID->"095316c4-f28e-4f85-bede-862f53c0e5fd"],
+Cell[557680, 11919, 2694, 40, 24, "Print",ExpressionUUID->"efda2f4e-d934-41c2-86c7-cbca1fb8b465"],
+Cell[560377, 11961, 1013, 21, 24, "Print",ExpressionUUID->"57adb63e-96b0-4a5a-9ab4-7c7dac69ae20"],
+Cell[561393, 11984, 4105, 64, 234, "Print",ExpressionUUID->"a067645e-2cc3-48ae-bb44-6ed57a58d8bb"],
+Cell[565501, 12050, 2840, 47, 158, "Print",ExpressionUUID->"9b627b0d-2c36-47fb-b735-91aed7ecb75a"],
+Cell[568344, 12099, 1010, 21, 24, "Print",ExpressionUUID->"9c2d6e7f-ec3f-468c-840f-c46079b037d7"],
+Cell[569357, 12122, 8195, 204, 272, "Print",ExpressionUUID->"b1519413-d193-4ce7-957f-49b255a2a3dd"],
+Cell[577555, 12328, 3137, 78, 101, "Print",ExpressionUUID->"cb3c45ee-221d-454e-99b2-89652476b5a1"],
+Cell[580695, 12408, 1026, 21, 24, "Print",ExpressionUUID->"a7053745-f9ca-47ac-abf4-d86306c5d4e1"],
+Cell[581724, 12431, 15887, 327, 386, "Print",ExpressionUUID->"ce723d4e-b5dd-4c68-9e61-a4e5affd5e9c"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[597672, 12765, 361, 6, 54, "Subsection",ExpressionUUID->"4d493080-5cef-46b6-afd9-0c61f5eee913"],
+Cell[CellGroupData[{
+Cell[598058, 12775, 6705, 147, 241, "Input",ExpressionUUID->"e7c7443c-733c-4061-a0c8-e1e8593e817b"],
+Cell[CellGroupData[{
+Cell[604788, 12926, 1032, 22, 24, "Print",ExpressionUUID->"6c7b83d8-9c32-4581-a5a0-79794d0d8816"],
+Cell[605823, 12950, 3955, 59, 46, "Print",ExpressionUUID->"2f46054f-15c9-44d6-9a8c-60602a82eea6"],
+Cell[609781, 13011, 2674, 40, 24, "Print",ExpressionUUID->"15346cb3-abf2-4576-b46c-b63b71cd5ffc"],
+Cell[612458, 13053, 1036, 22, 24, "Print",ExpressionUUID->"d43ce154-fe29-43cb-9cb4-789144ede187"],
+Cell[613497, 13077, 4103, 66, 234, "Print",ExpressionUUID->"97c4a310-d09b-4f7f-b124-161185097195"],
+Cell[617603, 13145, 2820, 48, 139, "Print",ExpressionUUID->"9f29201e-0cac-4ac9-a77a-471faa6c62e3"],
+Cell[620426, 13195, 1033, 22, 24, "Print",ExpressionUUID->"dc7afb41-1608-4318-93e2-3fa52513fdcf"],
+Cell[621462, 13219, 8194, 204, 272, "Print",ExpressionUUID->"76fc9d7b-229a-4d9f-a9f0-97f2ac986dbd"],
+Cell[629659, 13425, 3133, 78, 101, "Print",ExpressionUUID->"d597fd0f-461f-43aa-bcbe-e8d126c5b034"],
+Cell[632795, 13505, 1051, 22, 24, "Print",ExpressionUUID->"eb137c8d-a6da-43f8-8790-9cc48e5d9482"],
+Cell[633849, 13529, 15692, 323, 386, "Print",ExpressionUUID->"83dc03e6-17ca-4108-8b1a-ce2600fdf5a4"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[649614, 13860, 166, 3, 67, "Section",ExpressionUUID->"c76bc580-5bf3-4284-b0b4-3c4b3dc3786f"],
+Cell[CellGroupData[{
+Cell[649805, 13867, 1627, 33, 115, "Input",ExpressionUUID->"e2a1d931-0f3e-47d2-acac-28108867908d"],
+Cell[CellGroupData[{
+Cell[651457, 13904, 629, 15, 24, "Print",ExpressionUUID->"d4795bc3-9101-4b6b-b723-f51cd69d69ac"],
+Cell[652089, 13921, 1192, 18, 26, "Print",ExpressionUUID->"77df7c80-1b61-492a-9e5a-b38256a4489e"],
+Cell[653284, 13941, 633, 15, 24, "Print",ExpressionUUID->"7b0f1917-966a-4ea4-90b8-c84e14ed471f"],
+Cell[653920, 13958, 1318, 25, 82, "Print",ExpressionUUID->"ab9aa07a-2146-4cc3-9d8b-8363b5844690"],
+Cell[655241, 13985, 630, 15, 24, "Print",ExpressionUUID->"97002867-b4ff-4cc8-a375-35b39e7da448"],
+Cell[655874, 14002, 3196, 81, 120, "Print",ExpressionUUID->"c5f80159-7eba-4e27-aac2-c3df77146420"],
+Cell[659073, 14085, 646, 15, 24, "Print",ExpressionUUID->"9a2c2ead-5167-47db-a079-d63e3378d168"],
+Cell[659722, 14102, 2562, 57, 101, "Print",ExpressionUUID->"3f940899-79c6-4adf-9817-7ab2d42fa004"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]

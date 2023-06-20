@@ -57,11 +57,30 @@ Coil\[Psi]c::usage = "Normalised ellipse extent";
 DesToErr::usage = "Ratio of the desired to leading-order error total field harmonic magnitudes";
 
 
+LoopCoilData::usage =
+"stub";
+
+
+SaddleCoilData::usage =
+"stub";
+
+
+EllipseCoilData::usage =
+"stub";
+
+
 LoopCoilPlot::usage =
 "\!\(\*RowBox[{\"LoopCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", StyleBox[\"n\", \"TI\"]}], \"]\"}]\) plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)\[Hyphen]plane of the loop\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\).
 \!\(\*RowBox[{\"LoopCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
 
 MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"LoopCoilPlot",{{Cell[BoxData[GridBox[{{RowBox[{"LoopCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",StyleBox["n","TI"]}],"]"}]}}]],"InlineFormula",CellTags->"LoopCoilPlot_templates"],Cell[BoxData[GridBox[{{RowBox[{"LoopCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"LoopCoilPlot_templates"]},{Cell[BoxData[RowBox[{" plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)-plane of the loop-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\)."}]],"Output",CellTags->"LoopCoilPlot_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"LoopCoilPlot_usages"]}}]]
+
+
+LoopCoilPlot3D::usage =
+"\!\(\*RowBox[{\"LoopCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", StyleBox[\"n\", \"TI\"]}], \"]\"}]\) returns a 3D plot of the loop\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\).
+\!\(\*RowBox[{\"LoopCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
+
+MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"LoopCoilPlot3D",{{Cell[BoxData[GridBox[{{RowBox[{"LoopCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",StyleBox["n","TI"]}],"]"}]}}]],"InlineFormula",CellTags->"LoopCoilPlot3D_templates"],Cell[BoxData[GridBox[{{RowBox[{"LoopCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"LoopCoilPlot3D_templates"]},{Cell[BoxData[RowBox[{" returns a 3D plot of the loop-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\)."}]],"Output",CellTags->"LoopCoilPlot3D_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"LoopCoilPlot3D_usages"]}}]];
 
 
 SaddleCoilPlot::usage =
@@ -71,11 +90,25 @@ SaddleCoilPlot::usage =
 MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"SaddleCoilPlot",{{Cell[BoxData[GridBox[{{RowBox[{"SaddleCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",RowBox[{"{",RowBox[{StyleBox["n","TI"],",",StyleBox["m","TI"]}],"}"}]}],"]"}]}}]],"InlineFormula",CellTags->"SaddleCoilPlot_templates"],Cell[BoxData[GridBox[{{RowBox[{"SaddleCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Phi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Phi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"SaddleCoilPlot_templates"]},{Cell[BoxData[RowBox[{" plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)-plane of the saddle-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\)."}]],"Output",CellTags->"SaddleCoilPlot_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"SaddleCoilPlot_usages"]}}]]
 
 
+SaddleCoilPlot3D::usage =
+"\!\(\*RowBox[{\"SaddleCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\"], \",\", StyleBox[\"m\", \"TI\"]}], \"}\"}]}], \"]\"}]\) returns a 3D plot of the saddle\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\).
+\!\(\*RowBox[{\"SaddleCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Phi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Phi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
+
+MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"SaddleCoilPlot3D",{{Cell[BoxData[GridBox[{{RowBox[{"SaddleCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",RowBox[{"{",RowBox[{StyleBox["n","TI"],",",StyleBox["m","TI"]}],"}"}]}],"]"}]}}]],"InlineFormula",CellTags->"SaddleCoilPlot3D_templates"],Cell[BoxData[GridBox[{{RowBox[{"SaddleCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Phi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Phi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Phi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"SaddleCoilPlot3D_templates"]},{Cell[BoxData[RowBox[{" returns a 3D plot of the saddle-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\)."}]],"Output",CellTags->"SaddleCoilPlot3D_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and azimuthal extents \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Phi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"SaddleCoilPlot3D_usages"]}}]];
+
+
 EllipseCoilPlot::usage =
 "\!\(\*RowBox[{\"EllipseCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\"], \",\", StyleBox[\"m\", \"TI\"]}], \"}\"}]}], \"]\"}]\) plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)\[Hyphen]plane of the ellipse\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\).
 \!\(\*RowBox[{\"EllipseCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"], \",\", RowBox[{RowBox[{\"Coil\[Psi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Psi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
 
 MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"EllipseCoilPlot",{{Cell[BoxData[GridBox[{{RowBox[{"EllipseCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",RowBox[{"{",RowBox[{StyleBox["n","TI"],",",StyleBox["m","TI"]}],"}"}]}],"]"}]}}]],"InlineFormula",CellTags->"EllipseCoilPlot_templates"],Cell[BoxData[GridBox[{{RowBox[{"EllipseCoilPlot","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"],",",RowBox[{RowBox[{"Coil\[Psi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Psi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"EllipseCoilPlot_templates"]},{Cell[BoxData[RowBox[{" plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)-plane of the ellipse-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\)."}]],"Output",CellTags->"EllipseCoilPlot_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"EllipseCoilPlot_usages"]}}]]
+
+
+EllipseCoilPlot3D::usage =
+"\!\(\*RowBox[{\"EllipseCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", RowBox[{\"{\", RowBox[{StyleBox[\"n\", \"TI\"], \",\", StyleBox[\"m\", \"TI\"]}], \"}\"}]}], \"]\"}]\) returns a 3D plot of the ellipse\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\).
+\!\(\*RowBox[{\"EllipseCoilPlot3D\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"], \",\", RowBox[{RowBox[{\"Coil\[Psi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Psi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
+
+MathLink`CallFrontEnd[FrontEnd`CacheTemplateAndUsagePacket[FrontEnd`InputNotebook[],"EllipseCoilPlot3D",{{Cell[BoxData[GridBox[{{RowBox[{"EllipseCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]],",",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",RowBox[{"{",RowBox[{SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","1"}],"TR"]],",",SubscriptBox[StyleBox["i","TI"],StyleBox[RowBox[{"\[Chi]"," ","2"}],"TR"]],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",SubscriptBox[StyleBox["\[Rho]","TI"],StyleBox["c","TI"]],",",RowBox[{"{",RowBox[{StyleBox["n","TI"],",",StyleBox["m","TI"]}],"}"}]}],"]"}]}}]],"InlineFormula",CellTags->"EllipseCoilPlot3D_templates"],Cell[BoxData[GridBox[{{RowBox[{"EllipseCoilPlot3D","[",RowBox[{RowBox[{"{",RowBox[{RowBox[{RowBox[{"Coil\[Chi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Chi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Chi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"],",",RowBox[{RowBox[{"Coil\[Psi]c","[","1","]"}],"->",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","1"}],"TR"]]}],",",RowBox[{RowBox[{"Coil\[Psi]c","[","2","]"}],"->",SubscriptBox[StyleBox["\[Psi]","TI"],StyleBox[RowBox[{"c"," ","2"}],"TR"]]}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"}"}],",",StyleBox["\"\[Ellipsis]\"","TR"]}],"]"}]}}]],"InlineFormula",CellTags->"EllipseCoilPlot3D_templates"]},{Cell[BoxData[RowBox[{" returns a 3D plot of the ellipse-based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\) and degree \!\(\*StyleBox[\"m\", \"TI\"]\)."}]],"Output",CellTags->"EllipseCoilPlot3D_usages"],Cell[BoxData[RowBox[{" is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"1\", \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]c\", \"TI\"], StyleBox[\"2\", \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\) and ellipse extents \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Psi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\)."}]],"Output",CellTags->"EllipseCoilPlot3D_usages"]}}]];
 
 
 LoopFieldPlot::usage =
@@ -1128,18 +1161,48 @@ findAzimuthalExtents[mDes_, k\[Phi]_, opts:OptionsPattern[]] :=
 
 
 (* ::Section::Closed:: *)
+(*Coil Data*)
+
+
+
+
+
+(* ::Section::Closed:: *)
 (*Coil Plots*)
 
 
 reflectX[prim_, x_] := GeometricTransformation[prim, ReflectionTransform[{-1, 0}, {x, 0}]]
 reflectX[x_] := GeometricTransformation[#, ReflectionTransform[{-1, 0}, {x, 0}]]&
+reflectX3D[prim_, x_] := GeometricTransformation[prim, ReflectionTransform[{-1, 0, 0}, {x, 0, 0}]]
+reflectX3D[x_] := GeometricTransformation[#, ReflectionTransform[{-1, 0, 0}, {x, 0, 0}]]&
 
 
 reflectY[prim_, y_] := GeometricTransformation[prim, ReflectionTransform[{0, -1}, {0, y}]]
 reflectY[y_] := GeometricTransformation[#, ReflectionTransform[{0, -1}, {0, y}]]&
+reflectY3D[prim_, y_] := GeometricTransformation[prim, ReflectionTransform[{0, -1, 0}, {0, y, 0}]]
+reflectY3D[y_] := GeometricTransformation[#, ReflectionTransform[{0, -1, 0}, {0, y, 0}]]&
+
+
+reflectZ3D[prim_, z_] := GeometricTransformation[prim, ReflectionTransform[{0, 0, -1}, {0, 0, z}]]
+reflectZ3D[z_] := GeometricTransformation[#, ReflectionTransform[{0, 0, -1}, {0, 0, z}]]&
 
 
 arrowHead = Graphics[{Red, RegularPolygon[{1, 0}, 3]}];
+arrowHead3D = Graphics3D[{FaceForm[Red], EdgeForm[None], Cone[{{-.25, 0, 0}, {.75, 0, 0}}, .3]}];
+
+
+addHoverTube[tubeRadius_, hoverRadius_, path_, drawnTubeRadius_:#] := {
+	(* Draw the arrows. *)
+	Arrow @ Tube[path, drawnTubeRadius&[tubeRadius]],
+	(* If the thickness of the arrow is less than "HoverThickness", then add an invisible copy with
+		thickness "HoverThickness" to ensure the primitive has a reasonable mouse hover region. *)
+	If[TrueQ[tubeRadius < hoverRadius], {FaceForm[], Tube[path, hoverRadius]}, Nothing]
+}
+
+
+coilCylinder[\[Rho]c_, z_] := Cylinder[
+	{{0, 0, -#}, {0, 0, #}}&[\[Rho]c z],
+	.98 \[Rho]c]
 
 
 (* Arrow heads get too large if they scale linearly with current. *)
@@ -1154,7 +1217,17 @@ plotRangePaddingY[gWidth_, arrowheadS_, i\[Chi]_] :=
 	2 gWidth scaleHead[arrowheadS Last @ Abs[i\[Chi]]]
 
 
-coilPlotFrameLabel = {
+processPlotStyle[style_, primCount_] := Switch[
+	style,
+	(* PlotStyle -> Automatic uses the default colour set, ColorData[97]. *)
+	Automatic, ColorData[97] /@ Range[primCount],
+	(* PlotStyle -> {s1, s2, ...} cycles the si over the sets of primitives. *)
+	_List, PadRight[{}, primCount, style],
+	(* PlotStyle -> s uses s for all sets of primitives. *)
+	_, Table[style, primCount]]
+
+
+coilPlot2DFrameLabel = {
 	{
 		TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
 		None},
@@ -1163,16 +1236,46 @@ coilPlotFrameLabel = {
 		None}};
 
 
-schematicOpts = Normal @ Merge[
+coilPlot3DAxesLabel = {
+	TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
+	TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"y\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""],
+	TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""]};
+
+
+coilGraphic2DOpts = Normal @ Merge[
 	{
 		Options[Graphics],
 		{
 			ImageSize -> Large,
 			PlotRange -> All,
 			Frame -> True,
-			FrameLabel -> coilPlotFrameLabel,
+			FrameLabel -> coilPlot2DFrameLabel,
 			"ThicknessScaling" -> .0015,
-			"ArrowheadScaling" -> .006
+			"ArrowheadScaling" -> .005,
+			PlotStyle -> Black
+		}
+	},
+	Last];
+
+
+coilGraphic3DOpts = Normal @ Merge[
+	{
+		Options[Graphics3D],
+		{
+			ImageSize -> Large,
+			PlotRange -> All,
+			Boxed -> False,
+			Axes -> True,
+			AxesOrigin -> Automatic,
+			AxesLabel -> coilPlot3DAxesLabel,
+			PlotPoints -> 100,
+			"ThicknessScaling" -> .002,
+			"ArrowheadScaling" -> .03,
+			"HoverThickness" -> .007,
+			PlotStyle -> Black,
+			"ShowCylinder" -> True,
+			"CylinderStyle" -> Directive[EdgeForm[{GrayLevel[.8], Thickness[.001]}], FaceForm[GrayLevel[.95, .4]]],
+			Show -> None
 		}
 	},
 	Last];
@@ -1182,7 +1285,8 @@ schematicOpts = Normal @ Merge[
 (*Dynamic Plot Elements*)
 
 
-dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_]] := dynPrimByKey[prim,
+dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_], style_] := dynPrimByKey[
+	prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
@@ -1193,42 +1297,54 @@ dynLoop[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_]] := dynP
 	},
 	transform,
 	{\[Chi]c\[Rho]c, i\[Chi]},
-	Dynamic[tracker]]
+	Dynamic[tracker],
+	style]
 
 
-dynSaddle[prim_, \[Chi]c\[Rho]c:{_, _}, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_]] := dynPrimByEpilog[prim,
+dynSaddleText[\[Chi]c\[Rho]c:{_, _}, i\[Chi]_, \[Phi]c\[Rho]c_] := {
 	{
-		{
-			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
-			Row[{\[Chi]c\[Rho]c[[1]], ", ", \[Chi]c\[Rho]c[[2]], " (m)"}]},
-		{
-			"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
-			Row[{\[Phi]c\[Rho]c, " (m)"}]},
-		{
-			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
-			Row[{i\[Chi], ", ", -i\[Chi], " (A)"}]}
-	},
-	transform,
-	Dynamic[epilog]]
-
-
-dynSaddle[prim_, \[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_]] := dynPrimByEpilog[prim,
+		"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+		Row[{\[Chi]c\[Rho]c[[1]], ", ", \[Chi]c\[Rho]c[[2]], " (m)"}]},
 	{
-		{
-			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
-			Row[{\[Chi]c\[Rho]c, " (m)"}]},
-		{
-			"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
-			Row[{\[Phi]c\[Rho]c, " (m)"}]},
-		{
-			"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
-			Row[{i\[Chi], " (A)"}]}
-	},
+		"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
+		Row[{\[Phi]c\[Rho]c, " (m)"}]},
+	{
+		"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+		Row[{i\[Chi], ", ", -i\[Chi], " (A)"}]}}
+
+
+dynSaddleText[\[Chi]c\[Rho]c_?NumberQ, i\[Chi]_, \[Phi]c\[Rho]c_] := {
+	{
+		"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
+		Row[{\[Chi]c\[Rho]c, " (m)"}]},
+	{
+		"\!\(\*SubscriptBox[\"\[Phi]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)\[ThinSpace]\!\(\*SubscriptBox[\"\[Rho]\", StyleBox[\"c\",FontSlant->\"Italic\"]]\)",
+		Row[{\[Phi]c\[Rho]c, " (m)"}]},
+	{
+		"\"\\!\\(\\*SubscriptBox[StyleBox[\\\"i\\\",FontSlant->\\\"Italic\\\"], \\\"\[Chi]\\\"]\\)\"",
+		Row[{i\[Chi], " (A)"}]}}
+
+
+dynSaddle2D[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[epilog_], Dynamic[epilogOpt_], style_] := dynPrimByEpilog[
+	prim,
+	dynSaddleText[\[Chi]c\[Rho]c, i\[Chi], \[Phi]c\[Rho]c],
 	transform,
-	Dynamic[epilog]]
+	Dynamic[epilog],
+	Dynamic[epilogOpt],
+	style]
 
 
-dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_]] := dynPrimByKey[prim,
+dynSaddle3D[prim_, \[Chi]c\[Rho]c_, i\[Chi]_, \[Phi]c\[Rho]c_, transform_, Dynamic[tracker_], style_] := dynPrimByKey[
+	prim,
+	dynSaddleText[\[Chi]c\[Rho]c, i\[Chi], \[Phi]c\[Rho]c],
+	transform,
+	{\[Chi]c\[Rho]c, \[Phi]c\[Rho]c, i\[Chi]},
+	Dynamic[tracker],
+	style]
+
+
+dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, transform_, Dynamic[tracker_], style_] := dynPrimByKey[
+	prim,
 	{
 		{
 			"\"\\!\\(\\*SubscriptBox[\\\"\[Chi]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\[ThinSpace]\\!\\(\\*SubscriptBox[\\\"\[Rho]\\\", StyleBox[\\\"c\\\",FontSlant->\\\"Italic\\\"]]\\)\"",
@@ -1242,24 +1358,25 @@ dynEllipse[prim_, \[Chi]c\[Rho]c_, \[Psi]c\[Rho]c_, i\[Chi]_, transform_, Dynami
 	},
 	transform,
 	{\[Chi]c\[Rho]c, \[Psi]c\[Rho]c, i\[Chi]},
-	Dynamic[tracker]]
+	Dynamic[tracker],
+	style]
 
 
-dynPrimByKey[prim_, label:{{_, _}..}, transform_, key_, Dynamic[tracker_]] := Tooltip[
+dynPrimByKey[prim_, label:{{_, _}..}, transform_, key_, Dynamic[tracker_], style_] := Tooltip[
 	EventHandler[
-		{Dynamic[If[tracker === key, Red, Black]], transform[prim], prim},
+		{style, Dynamic[If[tracker === key, Red, {}]], transform[prim], prim},
 		{"MouseEntered" :> (tracker = key), "MouseExited" :> (tracker = None)}],
 	Pane[
 		TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
 		FrameMargins -> {5{1, 1}, 2{1, 1}}]]
 
 
-dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_]] := With[
+dynPrimByEpilog[prim_, label:{{_, _}..}, transform_, Dynamic[epilog_], Dynamic[epilogOpt_], style_] := With[
 	{primPair = {transform[prim], prim}},
 	Tooltip[
-		EventHandler[primPair, {
-			"MouseEntered" :> (epilog = {Red, primPair}),
-			"MouseExited" :> (epilog = {})}],
+		EventHandler[Prepend[primPair, style], {
+			"MouseEntered" :> (epilog = {{epilogOpt}, style, Red, primPair}),
+			"MouseExited" :> (epilog = {epilogOpt})}],
 		Pane[
 			TraditionalForm @ Grid[{RawBoxes[#1], " = ", #2}& @@@ label, Alignment -> Left],
 			FrameMargins -> {5{1, 1}, 2{1, 1}}]]]
@@ -1310,7 +1427,11 @@ loopPlotChecks[head_][\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_] := Module[
 	proceed]
 
 
-Options[LoopCoilPlot] = schematicOpts;
+(* ::Subsubsection::Closed:: *)
+(*2D*)
+
+
+Options[LoopCoilPlot] = coilGraphic2DOpts;
 
 
 LoopCoilPlot::BadSeparations = plotMessages["BadSeparations"];
@@ -1325,8 +1446,8 @@ LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 ) :=
 	Module[{\[Chi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Explicitly feed loopSchematic all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot,
-			which needs to propagate through to loopSchematic. *)
+		(* Explicitly feed loopGraphic2D all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot,
+			which needs to propagate through to loopGraphic2D. *)
 		allOpts = Sequence @@ Normal[Merge[{Options[LoopCoilPlot], {opts}}, Last]];
 		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
 		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
@@ -1334,11 +1455,15 @@ LoopCoilPlot[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 			First][[All, 2]]];
 		thicknessS = OptionValue["ThicknessScaling"];
 		arrowheadS = OptionValue["ArrowheadScaling"];
-		loopSchematic[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]
+		loopGraphic2D[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]
 
 
-loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
-	{gPrims, symTransform},
+loopGraphic2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
+	{styles, gPrims, symTransform},
+
+	styles = processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		Length[\[Chi]c]];
 
 	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
 	symTransform = If[EvenQ[nDes], reflectX[Pi \[Rho]c], Identity];
@@ -1347,7 +1472,7 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 		(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
 		gPrims = MapThread[
 
-			Function[{\[Chi]cp, i\[Chi]p, flip},
+			Function[{\[Chi]cp, i\[Chi]p, flip, style},
 				dynLoop[
 
 					flip @ {
@@ -1361,12 +1486,14 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 					\[Rho]c \[Chi]cp, i\[Chi]p,
 					(* Add the primitive with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
 					reflectY[0] @* symTransform,
-					Dynamic[tracker]]],
+					Dynamic[tracker],
+					style]],
 
 			{
 				\[Chi]c,
 				i\[Chi],
-				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity},
+				styles
 			}];
 		
 		Graphics[
@@ -1374,13 +1501,100 @@ loopSchematic[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 			PlotRange -> {{0, 2 Pi \[Rho]c}, All},
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]
+			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
 
-	(* integrand = Total @ MapThread[
-		Function @@ {#2 dl \[Cross] rp[{x, y, z}] / Norm[rp[{x, y, z}]]^3},
-		{Join[-\[Chi]c, \[Chi]c], Join[sym i\[Chi], i\[Chi]]}
-	] *)
-]
+
+(* ::Subsubsection::Closed:: *)
+(*3D*)
+
+
+Options[LoopCoilPlot3D] = coilGraphic3DOpts;
+
+
+LoopCoilPlot3D::BadSeparations = plotMessages["BadSeparations"];
+LoopCoilPlot3D::BadCurrents = plotMessages["BadCurrents"];
+LoopCoilPlot3D::BadDesired = plotMessages["BadDesired"];
+LoopCoilPlot3D::BadRadius = plotMessages["BadRadius"];
+
+
+LoopCoilPlot3D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
+	CheckArguments[LoopCoilPlot3D[\[Chi]c, i\[Chi], \[Rho]c, nDes, opts], 4] &&
+	loopPlotChecks[LoopCoilPlot3D][\[Chi]c, i\[Chi], \[Rho]c, nDes]
+) :=
+	Module[{\[Chi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Explicitly feed loopGraphic3D all option->value pairs. This is incase the user has changed the default value of an option on LoopCoilPlot3D,
+			which needs to propagate through to loopGraphic3D. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[LoopCoilPlot3D], {opts}}, Last]];
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		loopGraphic3D[\[Chi]cVals, i\[Chi], \[Rho]c, nDes, thicknessS, arrowheadS, allOpts]]
+
+
+loopGraphic3D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opts___] := Module[
+	{styles, hoverThickness, longestDim, plotPoints, gPrims, symTransform},
+
+	styles = processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		Length[\[Chi]c]];
+
+	hoverThickness = Lookup[Association[opts], "HoverThickness", .005];
+
+	(* Arrow thicknesses will be scaled by the longest side length of the plot. *)
+	longestDim = Max[Flatten[2 \[Rho]c {\[Chi]c, 1}]];
+
+	plotPoints = Lookup[Association[opts], PlotPoints, 100];
+
+	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+	symTransform = If[EvenQ[nDes], reflectY3D[0], Identity];
+
+	DynamicModule[{tracker},
+		(* Construct the primitives with +ve z coords. The thickness of each primitive is proportional to i\[Chi]. *)
+		gPrims = MapThread[
+
+			Function[{\[Chi]cp, i\[Chi]p, flip, style},
+				dynLoop[
+
+					flip @ {
+						(* Arrowheads (size scaled by i\[Chi]) *)
+						Arrowheads[Table[{scaleHead[arrowheadS Abs[i\[Chi]p]], pos, arrowHead3D}, {pos, .125, .875, .25}]],
+						(* Arrow *)
+						addHoverTube[
+							(* Tube radius *)
+							longestDim thicknessS Abs[i\[Chi]p] / 2,
+							(* Hover radius *)
+							longestDim hoverThickness / 2,
+							Array[\[Rho]c {Cos[#], Sin[#], \[Chi]cp}&, plotPoints, {0, 2. Pi}]
+						]
+					},
+
+					\[Rho]c \[Chi]cp, i\[Chi]p,
+					(* Add the primitive with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+					reflectZ3D[0] @* symTransform,
+					Dynamic[tracker],
+					style]],
+
+			{
+				\[Chi]c,
+				i\[Chi],
+				i\[Chi] /. {_?Negative -> reflectY3D[0], _?Positive -> Identity},
+				styles
+			}];
+		
+		Graphics3D[
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
+			PlotRange -> All,
+			Lighting -> AmbientLight[White],
+			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1452,7 +1666,11 @@ saddlePlotChecks[head_][\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] 
 	proceed]
 
 
-Options[SaddleCoilPlot] = schematicOpts;
+(* ::Subsubsection::Closed:: *)
+(*2D*)
+
+
+Options[SaddleCoilPlot] = coilGraphic2DOpts;
 
 
 SaddleCoilPlot::BadSeparations = plotMessages["BadSeparations"];
@@ -1469,8 +1687,8 @@ SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opti
 ) :=
 	Module[{\[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Explicitly feed saddleSchematic all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot,
-			which needs to propagate through to saddleSchematic. *)
+		(* Explicitly feed saddleGraphic2D all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot,
+			which needs to propagate through to saddleGraphic2D. *)
 		allOpts = Sequence @@ Normal[Merge[{Options[SaddleCoilPlot], {opts}}, Last]];
 		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
 		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
@@ -1482,15 +1700,23 @@ SaddleCoilPlot[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opti
 			First][[All, 2]]];
 		thicknessS = OptionValue["ThicknessScaling"];
 		arrowheadS = OptionValue["ArrowheadScaling"];
-		saddleSchematic[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
+		saddleGraphic2D[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
 
 
-saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{gPrims, symQ, arcCentres, arcExtents, wrappingTransforms, \[Chi]cPairs},
-
+saddleGraphic2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{epilogResolved, styles, gPrims, symQ, arcCentres, arcExtents, wrappingTransforms, \[Chi]cPairs, i = 1},
+	
+	epilogResolved = Replace[<|opts|>[Epilog], None | False -> {}];
+	
 	(* Is the coil axially symmetric? *)
 	symQ = OddQ[nDes + mDes];
 	
+	styles = Reverse @ processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		(* If axially symmetric, then pairs of adjacent separations are joined to form one primitive,
+			so we only need half as many colours. *)
+		Length[\[Chi]c] If[symQ, 1/2, 1] Length[\[Phi]c]];
+
 	(* Construct the primitives' coordinates. *)
 	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;;-2]];
 	arcExtents = \[Rho]c Riffle[
@@ -1503,7 +1729,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 		Table[Translate[#, {{0, 0}, {2 Pi \[Rho]c, 0}}]&, Length[\[Phi]c]],
 		Table[Identity, (Length[arcCentres] - 1) * Length[\[Phi]c]]];
 
-	DynamicModule[{epilog = {}},
+	DynamicModule[{epilog = {epilogResolved}, epilogOpt = epilogResolved},
 		If[symQ,
 
 			(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
@@ -1526,8 +1752,8 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 										{{extent[[2]], zPair[[1]]}, {extent[[1]], zPair[[1]]}}
 									}]
 								},
-								(* Arguments for dynSaddle *)
-								{zPair, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], reflectY[0]}
+								(* Arguments for dynSaddle2D *)
+								{zPair, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], reflectY[0], Dynamic[epilog], Dynamic[epilogOpt]}
 							}],
 							{arcExtents, wrappingTransforms}]],
 				{
@@ -1537,7 +1763,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 				}];
 			
 			gPrims = KeyValueMap[
-				dynSaddle[#2[[All, 1]], Sequence @@ #1, Dynamic[epilog]]&,
+				dynSaddle2D[#2[[All, 1]], Sequence @@ #1, styles[[i++]]]&,
 				GroupBy[Flatten[gPrims, 1], Last]],
 			
 			(* If the coil is axially antisymmetric, then each arc with +ve z is joined to its corresponding arc with -ve z. *)
@@ -1559,8 +1785,8 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 										{{extent[[2]], -z}, {extent[[1]], -z}}
 									}]
 								},
-								(* Arguments for dynSaddle *)
-								{z, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6]}}],
+								(* Arguments for dynSaddle2D *)
+								{z, i\[Chi]p, Round[Abs[Subtract @@ extent]/2, 10.^-6], {}&, Dynamic[epilog], Dynamic[epilogOpt]}}],
 						{arcExtents, wrappingTransforms}]],
 				{
 					\[Rho]c \[Chi]c,
@@ -1569,7 +1795,7 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 				}];
 
 			gPrims = KeyValueMap[
-				dynSaddle[#2[[All, 1]], Sequence @@ #1, {}&, Dynamic[epilog]]&,
+				dynSaddle2D[#2[[All, 1]], Sequence @@ #1, styles[[i++]]]&,
 				GroupBy[Flatten[gPrims, 1], Last]]
 		];
 
@@ -1579,7 +1805,184 @@ saddleSchematic[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
 			Epilog -> Dynamic[epilog],
-			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
+			Sequence @@ FilterRules[{opts}, DeleteCases[Options[Graphics], _[Epilog, _]]]]]]
+
+
+(* ::Subsubsection::Closed:: *)
+(*3D*)
+
+
+Options[SaddleCoilPlot3D] = Normal @ Merge[
+	{coilGraphic3DOpts, {"ThicknessScaling" -> .0015}},
+	Last];
+
+
+SaddleCoilPlot3D::BadSeparations = plotMessages["BadSeparations"];
+SaddleCoilPlot3D::BadExtents = plotMessages["BadExtents"];
+SaddleCoilPlot3D::BadCurrents = plotMessages["BadCurrents"];
+SaddleCoilPlot3D::BadCurrentRatios = plotMessages["BadCurrentRatios"];
+SaddleCoilPlot3D::BadDesiredNM = plotMessages["BadDesiredNM"];
+SaddleCoilPlot3D::BadRadius = plotMessages["BadRadius"];
+
+
+SaddleCoilPlot3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	CheckArguments[SaddleCoilPlot3D[\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}, opts], 5] &&
+	saddlePlotChecks[SaddleCoilPlot3D][\[Chi]c, \[Phi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+) :=
+	Module[{\[Chi]cVals, \[Phi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Explicitly feed saddleGraphic3D all option->value pairs. This is incase the user has changed the default value of an option on SaddleCoilPlot3D,
+			which needs to propagate through to saddleGraphic3D. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[SaddleCoilPlot3D], {opts}}, Last]];
+		(* If \[Chi]c is a list of Coil\[Chi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Chi]cVals = Replace[\[Chi]c, l:{__Rule} :> SortBy[
+			Cases[l, (Coil\[Chi]c[i_] -> val_) :> {i, val}],
+			First][[All, 2]]];
+		(* If \[Phi]c is a list of Coil\[Phi]c[index] -> val rules, then sort by index and take the vals. *)
+		\[Phi]cVals = Replace[\[Phi]c, l:{__Rule} :> SortBy[
+			Replace[l, (Coil\[Phi]c[i_] -> val_) :> {i, val}, 1],
+			First][[All, 2]]];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		saddleGraphic3D[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
+
+
+saddleGraphic3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{du, hoverThickness, styles, longestDim, gPrims, symQ, arcCentres, arcExtents, \[Chi]cPairs},
+
+	du = 2. Pi / Lookup[Association[opts], PlotPoints, 100];
+
+	hoverThickness = Lookup[Association[opts], "HoverThickness", .005];
+
+	(* Arrow thicknesses will be scaled by the longest side length of the plot. *)
+	longestDim = Max[Flatten[2 \[Rho]c {\[Chi]c, 1}]];
+
+	(* Is the coil axially symmetric? *)
+	symQ = OddQ[nDes + mDes];
+	
+	(* Construct the primitives' coordinates. *)
+	arcCentres = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;;-2]];
+	arcExtents = Riffle[
+		Table[{-#, #} + centre & /@ \[Phi]c, {centre, arcCentres[[;; ;; 2]]}],
+		Table[{#, -#} + centre & /@ \[Phi]c, {centre, arcCentres[[2 ;; ;; 2]]}]];
+	arcExtents = Flatten[arcExtents, 1];
+
+	styles = processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		(* If axially symmetric, then pairs of adjacent separations are joined to form one primitive,
+			so we only need half as many colours. *)
+		Length[\[Chi]c] If[symQ, 1/2, 1] Length[\[Phi]c]];
+
+	DynamicModule[{tracker},
+		If[symQ,
+
+			(* If the coil is axially symmetric, then subsequent pairs of arcs are joined together. *)
+			\[Chi]cPairs = Partition[\[Chi]c, 2];
+			(* Form an Association of key -> style elements, where key is {\[Chi]cPair, extent} for a primitive group. *)
+			styles = Association[
+				Rule @@@ Transpose[{
+					Flatten[Outer[List, \[Chi]cPairs, Round[\[Phi]c, 10.^-6], 1], 1],
+					styles}]];
+			gPrims = MapThread[
+				Function[{\[Chi]cPair, i\[Chi]p, flip},
+					Map[
+						Function[extent,
+							dynSaddle3D[
+								(* Reverse current direction of a saddle by flipping around its z-centre. *)
+								flip[Mean[\[Chi]cPair]] @ {
+									(* Arrowheads (size scaled by i\[Chi]) *)
+									Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead3D}}],
+									(* Collection of arrows (one for each line segment). *)
+									addHoverTube[
+										(* Tube radius *)
+										longestDim thicknessS Abs[i\[Chi]p] / 2,
+										(* Hover radius *)
+										longestDim hoverThickness / 2,
+										{
+											(* All four segments of the saddle. *)
+											\[Rho]c {Cos[extent[[1]]], Sin[extent[[1]]], #}& /@ \[Chi]cPair,
+											Array[\[Rho]c {Cos[#], Sin[#], \[Chi]cPair[[2]]}&, Round[Abs @@ Differences[extent] / du], extent],
+											\[Rho]c {Cos[extent[[2]]], Sin[extent[[2]]], #}& /@ Reverse[\[Chi]cPair],
+											Array[\[Rho]c {Cos[#], Sin[#], \[Chi]cPair[[1]]}&, Round[Abs @@ Differences[extent] / du], Reverse[extent]]
+										},
+										(* Thickness scaled by i\[Chi] *)
+										(* Add a small amount of thickness to the highlighted tube to ensure it is fully shown. *)
+										With[
+											{
+												key = {\[Rho]c \[Chi]cPair, Round[\[Rho]c Abs[Subtract @@ extent]/2, 10.^-6], i\[Chi]p},
+												longestDimBurn = longestDim},
+											Dynamic[longestDimBurn (thicknessS Abs[i\[Chi]p] / 2 + If[tracker === key, .00025, 0])]]]},
+								\[Rho]c \[Chi]cPair,
+								i\[Chi]p,
+								Round[\[Rho]c Abs[Subtract @@ extent]/2, 10.^-6],
+								reflectZ3D[0],
+								Dynamic[tracker],
+								styles[{\[Chi]cPair, Round[Abs[Subtract @@ extent]/2, 10.^-6]}]]],
+						arcExtents]],
+				{
+					\[Chi]cPairs,
+					i\[Chi][[;; ;; 2]],
+					i\[Chi][[;; ;; 2]] /. {_?Negative -> reflectZ3D, _?Positive -> (Identity&)}
+				}],
+			
+			(* If the coil is axially antisymmetric, then each arc with +ve z is joined to its corresponding arc with -ve z. *)
+			(* Form an Association of key -> style elements, where key is {\[Chi]c, extent} for a primitive group. *)
+			styles = Association[
+				Rule @@@ Transpose[{
+					Flatten[Outer[List, \[Chi]c, Round[\[Phi]c, 10.^-6]], 1],
+					styles}]];
+			gPrims = MapThread[
+				Function[{\[Chi]cp, i\[Chi]p, flip},
+					Map[
+						Function[extent,
+							dynSaddle3D[
+								flip @ {
+									(* Arrowheads (size scaled by i\[Chi]) *)
+									Arrowheads[{{scaleHead[arrowheadS Abs[i\[Chi]p]], .5, arrowHead3D}}],
+									(* Collection of arrows (one for each line segment). *)
+									addHoverTube[
+										(* Tube radius *)
+										longestDim thicknessS Abs[i\[Chi]p] / 2,
+										(* Hover radius *)
+										longestDim hoverThickness / 2,
+										{
+											(* All four segments of the saddle. *)
+											\[Rho]c {Cos[extent[[1]]], Sin[extent[[1]]], #}& /@ {-\[Chi]cp, \[Chi]cp},
+											Array[\[Rho]c {Cos[#], Sin[#], \[Chi]cp}&, Round[Abs @@ Differences[extent] / du], extent],
+											\[Rho]c {Cos[extent[[2]]], Sin[extent[[2]]], #}& /@ {\[Chi]cp, -\[Chi]cp},
+											Array[\[Rho]c {Cos[#], Sin[#], -\[Chi]cp}&, Round[Abs @@ Differences[extent] / du], Reverse[extent]]
+										},
+										(* Thickness scaled by i\[Chi] *)
+										(* Add a small amount of thickness to the highlighted tube to ensure it is fully shown. *)
+										With[
+											{
+												key = {\[Rho]c \[Chi]cp, Round[\[Rho]c Abs[Subtract @@ extent]/2, 10.^-6], i\[Chi]p},
+												longestDimBurn = longestDim},
+											Dynamic[longestDimBurn (thicknessS Abs[i\[Chi]p] / 2 + If[tracker === key, .00025, 0])]]]},
+								\[Rho]c \[Chi]cp,
+								i\[Chi]p,
+								Round[\[Rho]c Abs[Subtract @@ extent]/2, 10.^-6],
+								Identity,
+								Dynamic[tracker],
+								styles[{\[Chi]cp, Round[Abs[Subtract @@ extent]/2, 10.^-6]}]]],
+						arcExtents]],
+				{
+					\[Chi]c,
+					i\[Chi],
+					i\[Chi] /. {_?Negative -> reflectZ3D[0], _?Positive -> Identity}
+				}]
+		];
+
+		Graphics3D[
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
+			PlotRange -> All,
+			Lighting -> AmbientLight[White],
+			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
 
 
 (* ::Subsection::Closed:: *)
@@ -1636,7 +2039,11 @@ ellipsePlotChecks[head_][\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}] :=
 	proceed]
 
 
-Options[EllipseCoilPlot] = schematicOpts;
+(* ::Subsubsection::Closed:: *)
+(*2D*)
+
+
+Options[EllipseCoilPlot] = coilGraphic2DOpts;
 
 
 EllipseCoilPlot::BadChiPsi = plotMessages["BadChiPsi"];
@@ -1651,8 +2058,8 @@ EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Option
 ) :=
 	Module[{\[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
 		
-		(* Explicitly feed ellipseSchematic all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot,
-			which needs to propagate through to ellipseSchematic. *)
+		(* Explicitly feed ellipseGraphic2D all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot,
+			which needs to propagate through to ellipseGraphic2D. *)
 		allOpts = Sequence @@ Normal[Merge[{Options[EllipseCoilPlot], {opts}}, Last]];
 		{\[Chi]cVals, \[Psi]cVals} = Switch[
 			\[Chi]c\[Psi]c,
@@ -1664,11 +2071,15 @@ EllipseCoilPlot[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Option
 			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]c}];
 		thicknessS = OptionValue["ThicknessScaling"];
 		arrowheadS = OptionValue["ArrowheadScaling"];
-		ellipseSchematic[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
+		ellipseGraphic2D[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
 
 
-ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{gPrims, phases, symTransform, periodicityTransform},
+ellipseGraphic2D[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{styles, gPrims, phases, symTransform, periodicityTransform},
+
+	styles = processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		Length[\[Chi]c]];
 		
 	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
 	symTransform = If[EvenQ[nDes + mDes], reflectX[Pi \[Rho]c], Identity];
@@ -1682,7 +2093,7 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 		periodicityTransform = PadRight[{}, Length[phases], {Identity, reflectX[Pi \[Rho]c]}];
 
 		gPrims = MapThread[
-			Function[{z, t, i\[Chi]p, flip},
+			Function[{z, t, i\[Chi]p, flip, style},
 				dynEllipse[
 					flip @ MapThread[
 						Function[{phase, pt},
@@ -1702,12 +2113,14 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 					z, t, i\[Chi]p,
 					(* Add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
 					reflectY[0] @* symTransform,
-					Dynamic[tracker]]],
+					Dynamic[tracker],
+					style]],
 			{
 				\[Rho]c \[Chi]c,
 				\[Rho]c \[Psi]c,
 				i\[Chi],
-				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity}
+				i\[Chi] /. {_?Negative -> reflectX[Pi \[Rho]c], _?Positive -> Identity},
+				styles
 			}];
 		
 		(* Reshape into {{dirs, Arrow[...]}, {dirs, Arrow[...]}, ...} *)
@@ -1719,6 +2132,116 @@ ellipseSchematic[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 			PlotRangeClipping -> True,
 			PlotRangePadding -> {0, plotRangePaddingY[2 Pi \[Rho]c, arrowheadS, i\[Chi]]},
 			Sequence @@ FilterRules[{opts}, Options[Graphics]]]]]
+
+
+(* ::Subsubsection::Closed:: *)
+(*3D*)
+
+
+Options[EllipseCoilPlot3D] = coilGraphic3DOpts;
+
+
+EllipseCoilPlot3D::BadChiPsi = plotMessages["BadChiPsi"];
+EllipseCoilPlot3D::BadCurrents = plotMessages["BadCurrents"];
+EllipseCoilPlot3D::BadDesiredNM = plotMessages["BadDesiredNM"];
+EllipseCoilPlot3D::BadRadius = plotMessages["BadRadius"];
+
+
+EllipseCoilPlot3D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:OptionsPattern[]] /; (
+	CheckArguments[EllipseCoilPlot3D[\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}, opts], 4] &&
+	ellipsePlotChecks[EllipseCoilPlot3D][\[Chi]c\[Psi]c, i\[Chi], \[Rho]c, {nDes, mDes}]
+) :=
+	Module[{\[Chi]cVals, \[Psi]cVals, thicknessS, arrowheadS, allOpts},
+		
+		(* Explicitly feed ellipseGraphic3D all option->value pairs. This is incase the user has changed the default value of an option on EllipseCoilPlot3D,
+			which needs to propagate through to ellipseGraphic3D. *)
+		allOpts = Sequence @@ Normal[Merge[{Options[EllipseCoilPlot3D], {opts}}, Last]];
+		{\[Chi]cVals, \[Psi]cVals} = Switch[
+			\[Chi]c\[Psi]c,
+			(* If \[Chi]c\[Psi]c is a list of {\[Chi]c, \[Psi]c} pairs, then transpose and assign. *)
+			{{_, _}..},
+			Transpose[\[Chi]c\[Psi]c],
+			(* If \[Chi]c\[Psi]c is a list of Coil\[Chi]c[index] -> val and Coil\[Psi]c[index] -> val rules, then sort each by index and take the vals. *)
+			{__Rule},
+			SortBy[Cases[\[Chi]c\[Psi]c, (#[i_] -> val_) :> {i, val}], First][[All, 2]]& /@ {Coil\[Chi]c, Coil\[Psi]c}];
+		thicknessS = OptionValue["ThicknessScaling"];
+		arrowheadS = OptionValue["ArrowheadScaling"];
+		ellipseGraphic3D[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}, thicknessS, arrowheadS, allOpts]]
+
+
+ellipseGraphic3D[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
+	{styles, hoverThickness, longestDim, plotPoints, gPrims, phases, symTransform, periodicityTransform},
+
+	styles = processPlotStyle[
+		Lookup[Association[opts], PlotStyle, Black],
+		Length[\[Chi]c]];
+	
+	hoverThickness = Lookup[Association[opts], "HoverThickness", .005];
+
+	(* Arrow thicknesses will be scaled by the longest side length of the plot. *)
+	longestDim = Max[Flatten[2 \[Rho]c {\[Chi]c, 1}]];
+
+	plotPoints = Lookup[Association[opts], PlotPoints, 100];
+		
+	(* Reverse the direction of the -ve z primitives' currents if the coil is axially antisymmetric. *)
+	symTransform = If[EvenQ[nDes + mDes], reflectY3D[0], Identity];
+
+	DynamicModule[{tracker},
+
+		(* Construct the primitives' coordinates. *)
+		phases = Array[Identity, 2 mDes + 1, {0, 2 Pi}][[;; -2]];
+
+		(* Alternating periodicity so that there are mDes lines of symmetry. *)
+		periodicityTransform = PadRight[{}, Length[phases], {Identity, reflectY3D[0]}];
+
+		gPrims = MapThread[
+			Function[{\[Chi]cp, \[Psi]cp, i\[Chi]p, flip, style},
+				dynEllipse[
+					flip @ MapThread[
+
+						Function[{phase, pt},
+							pt @ {
+								Arrowheads @ Table[
+									{scaleHead[arrowheadS Abs[i\[Chi]p]], Mod[pos - phase/(2 Pi), 1.0001], arrowHead3D},
+									{pos, 0, 1, .5}],
+								(* Arrows *)
+								addHoverTube[
+									(* Tube radius *)
+									longestDim thicknessS Abs[i\[Chi]p] / 2,
+									(* Hover radius *)
+									longestDim hoverThickness / 2,
+									Array[
+										\[Rho]c {Cos[#], Sin[#], \[Psi]cp Cos[# + phase] + \[Chi]cp}&,
+										plotPoints, {0, 2. Pi}]]}],
+
+						{phases, periodicityTransform}],
+
+					\[Chi]cp, \[Psi]cp, i\[Chi]p,
+					(* Add the primitives with -ve z coords, accounting for the symmetry/antisymmetry of the coil. *)
+					reflectZ3D[0] @* symTransform,
+					Dynamic[tracker],
+					style]],
+			{
+				\[Chi]c,
+				\[Psi]c,
+				i\[Chi],
+				i\[Chi] /. {_?Negative -> reflectY3D[0], _?Positive -> Identity},
+				styles
+			}];
+		
+		(* Reshape into {{dirs, Arrow[...]}, {dirs, Arrow[...]}, ...} *)
+		gPrims = Flatten[gPrims, 1];
+
+		Graphics3D[
+			{
+				gPrims,
+				If[TrueQ[<|opts|>["ShowCylinder"]],
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c + \[Psi]c]]},
+					{}],
+				Replace[<|opts|>[Show], None | False -> {}]},
+			PlotRange -> All,
+			Lighting -> AmbientLight[White],
+			Sequence @@ FilterRules[{opts}, Options[Graphics3D]]]]]
 
 
 (* ::Section::Closed:: *)
