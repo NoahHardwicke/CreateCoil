@@ -19,7 +19,7 @@ Needs["NoahH`CreateCoil`"]
 
 ### Mathematica 12.3 or Earlier
 
-Compatibility is not guaranteed for earlier versions of Mathematica, but you may install the paclet by downloading CreateCoil.paclet, and running `PacletInstall` on the file.
+Compatibility is not guaranteed for earlier versions of Mathematica, but you may install the paclet by downloading [NoahH__CreateCoil-1.0.0.paclet](NoahH__CreateCoil-1.0.0.paclet), and running `PacletInstall` on the file.
 
 ## Paper: Designing optimal loop, saddle, and ellipse-based magnetic coils by spherical harmonic mapping
 
