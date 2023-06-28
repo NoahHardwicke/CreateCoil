@@ -57,18 +57,6 @@ Coil\[Psi]c::usage = "Normalised ellipse extent";
 DesToErr::usage = "Ratio of the desired to leading-order error total field harmonic magnitudes";
 
 
-LoopCoilData::usage =
-"stub";
-
-
-SaddleCoilData::usage =
-"stub";
-
-
-EllipseCoilData::usage =
-"stub";
-
-
 LoopCoilPlot::usage =
 "\!\(\*RowBox[{\"LoopCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", RowBox[{\"{\", RowBox[{SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]], \",\", SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]], \",\", StyleBox[\"n\", \"TI\"]}], \"]\"}]\) plots a schematic in the \!\(\*StyleBox[\"\[Phi]\", \"TI\"]\)\!\(\*StyleBox[\"z\", \"TI\"]\)\[Hyphen]plane of the loop\[Hyphen]based coil with axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), turn ratios \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"i\", \"TI\"], StyleBox[RowBox[{\"\[Chi]\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\), radius \!\(\*SubscriptBox[StyleBox[\"\[Rho]\", \"TI\"], StyleBox[\"c\", \"TI\"]]\) and target field harmonic of order \!\(\*StyleBox[\"n\", \"TI\"]\).
 \!\(\*RowBox[{\"LoopCoilPlot\", \"[\", RowBox[{RowBox[{\"{\", RowBox[{RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"1\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]}], \",\", RowBox[{RowBox[{\"Coil\[Chi]c\", \"[\", \"2\", \"]\"}], \"\[Rule]\", SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"}\"}], \",\", StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]}], \"]\"}]\) is an alternative way of specifying the axial separations \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"1\"}], \"TR\"]]\), \!\(\*SubscriptBox[StyleBox[\"\[Chi]\", \"TI\"], StyleBox[RowBox[{\"c\", \" \", \"2\"}], \"TR\"]]\), \!\(\*StyleBox[\"\\\"\[Ellipsis]\\\"\", \"TR\"]\).";
@@ -1200,9 +1188,19 @@ addHoverTube[tubeRadius_, hoverRadius_, path_, drawnTubeRadius_:#] := {
 }
 
 
-coilCylinder[\[Rho]c_, z_] := Cylinder[
-	{{0, 0, -#}, {0, 0, #}}&[\[Rho]c z],
-	.98 \[Rho]c]
+coilCylinder[\[Rho]c_, z_, plotPoints_] := Module[
+	{bottomDisk, topDisk, sideSurface}, 
+	{bottomDisk, topDisk} =
+		Through[(Map[Append[# \[Rho]c z]]& /@ {-1, 1})[CirclePoints[{\[Rho]c, 0}, plotPoints - 1]]];
+	sideSurface = MovingMap[
+		Apply[List @@ Join[#1, Reverse[#2]]&],
+		inert @@@ (Append[#, First[#]]& @ Transpose[{bottomDisk, topDisk}]),
+		1];
+	(* Reduce the radii of the top and bottom disks slightly so they don't obscure
+		any wires running around the top or bottom of the coil. *)
+	{bottomDisk, topDisk} = Map[Apply[{.995 #1, .995 #2, #3}&]] /@ {bottomDisk, topDisk};
+	{Polygon[{bottomDisk, topDisk}], EdgeForm[], Polygon[sideSurface]}]
+
 
 
 (* Arrow heads get too large if they scale linearly with current. *)
@@ -1274,7 +1272,7 @@ coilGraphic3DOpts = Normal @ Merge[
 			"HoverThickness" -> .007,
 			PlotStyle -> Black,
 			"ShowCylinder" -> True,
-			"CylinderStyle" -> Directive[EdgeForm[{GrayLevel[.8], Thickness[.001]}], FaceForm[GrayLevel[.95, .4]]],
+			"CylinderStyle" -> {EdgeForm[{GrayLevel[.8], Thickness[.001]}], FaceForm[GrayLevel[.95, .7]]},
 			Show -> None
 		}
 	},
@@ -1589,7 +1587,7 @@ loopGraphic3D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, thicknessS_, arrowheadS_, opt
 			{
 				gPrims,
 				If[TrueQ[<|opts|>["ShowCylinder"]],
-					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c], plotPoints]},
 					{}],
 				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
@@ -1848,9 +1846,10 @@ SaddleCoilPlot3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Op
 
 
 saddleGraphic3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknessS_, arrowheadS_, opts___] := Module[
-	{du, hoverThickness, styles, longestDim, gPrims, symQ, arcCentres, arcExtents, \[Chi]cPairs},
+	{plotPoints, du, hoverThickness, styles, longestDim, gPrims, symQ, arcCentres, arcExtents, \[Chi]cPairs},
 
-	du = 2. Pi / Lookup[Association[opts], PlotPoints, 100];
+	plotPoints = Lookup[Association[opts], PlotPoints, 100];
+	du = 2. Pi / plotPoints;
 
 	hoverThickness = Lookup[Association[opts], "HoverThickness", .005];
 
@@ -1977,7 +1976,7 @@ saddleGraphic3D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thicknes
 			{
 				gPrims,
 				If[TrueQ[<|opts|>["ShowCylinder"]],
-					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c]]},
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c], plotPoints]},
 					{}],
 				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
@@ -2236,7 +2235,7 @@ ellipseGraphic3D[\[Chi]c_, \[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, thickne
 			{
 				gPrims,
 				If[TrueQ[<|opts|>["ShowCylinder"]],
-					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c + \[Psi]c]]},
+					{Replace[<|opts|>["CylinderStyle"], {s__} :> Directive[s]], coilCylinder[\[Rho]c, Max[\[Chi]c + \[Psi]c], plotPoints]},
 					{}],
 				Replace[<|opts|>[Show], None | False -> {}]},
 			PlotRange -> All,
@@ -2257,7 +2256,7 @@ fieldPlotOpts = Normal @ Merge[
 			Axes -> None,
 			Frame -> True,
 			PlotRange -> All,
-			"\[Rho]cPlotPadding" -> .1,
+			"\[Rho]cPlotPadding" -> -0.05,
 			ImageSize -> Medium,
 			FrameLabel -> Automatic,
 			PlotLegends -> Automatic
