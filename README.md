@@ -23,6 +23,8 @@ Compatibility is not guaranteed for earlier versions of Mathematica, but you may
 
 ## Paper: Designing optimal loop, saddle, and ellipse-based magnetic coils by spherical harmonic mapping
 
+CreateCoil implements the theoretical model derived in [Designing optimal loop, saddle, and ellipse-based magnetic coils by spherical harmonic mapping](https://doi.org/10.1109/TIM.2023.3284138).
+
 Examples from the paper can be found in Examples/CreateCoilExamples.nb
 
 ## License
