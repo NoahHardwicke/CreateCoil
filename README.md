@@ -2,7 +2,7 @@
 
 A Wolfram Language (Mathematica) package for creating simple, discrete coils using current-carrying loops, saddles, or ellipses to generate magnetic fields.
 
-[View CreateCoil and its documentation on the Wolfram Paclet site](https://resources.wolframcloud.com/PacletRepository/resources/NoahH/CreateCoil/)
+### [View CreateCoil and its documentation on the Wolfram Paclet site](https://resources.wolframcloud.com/PacletRepository/resources/NoahH/CreateCoil/)
 
 ## Installation
 
@@ -19,7 +19,7 @@ Needs["NoahH`CreateCoil`"]
 
 ### Mathematica 12.3 or Earlier
 
-Compatibility is not guaranteed for earlier versions of Mathematica, but you may install the paclet by downloading [NoahH__CreateCoil-1.0.0.paclet](NoahH__CreateCoil-1.0.0.paclet), and running `PacletInstall` on the file.
+Compatibility is not guaranteed for earlier versions of Mathematica, but you may download [Kernel/CreateCoil.wl](Kernel/CreateCoil.wl) and run `Get` on the file to load the package.
 
 ## Paper: Designing optimal loop, saddle, and ellipse-based magnetic coils by spherical harmonic mapping
 
