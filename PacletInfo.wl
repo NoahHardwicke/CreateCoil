@@ -7,7 +7,7 @@ PacletObject[
     "Creator" -> "Noah Hardwicke, Peter J. Hobson, Michael Packer",
     "License" -> "CC-BY-NC-3.0",
     "PublisherID" -> "NoahH",
-    "Version" -> "1.0.1",
+    "Version" -> "1.0.2",
     "WolframVersion" -> "13.0+",
     "PrimaryContext" -> "NoahH`CreateCoil`",
     "Extensions" -> {
