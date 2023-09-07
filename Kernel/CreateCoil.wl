@@ -222,6 +222,21 @@ bFieldHarmonicVector[{n_, m_}, r_, \[Theta]_, \[Phi]_] :=
 			(n + m) pm Cos[m \[Phi]]}]
 
 
+bFieldCoilHarmonicVector[{n_, m_}, \[Chi]cVals_, i\[Chi]_, \[Phi]cVals_, tVals_, \[Rho]c_, pt:{x_, y_, z_}] :=
+	Block[{\[Chi]c, t},
+		With[{r = Norm[pt]},
+			Replace[\[Phi]cVals, {None -> 1, _ ->
+				Total[Sin[m #]& /@ \[Phi]cVals]}] *
+			1/Pi 1/\[Rho]c^n *
+			ReplaceAll[
+				totalHarmonic[i\[Chi], {n, m}, \[Chi]c, Replace[tVals, Except[None] -> t]],
+				Rule @@@ Join[
+					Transpose[{Table[\[Chi]c[i], {i, Length[\[Chi]cVals]}], \[Chi]cVals}],
+					If[tVals === None, {},
+						Transpose[{Table[t[i], {i, Length[tVals]}], tVals}]]]] *
+			bFieldHarmonicVector[{n, m}, r, ArcCos[z/r], ArcTan[y/x]]]]
+
+
 (* ::Section::Closed:: *)
 (*Selecting Harmonics*)
 
@@ -260,12 +275,12 @@ q[n_, m_, x_] := (-1)^m LegendreQ[n, m, 3, x]
 
 
 s[m_, t_, \[Chi]_] := s[m, t, \[Chi]] =
-	Simplify @ N[(1 - I)/(2 Sqrt[2t]) q[m - 1/2, 0, I (t^2 - \[Chi]^2 - 1)/(2t)]]
+	Simplify @ N[(1 - I)/(2 Sqrt[2t] I^m) q[m - 1/2, 0, I (t^2 - \[Chi]^2 - 1)/(2t)]]
 
 
 \[Beta]["Ellipse"][{n_, m_}, t_, \[Chi]_] := \[Beta]["Ellipse"][{n, m}, t, \[Chi]] =
 	Simplify @ N[
-		-I^m D[
+		(-1)^(m+1) D[
 			Simplify[
 				\[Chi] D[s[m, t, \[Chi]], {\[Chi], m}] +
 				m D[s[m, t, \[Chi]], {\[Chi], m-1}] +
@@ -306,7 +321,7 @@ totalHarmonic[i\[Chi], {n, m}, \[Chi]c, t, opts] =
 			(* The sum of harmonic contributions from however as many loop/saddle/ellipse-primitives as there are currents. *)
 			(* Simplify to quicken root-finding later. *)
 			term = Simplify[N[harmMag[{n, m}, \[Chi]c, t] / f[{n, m}]], Assumptions -> {\[Chi]c > 0, t > 0}];
-			expr = Abs @ Sum[
+			expr = Re @ Sum[
 				i\[Chi][[j]] (term /. {\[Chi]c -> \[Chi]c[j], t -> t[j]}),
 				{j, loopCount}];
 
@@ -830,7 +845,8 @@ findSeparations[
 			(* Calculate expressions for the total desired, nulled, and leading error harmonics. *)
 			totalHarms = With[{tBurn = t},
 				ParallelMap[
-					totalHarmonic[i\[Chi], #, \[Chi]c, tBurn]&,
+					(* Using the absolute value of the harmonic seems to yield better coils. *)
+					Abs @ totalHarmonic[i\[Chi], #, \[Chi]c, tBurn]&,
 					Join[{nmDes}, nmNull, {nmErr}]]];
 
 			totalHarmDes = echo[
@@ -1052,7 +1068,7 @@ findSeparations[
 							Function[
 								Append[
 									rules /. {\[Chi]c -> Coil\[Chi]c, t -> Coil\[Psi]c},
-									DesToErr -> (totalHarmDes/totalHarmErr /. rules)]] @@@ finalSols,
+									DesToErr -> Abs[totalHarmDes/totalHarmErr /. rules]]] @@@ finalSols,
 							Last][[partSpec]]];
 					
 					(* If "ValuesOnly" -> True, then only return the separation (and tan) values. *)
@@ -2285,7 +2301,11 @@ fieldPlot2DOpts = Normal @ Merge[
 			"\[Rho]cPlotPadding" -> .1,
 			PlotRangePadding -> Automatic,
 			MeshFunctions -> {#3 &},
-			Mesh -> True
+			Mesh -> True,
+			"DeviationPlotPoints" -> Automatic,
+			"DeviationMaxRecursion" -> Automatic,
+			"Deviation" -> {.01, .05},
+			"DeviationStyle" -> Automatic
 		}
 	},
 	Last];
@@ -2360,10 +2380,10 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 		{{1, 2, 3}, {"x", "y", "z"}}]]
 
 
-biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}] := Module[
-	{integrandXZ, data, const, bzAlongZ, bxbyAlongZ, bzAlongX, bxbyAlongX, zPlotRange},
+biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}, {otherOpts___}] := Module[
+	{integrandXZ, contours, data, const, bzAlongZ, bxbyAlongZ, bzAlongX, bxbyAlongX, zPlotRange, deviationInterpOpts, deviation, deviationStyle, regionPlots, temp, derivatives, integrandXZGrad, derivativeLabels, lines, regionPlotLines, densityPlots},
 
-	(* Plot the x-z plane *)
+	(* Plot the xz-plane *)
 	integrandXZ = integrand /. \[FormalY] -> 0;
 
 	(* Integrating the integrand returns a 3D field vector. Therefore, we use DensityPlot to interpolate the field looking at
@@ -2378,6 +2398,180 @@ biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts
 		{\[FormalX], 0, (1 + pad) \[Rho]c}, {\[FormalZ], 0, zMax},
 		interpolationOpts
 	]][[-1, 1]]&[integrationOpts];
+
+	deviation = Replace[#, Except[_List] -> {#}]&[<|otherOpts|>["Deviation"]];
+	(* If "DeviationStyle" -> Automatic, use large black dashing for the first deviation, small black for the second, then use ColorData[97]
+		in which each colour is used twice, once with large dashing and once with small dashing. *)
+	deviationStyle = Replace[
+		<|otherOpts|>["DeviationStyle"],
+		Automatic -> Append[Thickness[.79 .00375]] /@ Transpose @ {
+			PadRight[{}, Length[deviation], {Dashing[.8{.025, .009}, 0, "Square"], Dashing[.8{.005, .009}, 0, "Square"]}],
+			Table[i /. {1|2 -> Black, _ -> ColorData[97][Floor[(i - 1)/2]]}, {i, Length[deviation]}]}];
+	deviationInterpOpts = Sequence[
+		PlotPoints -> Replace[
+			<|otherOpts|>["DeviationPlotPoints"],
+			Automatic -> Round[<|interpolationOpts|>[PlotPoints] * 10/6]],
+		MaxRecursion -> Replace[
+			<|otherOpts|>["DeviationMaxRecursion"],
+			Automatic -> Round[<|interpolationOpts|>[MaxRecursion] * 5/4]]];
+
+	If[MatchQ[deviation, _?NumericQ | {__?NumericQ}],
+
+		deviationStyle = Switch[
+			deviationStyle,
+			_ColorFunction, Table[deviationStyle[i], {i, Length[deviation]}],
+			_List, Directive /@ PadRight[{}, Length[deviation], deviationStyle],
+			_, {deviationStyle}];
+		
+		derivatives = Map[
+			Flatten @* List @* ReplaceAll[Plus -> List],
+			Expand @ FullSimplify[
+				bFieldHarmonicVector[{n, m}, Sqrt[\[FormalX]^2 + \[FormalZ]^2], ArcCos[\[FormalZ] / Sqrt[\[FormalX]^2 + \[FormalZ]^2]], 0],
+				Assumptions -> {Element[\[FormalX], PositiveReals], Element[\[FormalZ], PositiveReals]}]];
+		
+		derivatives = MapThread[Function[{dim, field}, {dim, #}& /@ field], {Range[3], derivatives}];
+
+		derivativeLabels = Map[
+			Apply @ Function[{dim, field},
+				With[
+					{
+						xe = Exponent[field, \[FormalX]],
+						ze = Exponent[field, \[FormalZ]],
+						bDim = Style[Subscript["B", Switch[dim, 1, "x", 2, "y", 3, "z"]], Italic]},
+					Which[
+						TrueQ[field == 0], None,
+						TrueQ[{xe, ze} == {0, 0}], bDim,
+						True,
+						ToBoxes /@ FractionBox[
+							Row[{
+								If[xe + ze == 1, "\[PartialD]", Superscript["\[PartialD]", xe + ze]],
+								bDim}],
+							Row[MapThread[
+								Switch[#1,
+									0, Nothing,
+									1, Row[{"\[PartialD]", #2}],
+									_, Row[{"\[PartialD]", Superscript[#2, #1]}]]&,
+								{
+									{xe, ze},
+									{Style["x", Italic], Style["z", Italic]}}], "\[ThinSpace]"]] // RawBoxes]]],
+			derivatives, {2}];
+
+		derivatives = Map[
+			Map @ Apply @ Function[{dim, field},
+				With[{dx = Exponent[field, \[FormalX]], dz = Exponent[field, \[FormalZ]]},
+					Hold[D[Slot[dim], {\[FormalX], dx}, {\[FormalZ], dz}]]]],
+			derivatives];
+		
+		derivatives = Function[Evaluate[derivatives]] /. Hold[d_] :> d;
+		
+		(* Now find the symbolic expressions for the target field gradient, and the gradient of the integrand for the Biot Savart integral. *)
+		(* This is commented out because we're now sampling the target field from the centre *)
+		(* targetFieldGrad = Simplify[
+			Apply[derivatives,
+				bFieldCoilHarmonicVector[{n, m}, \[Chi]c, i\[Chi], \[Phi]c, t, \[Rho]c, {\[FormalX], 0, \[FormalZ]}] /. Abs -> (Sqrt[#^2] &)],
+			Assumptions -> {Element[\[FormalX], PositiveReals], Element[\[FormalZ], PositiveReals]}]; *)
+		integrandXZGrad = Apply[
+			derivatives,
+			integrandXZ /. Abs -> (Sqrt[#^2] &)];
+
+		contours = Map[
+			Function[{integrandi},
+				(* Use RegionPlot to find the contour where the actual field deviates from the target field harmonic (in the
+					top right quadrant). *)
+				regionPlots = Table[
+					With[
+						{target = 1/(4 Pi) Quiet @ NIntegrate[
+							Evaluate[integrandi /. {\[FormalX] -> 0, \[FormalZ] -> 0}],
+							{\[FormalU], 0, 1}, ##]},
+						Quiet @ RegionPlot[
+							With[
+								{actual = 1/(4 Pi) NIntegrate[integrandi, {\[FormalU], 0, 1}, ##]},
+								1 - d < actual/target < 1 + d],
+							{\[FormalX], 0, (1 + pad) \[Rho]c}, {\[FormalZ], 0, zMax},
+							Evaluate[deviationInterpOpts]]],
+					{d, deviation}]&[integrationOpts];
+				
+				(* For each RegionPlot... *)
+				regionPlotLines = Map[
+					Function[plot,
+						(* ...extract all lines from the RegionPlot. *)
+						lines = Cases[
+							Normal[plot],
+							Line[{ls:{{_, _}..}..}] | Line[l:{{_, _}..}] :> Splice[{ls, l}],
+							Infinity];
+						(* Then, for each line... *)
+						lines = Map[
+							Function[line,
+								(* ...If a point lies close to zero in either dimension, and the points either side do too, then remove the
+									point and split the line into two. *)
+								temp = If[
+									And @@ (Apply[Or] @* Map[LessThan[.001 \[Rho]c]] /@ Abs[{##}]),
+									(* Indicate a line split by replacing the point with "break". *)
+									"break",
+									(* Otherwise just return the point (the second of the three being compared). *)
+									#2]& @@@
+										Join[
+											(* Split the line into groups of three consecutive points, ready for comparision. *)
+											{{line[[1]], line[[1]], line[[2]]}},
+											Partition[line, 3, 1],
+											{{line[[-2]], line[[-1]], line[[-1]]}}];
+								(* Split the list by looking for runs of "break", and then delete those runs. *)
+								Splice[DeleteCases[SplitBy[temp, # =!= "break" &], {"break"...} | {_}, 1]]],
+							lines]],
+					regionPlots];
+
+				(* RegionPlot may have connected up separate regions. To avoid these erronious joins, we flatten the
+						points (rather than accepting the lines that RegionPlot generated) so that we may run
+						ReconstructionMesh on them later, which does a better job at identifying separate regions. *)
+				contours = Partition[Flatten[#], 2]& /@ regionPlotLines;
+				
+				(* Populate the remaining three quadrants by transforming the points appropriately. *)
+				contours = Map[
+					Join[
+						#,
+						{-1, 1}#& /@ #,
+						{-1, -1}#& /@ #,
+						{1, -1}#& /@ #]&,
+					contours];
+				
+				(* Identify the contour by applying ReconstructionMesh to the flattened points. *)
+				contours = MapIndexed[
+					Function[{points, index},
+						Replace[
+							Quiet @ ReconstructionMesh[points, Method -> "Crust"],
+							{
+								(* If the reconstruction succeeded, extract the mesh primitives. *)
+								mesh_MeshRegion :> (
+									temp = Flatten[MeshPrimitives[mesh, 1], 1, Line];
+									(* MeshPrimitives returns individual lines for each segment of the contour, e.g.:
+										{..., {pt1, pt2}, {pt2, pt3}, {pt3, pt4}, ...}
+										Hence we need to find runs of point pairs where the last point of one pair
+										is the first point of the next. *)
+									temp = Split[temp, Last[#1] === First[#2]&];
+									Line[Join[#[[All, 1]], {#[[-1, -1]]}]]& /@ temp),
+
+								(* If the reconstruction failed, use the region computed by RegionPlot, transforming
+									it into the remaining three quadrants. *)
+								_ReconstructionMesh -> Map[
+									Line @ {
+										#,
+										{-1, 1}#& /@ #,
+										{-1, -1}#& /@ #,
+										{1, -1}#& /@ #}&,
+									regionPlotLines[[First[index]]]]}]],
+					contours];
+				
+				(* Apply the appropriate styling to each deviation contour. *)
+				contours = MapThread[{CapForm["Square"], #1, #2}&, {deviationStyle, contours}];
+				
+				(* We have calculated the contours for each of the deviation values. Therefore we now want to join them
+					into one list so they can be displayed together. *)
+				contours = Catenate[contours]],
+			
+			integrandXZGrad, {2}],
+		
+		(* If no deviations are specified, then just return None. *)
+		contours = None];
 
 	const = QuantityMagnitude[UnitConvert[Quantity[1, "MagneticConstant"]]]/(4 Pi);
 	(* Micro Tesla *)
@@ -2412,10 +2606,14 @@ biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts
 		{-#1, -#2, {bxbyAlongX bxbyAlongZ, bxbyAlongX bxbyAlongZ, bzAlongX bzAlongZ}*#3}& @@@ data,
 		(* +x, -z *)
 		{#1, -#2, {bxbyAlongZ, bxbyAlongZ, bzAlongZ}*#3}& @@@ data];
+	
+	(* Construct the DensityPlots. *)
 
-	MapThread[
+	(* First, create a DensityPlot for each of the field components. *)
+	densityPlots = MapThread[
 
 		Function[{dim, str},
+		
 			ListDensityPlot[
 				{#1, #2, const #3[[dim]]}& @@@ data,
 				PlotLegends -> BarLegend[
@@ -2434,7 +2632,89 @@ biotSavartPlot2D[integrand_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts
 					},
 					1]]],
 
-		{{1, 2, 3}, {"x", "y", "z"}}]]
+		{{1, 2, 3}, {"x", "y", "z"}}];
+	
+	(* If there are no deviation contours to draw, then return {{plotBx}, {plotBy}, {plotBz}}. Otherwise combine the DensityPlots
+		with the contours and labels. *)
+	If[contours === None, List /@ densityPlots,
+		
+		(* Now create copies of the DensityPlots for each set of deviation contours. *)
+		densityPlots = MapThread[
+			Function[{contourSets, dim}, Table[densityPlots[[dim]], Length[contourSets]]],
+			{contours, {1, 2, 3}}];
+		
+		(* Finally, combine the DensityPlots, deviation contours, and plot labels. *)
+		raggedMapThread[
+
+			Function[{plot, contourSet, label},
+				Module[
+					{plotImageSize, dashingScaling},
+					plotImageSize = ImageSize /. AbsoluteOptions[plot, ImageSize];
+					(* Scale non-absolute dashings and thicknesses by the longest side of the graphic rather than the
+						width (which is the defualt behaviour). This is to ensure that plots with extreme aspect ratios (such as
+						tall and narrow saddle field plots) display with consistent dashing styles and thicknesses. *)
+					dashingScaling = Max[plotImageSize] / First[plotImageSize];
+					(* Furthermore, if the deviation style is Automatic, then negate the actual size of the plot for the dashing and
+						thickness of deviation contours. We don't simply use AbsoluteDashing/Thickness because we want the dashing/thickness
+						to scale with the plot if it's resized. *)
+					If[<|otherOpts|>["DeviationStyle"] === Automatic,
+						(* If a symbolic (Small, Medium, etc.) or single number ImageSize is specified, then the most space-filling aspect
+							ratio possible is 360/432 (which are the actual maximum width/height values for ImageSize -> Medium). If the
+							aspect ratio is greater than this, then the height will decrease while the width is fixed at 360, and if the
+							aspect ratio is less, then the width will decrease while the height is fixed at 432. The default dashing
+							and thickness spec has been designed for the {360, 432} ImageSize, but we want the dashing and thickness to remain
+							the same absolute size for smaller and larger plots. Therefore if the aspect ratio is greater than 360/432 then
+							we rescale the dashing/thickness by width, and by height if it's less. *)
+						dashingScaling = dashingScaling If[Divide @@ plotImageSize > 360/432., First, Last][{360., 432.} / plotImageSize]];
+
+					If[
+						label === None, plot,
+						Labeled[
+							Show[
+								plot,
+								Graphics[contourSet /. {
+									Dashing[{r__?NumericQ}, spec___] :> Dashing[dashingScaling {r}, spec],
+									Thickness[r_?NumericQ, spec___] :> Thickness[dashingScaling r, spec]}]],
+							Grid[
+								Join[
+									{{Row[{label, " Deviation:"}]}},
+									MapThread[
+										{Row[{
+											Framed[
+												Graphics[
+													{
+														#1 /. {
+															Dashing[{r__?NumericQ}, spec___] :> Dashing[dashingScaling {r}, spec],
+															Thickness[r_?NumericQ, spec___] :> Thickness[dashingScaling r, spec]},
+														Line[{{-1, 0}, {1, 0}}]},
+													PlotRange -> 1,
+													AspectRatio -> Full,
+													ImageSize -> plotImageSize],
+												ImageSize -> {35, 8}, Alignment -> {Left, Center},
+												FrameStyle -> None, FrameMargins -> None],
+											" ",
+											Round[100 #2, .01],
+											"%"}]}&,
+										{deviationStyle, deviation}]],
+								Alignment -> Left,
+								Spacings -> {1, {.5, 1, {.2}, .7}},
+								Dividers -> {{True, {False}, True}, {True, True, {False}, True}},
+								FrameStyle -> Replace[
+									Lookup[Association[plotOpts], FrameStyle, GrayLevel[.75]],
+									Automatic | {} -> GrayLevel[.75]],
+								BaseStyle -> Merge[
+									{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{plotOpts}, {LabelStyle}]},
+									Flatten[#, 2]&][LabelStyle]],
+							Right]]]],
+
+			{densityPlots, contours, derivativeLabels},
+			2]]]
+
+
+raggedMapThread[fn_, {lists__}, level_, currentLevel_:1] :=
+	If[currentLevel === level,
+		MapThread[fn, {lists}],
+		MapThread[raggedMapThread[fn, {##}, level, currentLevel + 1]&, {lists}]]
 
 
 (* ::Subsection::Closed:: *)
@@ -2526,7 +2806,7 @@ LoopFieldPlot2D[\[Chi]c_, i\[Chi]_, \[Rho]c_, nDes_, opts:OptionsPattern[]] /; (
 
 		biotSavartPlot2D[
 			loopIntegrand[\[Chi]cVals, i\[Chi], \[Rho]c, nDes],
-			\[Rho]c, {nDes, 0}, pad, zMax, interpolationOpts, plotOpts]]
+			\[Chi]cVals, i\[Chi], None, None, \[Rho]c, {nDes, 0}, pad, zMax, interpolationOpts, plotOpts, allOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -2720,7 +3000,7 @@ SaddleFieldPlot2D[\[Chi]c_, \[Phi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:O
 
 		biotSavartPlot2D[
 			saddleIntegrand[\[Chi]cVals, \[Phi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
-			\[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts]]
+			\[Chi]cVals, i\[Chi], \[Phi]cVals, None, \[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts, allOpts]]
 
 
 (* ::Subsection::Closed:: *)
@@ -2842,7 +3122,7 @@ EllipseFieldPlot2D[\[Chi]c\[Psi]c_, i\[Chi]_, \[Rho]c_, {nDes_, mDes_}, opts:Opt
 
 		biotSavartPlot2D[
 			ellipseIntegrand[\[Chi]cVals, \[Psi]cVals, i\[Chi], \[Rho]c, {nDes, mDes}],
-			\[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts]]
+			\[Chi]cVals, i\[Chi], None, \[Psi]cVals, \[Rho]c, {nDes, mDes}, pad, zMax, interpolationOpts, plotOpts, allOpts]]
 
 
 (* ::Subsection::Closed:: *)
