@@ -2635,14 +2635,19 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 	(* Micro Tesla *)
 	const = 10^6 const;
 
-	bFieldRange = const Replace[
-		Max @* Abs /@ Transpose[
-			Replace[
-				Select[data, Apply[If[Max @ Abs[xPlotRange] < .8 \[Rho]c, 0, .7] \[Rho]c < #1 <= .8 \[Rho]c &]],
-				{} -> data
-			][[All, -1]]],
-		0 | 0. -> 1/const,
-		1];
+	bFieldRange = Replace[
+		Lookup[<|plotOpts|>, PlotRange, Automatic],
+		{
+			{_, _, rb_?NumericQ} :> Table[{-1, 1} Abs[rb], 3],
+			{_, _, rb:{_?NumericQ, _?NumericQ}} :> Table[rb, 3],
+			_ :> const Replace[
+				{-1, 1} Max[Abs[#]]& /@ Transpose[
+					Replace[
+						Select[data, Apply[If[Max @ Abs[xPlotRange] < .8 \[Rho]c, 0, .7] \[Rho]c < #1 <= .8 \[Rho]c &]],
+						{} -> data
+					][[All, -1]]],
+				0 | 0. -> 1/const,
+				1]}];
 
 	(* If n+m is odd, coil is symmetric along z. Bz symmetric along z; Bx, By antisymmetric along z. *)
 	If[OddQ[n + m],
@@ -2691,8 +2696,8 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 				Sequence @@ Replace[{plotOpts},
 					{
 						(PlotRangePadding -> Automatic) -> (PlotRangePadding -> .02 Max[Abs @* Subtract @@@ {xPlotRange, zPlotRange}]),
-						(PlotRange -> Automatic) -> (PlotRange -> {Full, Full, {-bFieldRange[[dim]], bFieldRange[[dim]]}}),
-						(PlotRange -> {x_, y_, Automatic..., ___}) :> (PlotRange -> {x, y, {-bFieldRange[[dim]], bFieldRange[[dim]]}}),
+						(PlotRange -> Automatic) -> (PlotRange -> {Full, Full, {bFieldRange[[dim, 1]], bFieldRange[[dim, 2]]}}),
+						(PlotRange -> {x_, y_, Automatic..., ___}) :> (PlotRange -> {x, y, {bFieldRange[[dim, 1]], bFieldRange[[dim, 2]]}}),
 						(ClippingStyle -> Automatic) :> (ClippingStyle -> Replace[
 							Replace[<|plotOpts|>[ColorFunction], s_String :> ColorData[s]] /@ {0, 1},
 							Except[{__?ColorQ}] -> White])
