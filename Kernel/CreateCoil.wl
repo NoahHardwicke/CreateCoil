@@ -209,15 +209,18 @@ bFieldHarmonicVector[{n_, m_}, r_, \[Theta]_, \[Phi]_] :=
 		kd = KroneckerDelta[m, 0],
 		pm = p[{n - 1, m}, Cos[\[Theta]]],
 		pmMinus = p[{n - 1, m - 1}, Cos[\[Theta]]],
-		pmPlus = p[{n - 1, m + 1}, Cos[\[Theta]]]},
+		pmPlus = p[{n - 1, m + 1}, Cos[\[Theta]]],
+		(* pmMinus may be ComplexInfinity, which, when multiplied by 0, equals Indeterminate. We want
+			it to equal 0 instead. *)
+		zero = Function[Replace[Chop[#1], Except[0] :> #1 * #2]]},
 		
 		f[{n, m}] r^(n-1) {
 			(* x component *)
 			-(1 + kd)/2 pmPlus Cos[(m + 1)\[Phi]] +
-			(1 - kd)/2 (n + m - 1)(n + m) pmMinus Cos[(m - 1)\[Phi]],
+			zero[(1 - kd)/2 (n + m - 1)(n + m) Cos[(m - 1)\[Phi]], pmMinus],
 			(* y component *)
 			-(1 + kd)/2 pmPlus Sin[(m + 1)\[Phi]] -
-			(1 - kd)/2 (n + m - 1)(n + m) pmMinus Sin[(m - 1)\[Phi]],
+			zero[(1 - kd)/2 (n + m - 1)(n + m) Sin[(m - 1)\[Phi]], pmMinus],
 			(* z component *)
 			(n + m) pm Cos[m \[Phi]]}]
 
@@ -2298,10 +2301,13 @@ fieldPlot2DOpts = Normal @ Merge[
 				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"z\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None},
 				{TraditionalForm @ RawBoxes["\"\\!\\(\\*StyleBox[\\\"x\\\",FontSlant->\\\"Italic\\\"]\\) (m)\""], None}},
 			ColorFunction -> (Blend[{RGBColor[0, 0.36, 0.77], GrayLevel[.975], RGBColor[0.85, 0.27, 0.08]}, #]&),
+			ClippingStyle -> Automatic,
 			"\[Rho]cPlotPadding" -> .1,
 			PlotRangePadding -> Automatic,
 			MeshFunctions -> {#3 &},
 			Mesh -> True,
+			MeshStyle -> GrayLevel[0, .2],
+			"ReconstructMesh" -> False,
 			"DeviationPlotPoints" -> Automatic,
 			"DeviationMaxRecursion" -> Automatic,
 			"Deviation" -> {.01, .05},
@@ -2405,7 +2411,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 	deviationStyle = Replace[
 		<|otherOpts|>["DeviationStyle"],
 		Automatic -> Append[Thickness[.79 .00375]] /@ Transpose @ {
-			PadRight[{}, Length[deviation], {Dashing[.8{.025, .009}, 0, "Square"], Dashing[.8{.005, .009}, 0, "Square"]}],
+			PadRight[{}, Length[deviation], {Dashing[.8{.005, .009}, 0, "Square"], Dashing[.8{.025, .009}, 0, "Square"]}],
 			Table[i /. {1|2 -> Black, _ -> ColorData[97][Floor[(i - 1)/2]]}, {i, Length[deviation]}]}];
 	deviationInterpOpts = Sequence[
 		PlotPoints -> Replace[
@@ -2525,40 +2531,39 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 						ReconstructionMesh on them later, which does a better job at identifying separate regions. *)
 				contours = Partition[Flatten[#], 2]& /@ regionPlotLines;
 				
-				(* Populate the remaining three quadrants by transforming the points appropriately. *)
-				contours = Map[
-					Join[
-						#,
-						{-1, 1}#& /@ #,
-						{-1, -1}#& /@ #,
-						{1, -1}#& /@ #]&,
-					contours];
-				
 				(* Identify the contour by applying ReconstructionMesh to the flattened points. *)
 				contours = MapIndexed[
 					Function[{points, index},
 						Replace[
-							Quiet @ ReconstructionMesh[points, Method -> "Crust"],
+							Replace[TrueQ[<|otherOpts|>["ReconstructMesh"]],
+								True -> Quiet @ ReconstructionMesh[points, Method -> "Crust"]],
 							{
 								(* If the reconstruction succeeded, extract the mesh primitives. *)
 								mesh_MeshRegion :> (
-									temp = Flatten[MeshPrimitives[mesh, 1], 1, Line];
+									temp = MeshPrimitives[mesh, 1];
+									(* Filter out especially long lines (likely errors in the mesh reconstruction). *)
+									temp = Pick[
+										temp,
+										# < 5 & /@ Abs[Standardize[Apply[EuclideanDistance] @@@ temp]]];
+									temp = Flatten[temp, 1, Line];
 									(* MeshPrimitives returns individual lines for each segment of the contour, e.g.:
 										{..., {pt1, pt2}, {pt2, pt3}, {pt3, pt4}, ...}
 										Hence we need to find runs of point pairs where the last point of one pair
 										is the first point of the next. *)
 									temp = Split[temp, Last[#1] === First[#2]&];
-									Line[Join[#[[All, 1]], {#[[-1, -1]]}]]& /@ temp),
+									temp = Join[#[[All, 1]], {#[[-1, -1]]}]& /@ temp),
 
 								(* If the reconstruction failed, use the region computed by RegionPlot, transforming
 									it into the remaining three quadrants. *)
-								_ReconstructionMesh -> Map[
-									Line @ {
-										#,
-										{-1, 1}#& /@ #,
-										{-1, -1}#& /@ #,
-										{1, -1}#& /@ #}&,
-									regionPlotLines[[First[index]]]]}]],
+								_ReconstructionMesh | False :> (temp = regionPlotLines[[First[index]]])}];
+						(* Populate the remaining three quadrants by transforming the points appropriately. *)
+						Map[
+							Line @ {
+								#,
+								{-1, 1}#& /@ #,
+								{-1, -1}#& /@ #,
+								{1, -1}#& /@ #}&,
+							temp]],
 					contours];
 				
 				(* Apply the appropriate styling to each deviation contour. *)
@@ -2628,7 +2633,10 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					{
 						(PlotRangePadding -> Automatic) -> (PlotRangePadding -> .05 \[Rho]c (1 + pad)/1.1),
 						(PlotRange -> Automatic) -> (PlotRange -> {Full, Full, {-zPlotRange[[dim]], zPlotRange[[dim]]}}),
-						(PlotRange -> {x_, y_, Automatic}) :> (PlotRange -> {x, y, {-zPlotRange[[dim]], zPlotRange[[dim]]}})
+						(PlotRange -> {x_, y_, Automatic}) :> (PlotRange -> {x, y, {-zPlotRange[[dim]], zPlotRange[[dim]]}}),
+						(ClippingStyle -> Automatic) :> (ClippingStyle -> Replace[
+							Replace[<|plotOpts|>[ColorFunction], s_String :> ColorData[s]] /@ {0, 1},
+							Except[{__?ColorQ}] -> White])
 					},
 					1]]],
 
