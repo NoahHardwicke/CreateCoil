@@ -2499,7 +2499,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 						bDim = Style[Subscript["B", Switch[dim, 1, "x", 2, "y", 3, "z"]], Italic]},
 					Which[
 						TrueQ[field == 0], None,
-						TrueQ[{xe, ze} == {0, 0}], bDim,
+						TrueQ[{xe, ze} == {0, 0}], Pane[bDim, FrameMargins -> 0, BaselinePosition -> Baseline],
 						True,
 						ToBoxes /@ FractionBox[
 							Row[{
@@ -2742,12 +2742,14 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					If[
 						label === None, plot,
 						Labeled[
+							
 							Show[
 								plot,
 								Graphics[contourSet /. {
 									Dashing[{r__?NumericQ}, spec___] :> Dashing[dashingScaling {r}, spec],
 									Thickness[r_?NumericQ, spec___] :> Thickness[dashingScaling r, spec]}]],
-							Grid[
+
+							temp = Grid[
 								Join[
 									{{Row[{label, " Deviation:"}]}},
 									MapThread[
@@ -2763,20 +2765,40 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 													AspectRatio -> Full,
 													ImageSize -> plotImageSize],
 												ImageSize -> {35, 8}, Alignment -> {Left, Center},
-												FrameStyle -> None, FrameMargins -> None],
+												FrameStyle -> None, FrameMargins -> None,
+												BaselinePosition -> Scaled[0]],
 											" ",
 											Round[100 #2, .01],
 											"%"}]}&,
-										{deviationStyle, deviation}]],
+										{deviationStyle, deviation}],
+									{
+										{Row[{
+											Framed[
+												Graphics[
+													{
+														Replace[
+															Lookup[<|plotOpts|>, MeshStyle, GrayLevel[0, .3]],
+															Automatic -> GrayLevel[0, .3]] /. {
+																Dashing[{r__?NumericQ}, spec___] :> Dashing[dashingScaling {r}, spec],
+																Thickness[r_?NumericQ, spec___] :> Thickness[dashingScaling r, spec]},
+														Line[{{-1, 0}, {1, 0}}]},
+													PlotRange -> 1,
+													AspectRatio -> Full,
+													ImageSize -> plotImageSize],
+												ImageSize -> {35, 8}, Alignment -> {Left, Center},
+												FrameStyle -> None, FrameMargins -> None,
+												BaselinePosition -> Scaled[0]],
+												" ", "Flux Lines"}]}}],
 								Alignment -> Left,
-								Spacings -> {1, {.5, 1, {.2}, .7}},
-								Dividers -> {{True, {False}, True}, {True, True, {False}, True}},
+								Spacings -> {1, {.8, .6, {.2}, 1.2, .6}},
+								Dividers -> {{True, {False}, True}, {True, {False}, True, True}},
 								FrameStyle -> Replace[
 									Lookup[Association[plotOpts], FrameStyle, GrayLevel[.75]],
 									Automatic | {} -> GrayLevel[.75]],
 								BaseStyle -> Merge[
 									{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{plotOpts}, {LabelStyle}]},
 									Flatten[#, 2]&][LabelStyle]],
+
 							Right]]]],
 
 			{densityPlots, contours, derivativeLabels},
