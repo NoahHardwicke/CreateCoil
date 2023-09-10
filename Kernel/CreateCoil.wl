@@ -2406,7 +2406,7 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}, {otherOpts___}] := Module[
 	{
 		integrandXZ, contours, data, const, bzAlongZ, bxbyAlongZ, bzAlongX, bxbyAlongX,
-		deviationInterpOpts, deviation, deviationStyle, regionPlots, temp, derivatives, integrandXZGrad,
+		deviationInterpOpts, deviation, deviationStyle, regionPlots, temp, derivatives, integrandXZGrad, showMeshQ,
 		derivativeLabels, lines, regionPlotLines, densityPlots, xDataRange, zDataRange, xPlotRange, zPlotRange, xReflectQ, zReflectQ, bFieldRange},
 
 	(* Plot the xz-plane *)
@@ -2436,7 +2436,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					reflectQ = True,
 				_,
 					dataRange = {0, (1 + pad) \[Rho]c}; zDataRange = {0, zMax};
-					plotRange = {-1, 1}; zPlotRange = {-1, 1} zMax;
+					plotRange = {-1, 1} (1 + pad) \[Rho]c; zPlotRange = {-1, 1} zMax;
 					reflectQ = True],
 			HoldRest],
 		{
@@ -2715,6 +2715,10 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 			Function[{contourSets, dim}, Table[densityPlots[[dim]], Length[contourSets]]],
 			{contours, {1, 2, 3}}];
 		
+		showMeshQ = Not @ Or[
+			MatchQ[<|plotOpts|>[Mesh], {} | False | None],
+			MatchQ[<|plotOpts|>[MeshStyle], None | {} | Opacity[0]]];
+
 		(* Finally, combine the DensityPlots, deviation contours, and plot labels. *)
 		raggedMapThread[
 
@@ -2742,14 +2746,14 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					If[
 						label === None, plot,
 						Labeled[
-							
+
 							Show[
 								plot,
 								Graphics[contourSet /. {
 									Dashing[{r__?NumericQ}, spec___] :> Dashing[dashingScaling {r}, spec],
 									Thickness[r_?NumericQ, spec___] :> Thickness[dashingScaling r, spec]}]],
 
-							temp = Grid[
+							Grid[
 								Join[
 									{{Row[{label, " Deviation:"}]}},
 									MapThread[
@@ -2771,8 +2775,8 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 											Round[100 #2, .01],
 											"%"}]}&,
 										{deviationStyle, deviation}],
-									{
-										{Row[{
+									If[showMeshQ,
+										{{Row[{
 											Framed[
 												Graphics[
 													{
@@ -2788,10 +2792,15 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 												ImageSize -> {35, 8}, Alignment -> {Left, Center},
 												FrameStyle -> None, FrameMargins -> None,
 												BaselinePosition -> Scaled[0]],
-												" ", "Flux Lines"}]}}],
+												" ", "Flux Lines"}]}},
+										{}]],
 								Alignment -> Left,
-								Spacings -> {1, {.8, .6, {.2}, 1.2, .6}},
-								Dividers -> {{True, {False}, True}, {True, {False}, True, True}},
+								Spacings -> If[showMeshQ,
+									{1, {.8, .6, {.2}, 1.2, .6}},
+									{1, {.8, .6, {.2}, .6}}],
+								Dividers -> If[showMeshQ,
+									{{True, {False}, True}, {True, {False}, True, True}},
+									{{True, {False}, True}, {True, {False}, True}}],
 								FrameStyle -> Replace[
 									Lookup[Association[plotOpts], FrameStyle, GrayLevel[.75]],
 									Automatic | {} -> GrayLevel[.75]],
