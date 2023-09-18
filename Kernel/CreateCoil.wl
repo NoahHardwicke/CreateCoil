@@ -2307,10 +2307,10 @@ fieldPlot2DOpts = Normal @ Merge[
 			Mesh -> True,
 			MeshStyle -> GrayLevel[0, .2],
 			"ReconstructMesh" -> False,
-			"DeviationPlotPoints" -> Automatic,
-			"DeviationMaxRecursion" -> Automatic,
-			"Deviation" -> {.01, .05},
-			"DeviationStyle" -> Automatic
+			"DeviationsPlotPoints" -> Automatic,
+			"DeviationsMaxRecursion" -> Automatic,
+			"Deviations" -> {.01, .05},
+			"DeviationsStyle" -> Automatic
 		}
 	},
 	Last];
@@ -2458,20 +2458,20 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 		interpolationOpts
 	]][[-1, 1]]&[integrationOpts];
 
-	deviation = Replace[#, Except[_List] -> {#}]&[<|otherOpts|>["Deviation"]];
-	(* If "DeviationStyle" -> Automatic, use small black dashing for the first deviation, large black for the second, then use ColorData[97]
+	deviation = Replace[#, Except[_List] -> {#}]&[<|otherOpts|>["Deviations"]];
+	(* If "DeviationsStyle" -> Automatic, use small black dashing for the first deviation, large black for the second, then use ColorData[97]
 		in which each colour is used twice, once with small dashing and once with large dashing. *)
 	deviationStyle = Replace[
-		<|otherOpts|>["DeviationStyle"],
+		<|otherOpts|>["DeviationsStyle"],
 		Automatic -> Append[Thickness[.79 .00375]] /@ Transpose @ {
 			PadRight[{}, Length[deviation], {Dashing[.8{.005, .009}, 0, "Square"], Dashing[.8{.025, .009}, 0, "Square"]}],
 			Table[i /. {1|2 -> Black, _ -> ColorData[97][Floor[(i - 1)/2]]}, {i, Length[deviation]}]}];
 	deviationInterpOpts = Sequence[
 		PlotPoints -> Replace[
-			<|otherOpts|>["DeviationPlotPoints"],
+			<|otherOpts|>["DeviationsPlotPoints"],
 			Automatic -> Round[<|interpolationOpts|>[PlotPoints] * 10/6]],
 		MaxRecursion -> Replace[
-			<|otherOpts|>["DeviationMaxRecursion"],
+			<|otherOpts|>["DeviationsMaxRecursion"],
 			Automatic -> Round[<|interpolationOpts|>[MaxRecursion] * 5/4]]];
 
 	If[MatchQ[deviation, _?NumericQ | {__?NumericQ}],
@@ -2620,11 +2620,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					contours];
 				
 				(* Apply the appropriate styling to each deviation contour. *)
-				contours = MapThread[{CapForm["Square"], #1, #2}&, {deviationStyle, contours}];
-				
-				(* We have calculated the contours for each of the deviation values. Therefore we now want to join them
-					into one list so they can be displayed together. *)
-				contours = Catenate[contours]],
+				contours = MapThread[{CapForm["Square"], #1, #2}&, {deviationStyle, contours}]],
 			
 			integrandXZGrad, {2}],
 		
@@ -2733,7 +2729,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					(* Furthermore, if the deviation style is Automatic, then negate the actual size of the plot for the dashing and
 						thickness of deviation contours. We don't simply use AbsoluteDashing/Thickness because we want the dashing/thickness
 						to scale with the plot if it's resized. *)
-					If[<|otherOpts|>["DeviationStyle"] === Automatic,
+					If[<|otherOpts|>["DeviationsStyle"] === Automatic,
 						(* If a symbolic (Small, Medium, etc.) or single number ImageSize is specified, then the most space-filling aspect
 							ratio possible is 360/432 (which are the actual maximum width/height values for ImageSize -> Medium). If the
 							aspect ratio is greater than this, then the height will decrease while the width is fixed at 360, and if the
@@ -2767,7 +2763,13 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 														Line[{{-1, 0}, {1, 0}}]},
 													PlotRange -> 1,
 													AspectRatio -> Full,
-													ImageSize -> plotImageSize],
+													ImageSize -> plotImageSize,
+													Background -> Switch[
+														GrayLevel[Last[Cases[#1, _?ColorQ, Infinity], 0]],
+														GrayLevel[g_, ___] /; g >= .7,
+														Black,
+														_,
+														None]],
 												ImageSize -> {35, 8}, Alignment -> {Left, Center},
 												FrameStyle -> None, FrameMargins -> None,
 												BaselinePosition -> Scaled[0]],
