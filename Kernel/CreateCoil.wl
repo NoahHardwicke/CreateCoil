@@ -2322,7 +2322,7 @@ integrationOpts = Sequence[
 
 
 biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
-	{integrandX, integrandY, integrandZ, const, data, interpolationOpts, plotOpts, xRange, yRange, zRange, temp},
+	{integrandX, integrandY, integrandZ, const, data, interpolationOpts, plotOpts, xRange, yRange, zRange, xBRange, yBRange, zBRange, temp},
 
 	interpolationOpts = Sequence @@ FilterRules[opts, Complement[Options[Plot][[All, 1]], Options[ListLinePlot][[All, 1]]]];
 	plotOpts = Sequence @@ FilterRules[opts, Options[ListLinePlot]];
@@ -2331,13 +2331,14 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 		Lookup[<|plotOpts|>, PlotRange, Automatic],
 		Except[{rx_, ry_, rz_}] :> {Automatic, Automatic, Automatic}];
 
+	(* Horizontal Ranges *)
 	MapThread[
 		Function[{val, range},
 			Switch[val,
-				_?NumericQ,
-					range = {-val, val},
-				{_?NumericQ, _?NumericQ},
-					range = val,
+				{r_?NumericQ, _} /; r != 0,
+					range = {-val[[1]], val[[1]]},
+				{{r1_?NumericQ, r2_?NumericQ}, _} /; r1 != r2,
+					range = val[[1]],
 				_,
 					range = {-1, 1} (1 + pad) \[Rho]c;
 					zRange = {-1, 1} zMax],
@@ -2345,6 +2346,21 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 		{
 			temp,
 			{xRange, yRange, zRange}}];
+	
+	(* Vertical Ranges *)
+	MapThread[
+		Function[{val, range},
+			Switch[val,
+				{_, r_?NumericQ} /; r != 0,
+					range = {-val[[2]], val[[2]]},
+				{_, {r1_?NumericQ, r2_?NumericQ}} /; r1 != r2,
+					range = val[[2]],
+				_,
+					range = All],
+			HoldRest],
+		{
+			temp,
+			{xBRange, yBRange, zBRange}}];
 	
 	integrandX = integrand /. {\[FormalY] -> 0, \[FormalZ] -> 0};
 	integrandY = integrand /. {\[FormalX] -> 0, \[FormalZ] -> 0};
@@ -2373,7 +2389,7 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 	data = SortBy[First] /@ data;
 
 	MapThread[
-		Function[{dim, str},
+		Function[{dim, str, vRange},
 			ListLinePlot[
 				Transpose[First[Outer[List, {#1}, #2]]& @@@ data[[dim]]],
 				Sequence @@ Replace[{plotOpts},
@@ -2397,10 +2413,10 @@ biotSavartPlot[integrand_, \[Rho]c_, pad_, zMax_, opts_] := Module[
 								{{LabelStyle -> {"Graphics", "GraphicsLabel"}}, FilterRules[{opts}, LabelStyle]},
 								Flatten[#, 2]&],
 							LegendLayout -> "Column"], After]),
-						(PlotRange -> _) -> (PlotRange -> All)
+						(PlotRange -> _) -> (PlotRange -> {All, vRange})
 					},
 					1]]],
-		{{1, 2, 3}, {"x", "y", "z"}}]]
+		{{1, 2, 3}, {"x", "y", "z"}, {xBRange, yBRange, zBRange}}]]
 
 
 biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_}, pad_, zMax_, {interpolationOpts___}, {plotOpts___}, {otherOpts___}] := Module[
