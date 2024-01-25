@@ -2709,7 +2709,7 @@ biotSavartPlot2D[integrand_, \[Chi]c_, i\[Chi]_, \[Phi]c_, t_, \[Rho]c_, {n_, m_
 					{
 						(PlotRangePadding -> Automatic) -> (PlotRangePadding -> .02 Max[Abs @* Subtract @@@ {xPlotRange, zPlotRange}]),
 						(PlotRange -> Automatic) -> (PlotRange -> {Full, Full, {bFieldRange[[dim, 1]], bFieldRange[[dim, 2]]}}),
-						(PlotRange -> {x_, y_, Automatic..., ___}) :> (PlotRange -> {x, y, {bFieldRange[[dim, 1]], bFieldRange[[dim, 2]]}}),
+						(PlotRange -> {x_, y_, Automatic..., ___}) :> (PlotRange -> {xPlotRange, zPlotRange, {bFieldRange[[dim, 1]], bFieldRange[[dim, 2]]}}),
 						(ClippingStyle -> Automatic) :> (ClippingStyle -> Replace[
 							Replace[<|plotOpts|>[ColorFunction], s_String :> ColorData[s]] /@ {0, 1},
 							Except[{__?ColorQ}] -> White])
